@@ -1,0 +1,40 @@
+!script{{
+--/|Magic-Missile
+--/|Version 1.0.0
+
+--#titleCardBackground|#BA5
+--#subtitleFontColor|#621
+--#oddRowBackground|#EC8
+--#evenRowBackground|#ED9
+--#emoteFontColor|#000
+--#noRollHighlight|noRollHighlight
+
+--=castLevel|?{Magic Missile - Cast at what Level|1|2|3|4|5|6|7|8|9}
+--#sourceToken|@{selected|token_id}
+--#emoteText|@{selected|character_name} casts a level [$castLevel] Magic Missile
+--#title|Magic Missile
+--#leftsub|Range: 120 ft
+--#rightsub|Cast at level [$castLevel]
+
+--=spellSlots|[*@{selected|token_id}:lvl[$castLevel]_slots_expended]
+--?[$spellSlots] -ge 1|enoughSpellSlots
+--+Warning|[r][#800]No level [$castLevel.Raw] spell slots[/#][/r]
+--+|[hr]
+--:enoughSpellSlots|
+
+--=numberOfDarts|[$castLevel] + 2
+--=dartCounter|1
+--:dartLoop|
+--=dmg|1d4 [Base] + 1
+--+Dart [$dartCounter.Raw] Damage|[r][$dmg][/r]
+--=dartCounter|[$dartCounter] + 1
+--?[$dartCounter] -le [$numberOfDarts]|dartLoop
+--+Damage Type|[r][i]Force[/i][/r]
+
+--?[$spellSlots] -le 0|skipDecSpellSlots
+--!a:@{selected|token_id}|lvl[$castLevel]_slots_expended:-=1
+--=spellSlots|[$spellSlots] - 1
+--+|[hr]
+--+Level [$castLevel.Raw] Spell Slots Remaining|[r][$spellSlots][/r]
+--:skipDecSpellSlots|
+}}
