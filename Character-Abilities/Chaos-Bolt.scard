@@ -1,0 +1,117 @@
+!script{{
+--/|Chaos-Bolt
+--/|Version 1.0.6
+
+--/|An attack roll must be equal to or greater than this number to get a critical hit.
+--=criticalHitThreshold|20
+
+--/|Set this to 0 to use standard critical hit damage.
+--/|Set this to 1 to use variant critical hit damage.
+--=useVariantCriticalHitDamage|0
+
+--#titleCardBackground|#BA5
+--#subtitleFontColor|#621
+--#oddRowBackground|#EC8
+--#evenRowBackground|#ED9
+--#emoteFontColor|#000
+--#noRollHighlight|noRollHighlight
+
+--=castLevel|?{Chaos Bolt - Cast at what Level|1|2|3|4|5|6|7|8|9}
+--#sourceToken|@{selected|token_id}
+--#emoteText|@{selected|character_name} casts a level [$castLevel] Chaos Bolt
+--#title|Chaos Bolt
+--#leftsub|Range: 120 ft
+--#rightsub|Cast at level [$castLevel]
+
+--=spellSlots|[*@{selected|token_id}:lvl[$castLevel]_slots_expended]
+--?[$spellSlots] -ge 1|enoughSpellSlots
+--+Warning|[r][#800]No level [$castLevel.Raw] spell slots[/#][/r]
+--+|[hr]
+--:enoughSpellSlots|
+
+-->Attack|
+
+--?[$spellSlots] -le 0|skipDecSpellSlots
+--!a:@{selected|token_id}|lvl[$castLevel]_slots_expended:-=1
+--=spellSlots|[$spellSlots] - 1
+--+|[hr]
+--+Level [$castLevel.Raw] Spell Slots Remaining|[r][$spellSlots][/r]
+--:skipDecSpellSlots|
+--X|
+
+--:Attack|
+    --=attackRoll1|1d20 [Base] + @{selected|spell_attack_bonus} [Spell]
+
+    --&attackRoll1Text|[$attackRoll1]
+    --?[$attackRoll1.Base] -gt 1|skipFumble1Coloring
+        --&attackRoll1Text|[#800][$attackRoll1][/#]
+    --:skipFumble1Coloring|
+    --?[$attackRoll1.Base] -lt [$criticalHitThreshold]|skipCrit1Coloring
+        --&attackRoll1Text|[#080][$attackRoll1][/#]
+    --:skipCrit1Coloring|
+
+    --=attackRoll2|1d20 [Base] + @{selected|spell_attack_bonus} [Spell]
+
+    --&attackRoll2Text|[$attackRoll2]
+    --?[$attackRoll2.Base] -gt 1|skipFumble2Coloring
+        --&attackRoll2Text|[#800][$attackRoll2][/#]
+    --:skipFumble2Coloring|
+    --?[$attackRoll2.Base] -lt [$criticalHitThreshold]|skipCrit2Coloring
+        --&attackRoll2Text|[#080][$attackRoll2][/#]
+    --:skipCrit2Coloring|
+    --+Ranged Attack|[r][&attackRoll1Text] | [&attackRoll2Text][/r]
+
+    --=dmgRoll1|1d8 [Base]
+    --=dmgRoll2|1d8 [Base]
+
+    --?[$castLevel] -gt 1|hlDmg
+        --=dmgRoll3|1d6 [Base]
+        --^dmgDone|
+    --:hlDmg|
+        --=hlDmgDieCount|[$castLevel] - 1
+        --=dmgRoll3|1d6 [Base] + [$hlDmgDieCount]d6 [Level [$castLevel]]
+    --:dmgDone|
+
+    --=dmg|[$dmgRoll1] + [$dmgRoll2] + [$dmgRoll3]
+    --&dmgRollText|[$dmgRoll1]+[$dmgRoll2]+[$dmgRoll3]
+    --?[$dmgRoll1.Base] -ne [$dmgRoll2.Base]|skipHopColoring
+        --&dmgRollText|[#08F][$dmgRoll1][/#]+[#08F][$dmgRoll2][/#]+[$dmgRoll3]
+    --:skipHopColoring|
+    --+Damage|[r][&dmgRollText]=[$dmg][/r]
+
+    --?[$attackRoll1.Base] -lt [$criticalHitThreshold] -and [$attackRoll2.Base] -lt [$criticalHitThreshold]|skipCrit
+        --?[$useVariantCriticalHitDamage] -eq 1|calcVarCrit
+            --?[$castLevel] -gt 1|calcHlStdCrit
+                --=critDmg|2d8 [Base] + 1d6 [Base]
+                --^calcCritDone|
+            --:calcHlStdCrit|
+                --=hlDmgDieCount|[$castLevel] - 1
+                --=critDmg|2d8 [Base] + 1d6 [Base] + [$hlDmgDieCount]d6 [Level [$castLevel]]
+                --^calcCritDone|
+        --:calcVarCrit|
+            --?[$castLevel] -gt 1|calcHlVarCrit
+                --=critDmg|1d8 [Base] + 8 [Max] + 1d6 [Base]
+                --^calcCritDone|
+            --:calcHlVarCrit|
+                --=hlDmgDieCount|[$castLevel] - 1
+                --=critDmg|1d8 [Base] + 8 [Max] + 1d6 [Base] + [$hlDmgDieCount]d6 [Level [$castLevel]]
+                --^calcCritDone|
+        --:calcCritDone|
+        --+Critical Hit Damage|[r][$critDmg][/r]
+    --:skipCrit|
+
+    --c[$dmgRoll1]|1:&dmgType1;Acid|2:&dmgType1;Cold|3:&dmgType1;Fire|4:&dmgType1;Force|5:&dmgType1;Lightning|6:&dmgType1;Poison|7:&dmgType1;Psychic|8:&dmgType1;Thunder
+    --c[$dmgRoll2]|1:&dmgType2;Acid|2:&dmgType2;Cold|3:&dmgType2;Fire|4:&dmgType2;Force|5:&dmgType2;Lightning|6:&dmgType2;Poison|7:&dmgType2;Psychic|8:&dmgType2;Thunder
+
+    --?[$dmgRoll1] -ne [$dmgRoll2]|skipHop
+    --+Damage Type|[r][i][&dmgType1][/i][/r]
+    --+|[hr]
+    --+|[c]Chaotic energy leaps to a new target within 30 feet![/c]
+    --+|[hr]
+    -->Attack|
+    --^hopDone|
+    --:skipHop|
+    --+Damage Type|[r]Either [i][&dmgType1][/i] or [i][&dmgType2][/i][/r]
+    --:hopDone|
+--<|
+}}
