@@ -1,0 +1,11 @@
+Name=SpiritualWeapons
+Version=1.0.0
+Arrow={"name":"Arrow","url":"url-to-your-arrow-spiritual-weapon"}
+Axe={"name":"Axe","url":"url-to-your-axe-spiritual-weapon"}
+Bow={"name":"Bow","url":"url-to-your-bow-spiritual-weapon"}
+Club={"name":"Club","url":"url-to-your-club-spiritual-weapon"}
+Hammer={"name":"Hammer","url":"url-to-your-hammer-spiritual-weapon"}
+Mace={"name":"Mace","url":"url-to-your-mace-spiritual-weapon"}
+Spear={"name":"Spear","url":"url-to-your-spear-spiritual-weapon"}
+Staff={"name":"Staff","url":"url-to-your-staff-spiritual-weapon"}
+Sword={"name":"Sword","url":"url-to-your-sword-spiritual-weapon"}
