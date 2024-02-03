@@ -1,3 +1,3 @@
-!# TM-Toggle-Hunters-Mark
-!# Version 1.0.2
+!# Toggle-Hunters-Mark
+!# Version 1.0.3
 !token-mod --set statusmarkers#!archery-target
