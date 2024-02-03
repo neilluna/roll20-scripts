@@ -1,3 +1,3 @@
-!# Summon-Spiritual-Hammer
-!# Version 1.0.3
-!Summon-Spiritual-Weapon hammer right
+!# Summon-Spiritual-Weapon
+!# Version 1.0.4
+!Summon-Spiritual-Weapon get.SpellMule.SpiritualWeapons.?{Summon which spiritual weapon?|Arrow|Axe|Bow|Club|Hammer|Mace|Spear|Staff|Sword|} ?{Summon to which side?|Above|Below|Left|Right|}
