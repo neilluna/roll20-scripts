@@ -1,0 +1,3 @@
+!# Kill
+!# Version 1.0.3
+!token-mod --order top --set layer#map statusmarkers#dead

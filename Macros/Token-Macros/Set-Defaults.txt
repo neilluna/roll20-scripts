@@ -1,3 +1,3 @@
-!# TM-Set-Defaults
-!# Version 1.0.2
+!# Set-Defaults
+!# Version 1.0.3
 !token-mod --on showname showplayers_bar1 showplayers_name --off playersedit_aura1 playersedit_aura2 playersedit_bar1 playersedit_bar2 playersedit_bar3 playersedit_name showplayers_aura1 showplayers_aura2 showplayers_bar2 showplayers_bar3

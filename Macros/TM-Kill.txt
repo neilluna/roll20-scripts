@@ -1,3 +1,0 @@
-!# TM-Kill
-!# Version 1.0.2
-!token-mod --order top --set layer#map aura1_radius#0 statusmarkers#dead
