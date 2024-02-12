@@ -1,3 +1,4 @@
 !# Whisper-10-Blank-Lines
-!# Version 1.0.2
-!Whisper-Blank-Lines 10
+!# Version 2.0.0
+!# Depends on Whisper-Blank-Lines.js version 2.0.0 or higher.
+!Paraselene-Whisper-Blank-Lines 10

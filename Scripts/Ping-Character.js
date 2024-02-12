@@ -1,11 +1,18 @@
 // Ping and center on the player's tokens.
-// Version 1.0.6
+// Version 2.0.0
 
-on("chat:message", function(msg) {
-    var commandName = "!Ping-Character";
+var paraselene = paraselene || {};
 
-    var args = msg.content.split(/\s+/);
-    if (msg.type != "api" || args[0] != commandName) { return; }
+on("ready", function() {
+    on("chat:message", function(msg) {
+        paraselene.pingCharacter(msg);
+        paraselene.pingCharacterById(msg);
+    });
+});
+
+paraselene.pingCharacter = function(msg) {
+    var commandName = "!Paraselene-Ping-Character";
+    if (msg.type != "api" || msg.content.indexOf(commandName) != 0) { return; }
 
     var playerPageId = Campaign().get("playerpageid");
     var playerPages = Campaign().get("playerspecificpages");
@@ -46,7 +53,8 @@ on("chat:message", function(msg) {
         token_info = tokenInfoList[0];
         sendChat(
             commandName,
-            `!PingCharacterById ${msg.playerid} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}`
+            '!Paraselene-Ping-Character-By-Id ' +
+            `${msg.playerid} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}`
         );
         return;
     }
@@ -54,17 +62,17 @@ on("chat:message", function(msg) {
     var links = "";
     tokenInfoList.forEach(token_info => {
         links += '<a href="' +
-            `!PingCharacterById ${msg.playerid} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}` +
+            '!Paraselene-Ping-Character-By-Id ' +
+            `${msg.playerid} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}` +
             `">${token_info.characterName}</a>`;
     });
     sendChat(commandName, `/w "${playerName}" Which character to ping?<br/>${links}`, null, {noarchive: true});
-});
+}
 
-on("chat:message", function(msg) {
-    var commandName = "!PingCharacterById";
-
+paraselene.pingCharacterById = function(msg) {
+    var commandName = "!Paraselene-Ping-Character-By-Id";
+    if (msg.type != "api" || msg.content.indexOf(commandName) != 0) { return; }
     var args = msg.content.split(/\s+/);
-    if (msg.type != "api" || args[0] != commandName) { return; }
 
     var playerId = args[1];
     var playerPageId = args[2];
@@ -79,4 +87,4 @@ on("chat:message", function(msg) {
     })[0];
  
     sendPing(token.get("left"), token.get("top"), token.get("pageid"), playerId, true, playerId);
-});
+}

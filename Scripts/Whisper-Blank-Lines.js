@@ -1,11 +1,18 @@
 // Whisper blank lines to the chat window. Non archiving.
-// Version 1.0.0-dev
+// Version 2.0.0
 
-on("chat:message", function(msg) {
-    var commandName = "!Whisper-Blank-Lines";
+var paraselene = paraselene || {};
 
+on("ready", function() {
+    on("chat:message", function(msg) {
+        paraselene.whisperBlankLines(msg);
+    });
+});
+
+paraselene.whisperBlankLines = function(msg) {
+    var commandName = "!Paraselene-Whisper-Blank-Lines";
+    if (msg.type != "api" || msg.content.indexOf(commandName) != 0) { return; }
     var args = msg.content.split(/\s+/);
-    if (msg.type != "api" || args[0] != commandName) { return; }
 
     var playerName = getObj("player", msg.playerid).get("displayname");
 
@@ -14,4 +21,4 @@ on("chat:message", function(msg) {
     var blankLines = Array(numberOfBlankLines + 1).join("<br>")
 
     sendChat(commandName, `/w "${playerName}" <br>${infoMessege}<br>${blankLines}`, null, {noarchive: true});
-});
+}
