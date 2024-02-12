@@ -12,7 +12,8 @@ on("ready", function() {
 
 paraselene.pingCharacter = function(msg) {
     var commandName = "!Paraselene-Ping-Character";
-    if (msg.type != "api" || msg.content.indexOf(commandName) != 0) { return; }
+    var args = msg.content.split(/\s+/);
+    if (msg.type != "api" || args[0] != commandName) { return; }
 
     var playerPageId = Campaign().get("playerpageid");
     var playerPages = Campaign().get("playerspecificpages");
@@ -71,8 +72,8 @@ paraselene.pingCharacter = function(msg) {
 
 paraselene.pingCharacterById = function(msg) {
     var commandName = "!Paraselene-Ping-Character-By-Id";
-    if (msg.type != "api" || msg.content.indexOf(commandName) != 0) { return; }
     var args = msg.content.split(/\s+/);
+    if (msg.type != "api" || args[0] != commandName) { return; }
 
     var playerId = args[1];
     var playerPageId = args[2];

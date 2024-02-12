@@ -11,8 +11,8 @@ on("ready", function() {
 
 paraselene.summonSpiritualWeapon = function(msg) {
     var commandName = "!Paraselene-Summon-Spiritual-Weapon";
-    if (msg.type != "api" || msg.content.indexOf(commandName) != 0) { return; }
     var args = msg.content.split(/\s+/);
+    if (msg.type != "api" || args[0] != commandName) { return; }
 
     var weapon = JSON.parse(args[1]);
     var offset = args[2];

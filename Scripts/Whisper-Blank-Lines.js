@@ -11,8 +11,8 @@ on("ready", function() {
 
 paraselene.whisperBlankLines = function(msg) {
     var commandName = "!Paraselene-Whisper-Blank-Lines";
-    if (msg.type != "api" || msg.content.indexOf(commandName) != 0) { return; }
     var args = msg.content.split(/\s+/);
+    if (msg.type != "api" || args[0] != commandName) { return; }
 
     var playerName = getObj("player", msg.playerid).get("displayname");
 
