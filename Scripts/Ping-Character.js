@@ -46,7 +46,7 @@ paraselene.pingCharacter = function(msg) {
     });
 
     if (tokenInfoList.length == 0) {
-        sendChat(commandName, `/w "${playerName}" None of your tokens are on this map.`, null, {noarchive: true});
+        sendChat(commandName, `/w "${playerName}" <br/>None of your tokens are on this map.`, null, {noarchive: true});
         return;
     }
 
@@ -65,9 +65,9 @@ paraselene.pingCharacter = function(msg) {
         links += '<a href="' +
             '!Paraselene-Ping-Character-By-Id ' +
             `${msg.playerid} ${playerName} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}` +
-            `">${token_info.characterName}</a>`;
+            `">${token_info.characterName}</a><br/>`;
     });
-    sendChat(commandName, `/w "${playerName}" Which character to ping?<br/>${links}`, null, {noarchive: true});
+    sendChat(commandName, `/w "${playerName}" <br/>Which character to ping?<br/>${links}`, null, {noarchive: true});
 }
 
 paraselene.pingCharacterById = function(msg) {
@@ -89,7 +89,7 @@ paraselene.pingCharacterById = function(msg) {
     });
 
     if (tokenList.length == 0) {
-        sendChat(commandName, `/w "${playerName}" The token is no longer on this map.`, null, {noarchive: true});
+        sendChat(commandName, `/w "${playerName}" <br/>The token is no longer on this map.`, null, {noarchive: true});
         return;
     }
 
