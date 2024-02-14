@@ -1,5 +1,5 @@
 // Ping and center on the player's tokens.
-// Version 2.0.0
+// Version 2.0.1
 
 var paraselene = paraselene || {};
 
@@ -46,7 +46,7 @@ paraselene.pingCharacter = function(msg) {
     });
 
     if (tokenInfoList.length == 0) {
-        sendChat(commandName, `/w "${playerName}" None of your tokens are on this map.`, null, {noarchive: true});
+        sendChat(commandName, `/w "${playerName}" <br/>None of your tokens are on this map.`, null, {noarchive: true});
         return;
     }
 
@@ -55,7 +55,7 @@ paraselene.pingCharacter = function(msg) {
         sendChat(
             commandName,
             '!Paraselene-Ping-Character-By-Id ' +
-            `${msg.playerid} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}`
+            `${msg.playerid} ${playerName} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}`
         );
         return;
     }
@@ -64,10 +64,10 @@ paraselene.pingCharacter = function(msg) {
     tokenInfoList.forEach(token_info => {
         links += '<a href="' +
             '!Paraselene-Ping-Character-By-Id ' +
-            `${msg.playerid} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}` +
-            `">${token_info.characterName}</a>`;
+            `${msg.playerid} ${playerName} ${playerPageId} ${token_info.characterId} ${token_info.tokenId}` +
+            `">${token_info.characterName}</a><br/>`;
     });
-    sendChat(commandName, `/w "${playerName}" Which character to ping?<br/>${links}`, null, {noarchive: true});
+    sendChat(commandName, `/w "${playerName}" <br/>Which character to ping?<br/>${links}`, null, {noarchive: true});
 }
 
 paraselene.pingCharacterById = function(msg) {
@@ -76,16 +76,23 @@ paraselene.pingCharacterById = function(msg) {
     if (msg.type != "api" || args[0] != commandName) { return; }
 
     var playerId = args[1];
-    var playerPageId = args[2];
-    var characterId = args[3];
-    var tokenId = args[4];
-    var token = findObjs({
+    var playerName = args[2];
+    var playerPageId = args[3];
+    var characterId = args[4];
+    var tokenId = args[5];
+    var tokenList = findObjs({
         id: tokenId,
         pageid: playerPageId,
         represents: characterId,
         subtype: "token",
         type: "graphic"
-    })[0];
- 
+    });
+
+    if (tokenList.length == 0) {
+        sendChat(commandName, `/w "${playerName}" <br/>The token is no longer on this map.`, null, {noarchive: true});
+        return;
+    }
+
+    var token = tokenList[0];
     sendPing(token.get("left"), token.get("top"), token.get("pageid"), playerId, true, playerId);
 }
