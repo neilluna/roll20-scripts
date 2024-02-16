@@ -1,3 +1,4 @@
 !# Kill
-!# Version 1.0.3
+!# Version 1.0.4
+!# Depends on TokenMod.
 !token-mod --order top --set layer#map statusmarkers#dead

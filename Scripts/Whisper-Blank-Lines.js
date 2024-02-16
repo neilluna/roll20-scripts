@@ -10,15 +10,16 @@ on("ready", function() {
 });
 
 paraselene.whisperBlankLines = function(msg) {
-    var commandName = "!Paraselene-Whisper-Blank-Lines";
-    var args = msg.content.split(/\s+/);
+    const commandName = "!Paraselene-Whisper-Blank-Lines";
+    const args = msg.content.split(/\s+/);
     if (msg.type != "api" || args[0] != commandName) { return; }
 
-    var playerName = getObj("player", msg.playerid).get("displayname");
+    const playerId = msg.playerid
+    const playerName = getObj("player", playerId).get("displayname");
 
-    var numberOfBlankLines = Number(args[1])
-    var infoMessege = `<br/>${numberOfBlankLines} blank lines. Only you see this. It will not be saved.<br/>`
-    var blankLines = Array(numberOfBlankLines + 1).join("<br/>")
+    const numberOfBlankLines = Number(args[1])
+    const infoMessege = `<br/>${numberOfBlankLines} blank lines. Only you see this. It will not be saved.<br/>`
+    const blankLines = Array(numberOfBlankLines + 1).join("<br/>")
 
     sendChat(commandName, `/w "${playerName}" ${infoMessege}${blankLines}`, null, {noarchive: true});
 }

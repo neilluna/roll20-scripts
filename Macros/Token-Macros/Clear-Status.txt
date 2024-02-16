@@ -1,3 +1,4 @@
 !# Clear-Status
-!# Version 1.0.3
+!# Version 1.0.4
+!# Depends on TokenMod.
 !token-mod --set statusmarkers#=

@@ -1,4 +1,4 @@
 !# Summon-Spiritual-Weapon
-!# Version 3.0.0
-!# Depends on Summon-Spiritual-Weapon.js version 3.0.0 or higher.
+!# Version 3.0.1
+!# Depends on Muler and Summon-Spiritual-Weapon.js.
 !Paraselene-Summon-Spiritual-Weapon {& mule SpellMule.SpiritualWeapons} get.SpellMule.SpiritualWeapons.?{Summon which spiritual weapon?|Arrow|Axe|Bow|Club|Hammer|Mace|Spear|Staff|Sword|} ?{Summon to which side?|Above|Below|Left|Right|}

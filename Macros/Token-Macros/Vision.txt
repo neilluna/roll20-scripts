@@ -1,3 +1,4 @@
 !# Vision
-!# Version 1.0.3
+!# Version 1.0.4
+!# Depends on TokenMod.
 !token-mod --set ?{Vision|Off, has_bright_light_vision#on has_night_vision#off night_vision_distance#0 light_angle#360 night_vision_effect#none|Blind Fighting, has_bright_light_vision#on has_night_vision#on night_vision_distance#10 light_angle#360 night_vision_effect#none|Darkvision 60, has_bright_light_vision#on has_night_vision#on night_vision_distance#60 light_angle#360 night_vision_effect#nocturnal|Darkvision 90, has_bright_light_vision#on has_night_vision#on night_vision_distance#90 light_angle#360 night_vision_effect#nocturnal|Darkvision 120, has_bright_light_vision#on has_night_vision#on night_vision_distance#120 light_angle#360 night_vision_effect#nocturnal|Darkvision 300, has_bright_light_vision#on has_night_vision#on night_vision_distance#300 light_angle#360 night_vision_effect#nocturnal}
