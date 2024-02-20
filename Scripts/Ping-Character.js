@@ -1,5 +1,5 @@
 // Ping and center on the player's tokens.
-// Version 2.0.2
+// Version 2.0.3
 
 var paraselene = paraselene || {};
 
@@ -50,11 +50,7 @@ paraselene.pingCharacter = function(msg) {
     }
 
     if (tokenInfoList.length == 1) {
-        sendChat(
-            commandName,
-            '!Paraselene-Ping-Character-By-Id ' +
-            `${playerId} ${playerName} ${tokenInfoList[0].tokenId}`
-        );
+        sendChat(commandName, `!Paraselene-Ping-Character-By-Id ${playerId} ${tokenInfoList[0].tokenId}`);
         return;
     }
 
@@ -67,9 +63,8 @@ paraselene.pingCharacter = function(msg) {
     let links = "";
     tokenInfoList.forEach(token_info => {
         links += '<a href="' +
-            '!Paraselene-Ping-Character-By-Id ' +
-            `${playerId} ${playerName} ${token_info.tokenId}` +
-            `">${token_info.tokenName}</a><br/>`;
+            `!Paraselene-Ping-Character-By-Id ${playerId} ${token_info.tokenId}">${token_info.tokenName}` +
+            '</a><br/>';
     });
     sendChat(commandName, `/w "${playerName}" <br/>Which character to ping?<br/>${links}`, null, {noarchive: true});
 }
@@ -80,8 +75,9 @@ paraselene.pingCharacterById = function(msg) {
     if (msg.type != "api" || args[0] != commandName) { return; }
 
     const playerId = args[1];
-    const playerName = args[2];
-    const tokenId = args[3];
+    const tokenId = args[2];
+
+    const playerName = getObj("player", playerId).get("displayname");
 
     var tokenList = findObjs({
         id: tokenId,
