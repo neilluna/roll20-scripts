@@ -1,4 +1,12 @@
 !# Set-Defaults
-!# Version 1.0.4
-!# Depends on TokenMod.
-!token-mod --on showname showplayers_bar1 showplayers_name --off playersedit_aura1 playersedit_aura2 playersedit_bar1 playersedit_bar2 playersedit_bar3 playersedit_name showplayers_aura1 showplayers_aura2 showplayers_bar2 showplayers_bar3
+!# Version 1.0.5
+!token-mod {{{
+    --on
+        showname
+        showplayers_name
+        showplayers_bar1
+    --off
+        playersedit_name
+        showplayers_aura1 showplayers_aura2 playersedit_aura1 playersedit_aura2
+        showplayers_bar2 showplayers_bar3 playersedit_bar1 playersedit_bar2 playersedit_bar3
+}}}
