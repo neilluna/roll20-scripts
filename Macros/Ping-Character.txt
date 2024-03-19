@@ -1,4 +1,3 @@
 !# Ping-Character
-!# Version 2.0.3
-!# Depends on Ping-Character.js.
-!Paraselene-Ping-Character
+!# Version 3.0.0
+!Paraselene-Tools-Ping-Character --speakAs Ping-Character
