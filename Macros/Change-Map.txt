@@ -1,4 +1,3 @@
 !# Change-Map
-!# Version 1.0.0
-!# Depends on MapChange.
+!# Version 1.0.1
 !mc menu --show public

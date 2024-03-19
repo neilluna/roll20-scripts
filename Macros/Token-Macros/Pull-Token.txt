@@ -1,4 +1,3 @@
 !# Pull-Token
-!# Version 1.0.0
-!# Depends on TokenMod and Pull-Token.js.
+!# Version 1.0.1
 !Paraselene-Pull-Token
