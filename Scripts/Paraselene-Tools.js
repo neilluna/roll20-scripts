@@ -155,22 +155,23 @@ const ParaseleneTools = (() => {
         const controlledby = pc.stringOrBlank(token.get('controlledby'));
 
         const cellStyle = 'padding-left: 10px; padding-right: 10px;';
-        const info_table = new Table()
+        const table = new Table()
             .add(new Row()
-                .add(new Header(name, 'text-align: center;')
-                    .addAttribute(new Attribute('colspan', '2'))
-                )
+                .add(new Cell(
+                    `Information for token<br/>${name}`,
+                    'text-align: center;'
+                ).addAttribute(new Attribute('colspan', '2')))
             )
             .add(new Row()
-                .add(new Header('id:'))
+                .add(new Header('id'))
                 .add(new Cell(id, cellStyle))
             )
             .add(new Row()
-                .add(new Header('name:'))
+                .add(new Header('name'))
                 .add(new Cell(name, cellStyle))
             )
             .add(new Row()
-                .add(new Header('imgsrc:'))
+                .add(new Header('imgsrc'))
                 .add(new Cell(
                     new Element('img')
                         .addAttribute(new Attribute('src', imgsrc))
@@ -185,68 +186,71 @@ const ParaseleneTools = (() => {
                 ))
             )
             .add(new Row()
-                .add(new Header('represents:'))
+                .add(new Header('represents'))
                 .add(new Cell(represents, cellStyle))
             )
             .add(new Row()
-                .add(new Header('left:'))
+                .add(new Header('left'))
                 .add(new Cell(left, cellStyle))
             )
             .add(new Row()
-                .add(new Header('top:'))
+                .add(new Header('top'))
                 .add(new Cell(top, cellStyle))
             )
             .add(new Row()
-                .add(new Header('width:'))
+                .add(new Header('width'))
                 .add(new Cell(width, cellStyle))
             )
             .add(new Row()
-                .add(new Header('height:'))
+                .add(new Header('height'))
                 .add(new Cell(height, cellStyle))
             )
             .add(new Row()
-                .add(new Header('rotation:'))
+                .add(new Header('rotation'))
                 .add(new Cell(rotation, cellStyle))
             )
             .add(new Row()
-                .add(new Header('layer:'))
+                .add(new Header('layer'))
                 .add(new Cell(layer, cellStyle))
             )
             .add(new Row()
-                .add(new Header('controlledby:'))
+                .add(new Header('controlledby'))
                 .add(new Cell(controlledby, cellStyle))
-            );
-
-        const action_table = new Table()
+            )
             .add(new Row()
                 .add(new Cell(
                     new Link(
                         `!${scriptName}-Delete-Token-API --speakAs ${speakAs} ${playerId} ${id}`,
-                        `Delete this token (Cannot be undone. Be sure.)`,
-                    )
-                    .render()
-                ))
+                        `Delete this token`,
+                    ).render(),
+                ).addAttribute(new Attribute('colspan', '2')))
             )
             .add(new Row()
                 .add(new Cell(
                     new Link(
                         `!${scriptName}-List-Tokens-API --speakAs ${speakAs} ${playerId} ${id}`,
                         `List other tokens on this token's page`,
-                    )
-                    .render()
-                ))
-                )
+                    ).render(),
+                ).addAttribute(new Attribute('colspan', '2')))
+            )
             .add(new Row()
                 .add(new Cell(
                     new Link(
                         `!${scriptName}-Ping-Token-API --speakAs ${speakAs} ${playerId} ${id}`,
-                        `Ping this tokens and center on its location`,
-                    )
-                    .render()
-                ))
+                        `Ping this token and center on its location`,
+                    ).render(),
+                ).addAttribute(new Attribute('colspan', '2')))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-List-Pull-Tokens-API --speakAs ${speakAs} ${playerId} ${id}`,
+                        `Pull tokens to this token`,
+                    ).render(),
+                ).addAttribute(new Attribute('colspan', '2')))
             );
 
-        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${info_table.render()}<p/>${action_table.render()}`);
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
     };
 
     // Delete a token. Meant to be called from other scripts.
@@ -319,27 +323,34 @@ const ParaseleneTools = (() => {
         }
 
         const token = specifiedTokens[0];
+        const tokenName = pc.stringOrBlank(token.get('name'));
         const pageId = token.get('pageid');
 
-        let page_tokens = findObjs({
+        let pageTokens = findObjs({
             pageid: pageId,
             subtype: 'token',
             type: 'graphic',
         });
 
-        if (page_tokens.length > 1) {
-            page_tokens = pc.sortTokens(page_tokens);
+        if (pageTokens.length > 1) {
+            pageTokens = pc.sortTokens(pageTokens);
         }
 
         const pageTokensTable = new Table()
             .add(new Row()
+                .add(new Cell(
+                    `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})`,
+                    'text-align: center;',
+                ).addAttribute(new Attribute('colspan', '2')))
+            )
+            .add(new Row()
                 .add(new Header('Token'))
                 .add(new Header(
-                    'left, top, width, height',
+                    'left,&nbsp;top,&nbsp;width,&nbsp;height',
                     'padding-left: 10px; padding-right: 10px;',
                 ))
             );
-        page_tokens.forEach(token => {
+        pageTokens.forEach(token => {
             const id = token.get('id');
             const name = pc.stringOrBlank(token.get('name'));
             const left = token.get('left');
@@ -422,7 +433,7 @@ const ParaseleneTools = (() => {
             .add(new Row()
                 .add(new Header('Token'))
                 .add(new Header(
-                    'left, top, width, height',
+                    'left,&nbsp;top,&nbsp;width,&nbsp;height',
                     'padding-left: 10px; padding-right: 10px;',
                 ))
             );
@@ -490,6 +501,96 @@ const ParaseleneTools = (() => {
         sendPing(left, top, pageId, playerId, true, playerId);
     };
 
+    // Present a menu allowing a player to pull other tokens on the same page to this token.
+    const listPullTokensAPI = (msg) => {
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const commandName = `${scriptName}-List-Pull-Tokens-API`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+
+        const playerId = args[1];
+        const tokenId = args[2];
+
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
+
+        const specifiedTokens = findObjs({
+            id: tokenId,
+            subtype: 'token',
+            type: 'graphic',
+        });
+
+        if (specifiedTokens.length == 0) {
+            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            return;
+        }
+
+        const token = specifiedTokens[0];
+        const tokenName = pc.stringOrBlank(token.get('name'));
+        const pageId = token.get('pageid');
+        const tokenLayer = token.get('layer');
+        const tokenLeft = token.get('left');
+        const tokenTop = token.get('top');
+
+        let pageTokens = findObjs({
+            pageid: pageId,
+            subtype: 'token',
+            type: 'graphic',
+        });
+
+        if (pageTokens.length > 1) {
+            pageTokens = pc.sortTokens(pageTokens);
+        }
+
+        const pageTokensTable = new Table()
+            .add(new Row()
+                .add(new Cell(
+                    `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})<br/>` +
+                    'Which token do you wish to pull to this token?',
+                    'text-align: center;',
+                ).addAttribute(new Attribute('colspan', '2')))
+            )
+            .add(new Row()
+                .add(new Header('Token'))
+                .add(new Header(
+                    'left,&nbsp;top,&nbsp;width,&nbsp;height',
+                    'padding-left: 10px; padding-right: 10px;',
+                ))
+            );
+        pageTokens.forEach(token => {
+            const id = token.get('id');
+            const name = pc.stringOrBlank(token.get('name'));
+            const left = token.get('left');
+            const top = token.get('top');
+            const width = token.get('width');
+            const height = token.get('height');
+
+            pageTokensTable
+                .add(new Row()
+                    .add(new Cell(
+                        new Link(
+                            `!token-mod --ignore-selected --ids ${id} ` +
+                                `--order tofront --set layer#${tokenLayer} ` +
+                                `left#${tokenLeft} top#${tokenTop}`,
+                            name,
+                        ).render()
+                    ))
+                    .add(new Cell(
+                        `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
+                        'padding-left: 10px; padding-right: 10px;',
+                    ))
+                )
+        });
+
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
+    };
+
     // Register event handlers.
     const registerEventHandlers = () => {
         on('chat:message', deleteTokenAPI);
@@ -498,6 +599,7 @@ const ParaseleneTools = (() => {
         on('chat:message', listTokensAPI);
         on('chat:message', pingCharacter);
         on('chat:message', pingTokenAPI);
+        on('chat:message', listPullTokensAPI);
     };
 
     // When all scripts have loaded ...
