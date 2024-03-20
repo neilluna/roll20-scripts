@@ -1,0 +1,13 @@
+!# Shatter
+!# Version 1.0.0
+!# DarkSlateBlue - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#483d8b50
+  --aoeOutlineColor|#00000050
+  --aoeType|circle, float
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --radius|10ft
+  --tooltip|@{selected|token_name} - Shatter
+}}

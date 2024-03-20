@@ -1,0 +1,15 @@
+!# Thunderwave
+!# Version 1.0.0
+!# SeaGreen - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#2e8b5750
+  --aoeOutlineColor|#00000050
+  --aoeType|wall
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --origin|nearest, face
+  --radius|15ft
+  --tooltip|@{selected|token_name} - Thunderwave
+  --width|15ft
+}}

@@ -1,0 +1,13 @@
+!# Trajectory
+!# Version 1.0.0
+!# Grey - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#80808050
+  --aoeOutlineColor|#00000050
+  --aoeType|line
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --origin|nearest, face
+  --tooltip|@{selected|token_name} - Trajectory
+}}

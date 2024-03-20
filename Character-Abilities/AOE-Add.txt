@@ -1,0 +1,28 @@
+!# AOE-Add
+!# Version 1.0.0
+/w gm &{template:default}{{name=AoE-Add - @{selected|character_name}}} {{
+[Burning Hands](~SpellMule|BurningHands)
+[Call Lightning - Cloud](~SpellMule|CallLightningCloud)
+[Call Lightning - Strike](~SpellMule|CallLightningStrike)
+[Control Water](~SpellMule|ControlWater)
+[Destructive Wave](~SpellMule|DestructiveWave)
+[Detect Evil and Good](~SpellMule|DetectEvilAndGood)
+[Detect Magic](~SpellMule|DetectMagic)
+[Dragon's Breath](~SpellMule|DragonsBreath)
+[Earth Tremor](~SpellMule|EarthTremor)
+[Flaming Sphere](~SpellMule|FlamingSphere)
+[Fog Cloud](~SpellMule|FogCloud)
+[Guardian of Faith](~SpellMule|GuardianOfFaith)
+[Gust of Wind](~SpellMule|GustOfWind)
+[Hallow](~SpellMule|Hallow)
+[Ice Storm](~SpellMule|IceStorm)
+[Insect Plague](~SpellMule|InsectPlague)
+[Mass Cure Wounds](~SpellMule|MassCureWounds)
+[Shatter](~SpellMule|Shatter)
+[Silence](~SpellMule|Silence)
+[Sleep](~SpellMule|Sleep)
+[Sleet Storm](~SpellMule|SleetStorm)
+[Thunderwave](~SpellMule|Thunderwave)
+[Trajectory](~SpellMule|Trajectory)
+[Zone of Truth](~SpellMule|ZoneOfTruth)
+}}

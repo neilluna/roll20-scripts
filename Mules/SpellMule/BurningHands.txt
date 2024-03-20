@@ -1,0 +1,14 @@
+!# BurningHands
+!# Version 1.0.0
+!# Red - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#ff000050
+  --aoeOutlineColor|#00000050
+  --aoeType|5econe
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --origin|nearest, face
+  --radius|15ft
+  --tooltip|@{selected|token_name} - Burning Hands
+}}

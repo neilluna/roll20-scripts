@@ -1,0 +1,13 @@
+!# InsectPlague
+!# Version 1.0.0
+!# GreenYellow - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#adff2f50
+  --aoeOutlineColor|#00000050
+  --aoeType|circle, float
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --radius|20ft
+  --tooltip|@{selected|token_name} - Insect Plague
+}}
