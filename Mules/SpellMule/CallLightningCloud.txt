@@ -1,0 +1,13 @@
+!# CallLightningCloud
+!# Version 1.0.0
+!# DarkGrey - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#a9a9a950
+  --aoeOutlineColor|#00000050
+  --aoeType|circle, float
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --radius|60ft
+  --tooltip|@{selected|token_name} - Call Lightning Cloud
+}}

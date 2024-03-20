@@ -1,0 +1,13 @@
+!# EarthTremor
+!# Version 1.0.0
+!# Tan - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#d2b48c50
+  --aoeOutlineColor|#00000050
+  --aoeType|circle
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --radius|10ft
+  --tooltip|@{selected|token_name} - Earth Tremor
+}}

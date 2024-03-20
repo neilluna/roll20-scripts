@@ -1,0 +1,13 @@
+!# CallLightningStrike
+!# Version 1.0.0
+!# White - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#ffffff
+  --aoeOutlineColor|#00000050
+  --aoeType|circle, float
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --radius|5ft
+  --tooltip|@{selected|token_name} - Call Lightning Strike
+}}

@@ -1,0 +1,13 @@
+!# SleetStorm
+!# Version 1.0.0
+!# Snow - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#fffafa50
+  --aoeOutlineColor|#00000050
+  --aoeType|circle, float
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --radius|40ft
+  --tooltip|@{selected|token_name} - Sleet Storm
+}}

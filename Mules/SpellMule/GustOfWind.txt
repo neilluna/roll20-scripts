@@ -1,0 +1,15 @@
+!# GustOfWind
+!# Version 1.0.0
+!# SkyBlue - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#87ceeb50
+  --aoeOutlineColor|#00000050
+  --aoeType|wall
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --origin|nearest, face
+  --radius|60ft
+  --tooltip|@{selected|token_name} - Gust of Wind
+  --width|10ft
+}}

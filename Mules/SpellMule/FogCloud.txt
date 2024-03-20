@@ -1,0 +1,13 @@
+!# FogCloud
+!# Version 1.0.0
+!# Grey - https://www.w3schools.com/colors/colors_hex.asp
+!smartaoe {{
+  --aoeColor|#80808050
+  --aoeOutlineColor|#00000050
+  --aoeType|circle, float
+  --forceIntersection|0
+  --minGridArea|0.25
+  --mintokarea|0.25
+  --radius|[[(?{Fog Cloud - Cast at what Level?|1|2|3|4|5|6|7|8|9}*20)]]ft
+  --tooltip|@{selected|token_name} - Fog Cloud
+}}
