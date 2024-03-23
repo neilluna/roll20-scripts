@@ -1,5 +1,5 @@
-!# AOE-Add
-!# Version 1.0.0
+!# AOE-Add. <= Period at the end of the name protects this from Token Action Maker deletion.
+!# Version 1.0.1
 /w gm &{template:default}{{name=AoE-Add - @{selected|character_name}}} {{
 [Burning Hands](~SpellMule|BurningHands)
 [Call Lightning - Cloud](~SpellMule|CallLightningCloud)
