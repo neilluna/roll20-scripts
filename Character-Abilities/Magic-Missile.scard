@@ -1,6 +1,6 @@
 !script{{
---/|Magic-Missile
---/|Version 1.0.0
+--/|Magic-Missile. <= Period at the end of the name protects this from Token Action Maker deletion.
+--/|Version 1.0.1
 
 --#titleCardBackground|#BA5
 --#subtitleFontColor|#621
