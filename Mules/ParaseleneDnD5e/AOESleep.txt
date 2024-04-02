@@ -1,4 +1,4 @@
-!# Sleep
+!# AOESleep
 !# Version 1.0.0
 !# LightBlue - https://www.w3schools.com/colors/colors_hex.asp
 !smartaoe {{

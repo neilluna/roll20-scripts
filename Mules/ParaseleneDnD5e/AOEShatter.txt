@@ -1,4 +1,4 @@
-!# Shatter
+!# AOEShatter
 !# Version 1.0.0
 !# DarkSlateBlue - https://www.w3schools.com/colors/colors_hex.asp
 !smartaoe {{

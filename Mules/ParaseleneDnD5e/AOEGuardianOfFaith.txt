@@ -1,4 +1,4 @@
-!# GuardianOfFaith
+!# AOEGuardianOfFaith
 !# Version 1.0.0
 !# Gold - https://www.w3schools.com/colors/colors_hex.asp
 !smartaoe {{
