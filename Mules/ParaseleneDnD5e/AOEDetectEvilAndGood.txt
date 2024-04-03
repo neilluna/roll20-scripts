@@ -1,8 +1,8 @@
-!# DestructiveWave
+!# AOEDetectEvilAndGood
 !# Version 1.0.0
-!# Tan - https://www.w3schools.com/colors/colors_hex.asp
+!# Magenta - https://www.w3schools.com/colors/colors_hex.asp
 !smartaoe {{
-  --aoeColor|#d2b48c50
+  --aoeColor|#ff00ff50
   --aoeOutlineColor|#00000050
   --aoeType|circle, float
   --forceIntersection|0
@@ -10,5 +10,5 @@
   --mintokarea|0.25
   --controlTokName|self
   --radius|30ft
-  --tooltip|@{selected|token_name} - Destructive Wave
+  --tooltip|@{selected|token_name} - Detect Evil And Good
 }}

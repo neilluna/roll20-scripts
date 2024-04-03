@@ -1,0 +1,19 @@
+!# TurnOrderStack
+!# Version 1.0.0
+/w gm &{template:traits} {{name=Turn Order Stack}} {{description=**Announcements**
+    [List](!group-init --stack list)
+    [Push to last](!group-init --stack push) [with label](!group-init --stack push &#63;{Stack item label})
+    [Pop from last](!group-init --stack pop)
+    [Pop merge from last](!group-init --stack merge)
+    [Push copy to last](!group-init --stack copy) [with label](!group-init --stack copy &#63;{Stack item label})
+    [Copy from first](!group-init --stack apply)
+    [Copy merge from first](!group-init --stack apply-merge)
+    [Swap with first](!group-init --stack swap) [with label](!group-init --stack swap &#63;{Stack item label})
+    [Swap with last](!group-init --stack tail-swap) [with label](!group-init --stack tail-swap &#63;{Stack item label})
+    [Rotate into first](!group-init --stack reverse-rotate) [with label](!group-init --stack reverse-rotate &#63;{Stack item label})
+    [Rotate into last](!group-init --stack rotate) [with label](!group-init --stack rotate &#63;{Stack item label})
+    [Clear](!group-init --stack clear)
+    **Stack Tips**
+    - To rotate the stack upward, do a "Rotate into last", then a "Swap with last".
+    - To rotate the stack downward, do a "Rotate into first", then a "Swap with first".
+}}

@@ -1,4 +1,4 @@
-!# DetectEvilAndGood
+!# AOEDetectMagic
 !# Version 1.0.0
 !# Magenta - https://www.w3schools.com/colors/colors_hex.asp
 !smartaoe {{
@@ -10,5 +10,5 @@
   --mintokarea|0.25
   --controlTokName|self
   --radius|30ft
-  --tooltip|@{selected|token_name} - Detect Evil And Good
+  --tooltip|@{selected|token_name} - Detect Magic
 }}

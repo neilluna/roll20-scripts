@@ -1,6 +1,6 @@
 !script{{
---/|Chaos-Bolt
---/|Version 1.0.6
+--/|Chaos-Bolt. <= Period at the end of the name protects this from Token Action Maker deletion.
+--/|Version 1.0.7
 
 --/|An attack roll must be equal to or greater than this number to get a critical hit.
 --=criticalHitThreshold|20

@@ -1,4 +1,4 @@
-!# GustOfWind
+!# AOEGustOfWind
 !# Version 1.0.0
 !# SkyBlue - https://www.w3schools.com/colors/colors_hex.asp
 !smartaoe {{
