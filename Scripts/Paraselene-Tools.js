@@ -1,6 +1,6 @@
 // Paraselene-Tools
 // Game-independent tools.
-// Version 1.0.0
+// Version 1.0.1
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneTools = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.0',
+    version: '1.0.1',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -392,14 +392,14 @@ const ParaseleneTools = (() => {
         const playerName = player.get('displayname');
 
         const playerPageId = ParaseleneCommon.getPlayerPageId(playerId);
-    
+
         const characters = findObjs({
             type: 'character',
         }).filter(character => {
             const controlledBy = character.get('controlledby').split(',');
             return controlledBy.includes(playerId) || controlledBy.includes('all');
         });
-    
+
         let tokens = [];
         characters.forEach(character => {
             const characterId = character.get('id');
@@ -412,12 +412,12 @@ const ParaseleneTools = (() => {
                 tokens.push(token);
             });
         });
-    
+
         if (tokens.length == 0) {
             pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>None of your tokens are on this map.`);
             return;
         }
-    
+
         if (tokens.length == 1) {
             const token = tokens[0];
             const id = token.get('id');
@@ -428,7 +428,7 @@ const ParaseleneTools = (() => {
         if (tokens.length > 1) {
             tokens = ParaseleneCommon.sortTokens(tokens);
         }
-    
+
         const pageTokensTable = new Table()
             .add(new Row()
                 .add(new Header('Token'))
@@ -459,7 +459,7 @@ const ParaseleneTools = (() => {
                 )
             )
         });
-    
+
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
     };
 
