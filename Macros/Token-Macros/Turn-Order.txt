@@ -1,3 +1,0 @@
-!# Turn-Order
-!# Version 1.0.0
-%{ParaseleneTools|TurnOrder}

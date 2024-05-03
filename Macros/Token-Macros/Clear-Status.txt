@@ -1,3 +1,0 @@
-!# Clear-Status
-!# Version 1.0.5
-!token-mod --set statusmarkers#=

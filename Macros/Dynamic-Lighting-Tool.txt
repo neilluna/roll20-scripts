@@ -1,3 +1,0 @@
-!# Dynamic-Lighting-Tool
-!# Version 1.0.4
-!dltool
