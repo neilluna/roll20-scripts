@@ -882,11 +882,9 @@ const ParaseleneInstaller = (() => {
         const character = characters[0];
 
         // Create a list of the existing Paraselene abilities.
-        const existingAbilities = findObjs({
+        let existingAbilities = findObjs({
             type: 'ability',
             characterid: character.id,
-        }).filter(ability => {
-            return isParaseleneAction(ability.get('action'));
         });
 
         // Create an index of the new actions.
@@ -899,25 +897,28 @@ const ParaseleneInstaller = (() => {
                 const name = ability.get('name');
                 const action = ability.get('action');
                 const canonicalName = getParaseleneActionCanonicalName(action);
-                const displayName = `${name} (${canonicalName})`;
                 if (newActionsIndex.hasOwnProperty(canonicalName)) {
                     const newAction = newActionsList[newActionsIndex[canonicalName]];
                     if (action == newAction) {
-                        summary += `- ${displayName} is up to date.<br/>`;
+                        summary += `- ${name} is up to date.<br/>`;
                     } else {
                         ability.set({
                             action: newAction,
                         });
-                        summary += `- ${displayName} updated.<br/>`;
+                        summary += `- ${name} updated.<br/>`;
                     }
                 } else {
                     ability.remove();
-                    summary += `- ${displayName} removed.<br/>`;
+                    summary += `- ${name} removed.<br/>`;
                 }
             });
         }
 
-        const existingAbilityNames = existingAbilities.map(ability => {
+        // Get a fresh list of the existing Paraselene abilities names, since some may have been removed.
+        const existingAbilityNames = findObjs({
+            type: 'ability',
+            characterid: character.id,
+        }).map(ability => {
             return ability.get('name');
         });
         const actionsToInstall = newActionsList.filter(action => {
@@ -928,7 +929,6 @@ const ParaseleneInstaller = (() => {
             summary += `Installing ${characterName} abilities<br/>`;
             actionsToInstall.forEach(action => {
                 const name = getParaseleneAbilityName(action);
-                const displayName = `${name} (${getParaseleneActionCanonicalName(action)})`;
                 createObj(
                     'ability',
                     {
@@ -937,7 +937,7 @@ const ParaseleneInstaller = (() => {
                         characterid: character.id,
                     }
                 );
-                summary += `- ${displayName} installed.<br/>`;
+                summary += `- ${name} installed.<br/>`;
             });
         };
 
@@ -948,7 +948,7 @@ const ParaseleneInstaller = (() => {
     const updateParaseleneMacros = (speakAs, playerId, playerName) => {
 
         // Create a list of the existing Paraselene macros.
-        const existingMacros = findObjs({
+        let existingMacros = findObjs({
             type: 'macro',
         }).filter(macro => {
             return isParaseleneAction(macro.get('action'));
@@ -983,7 +983,12 @@ const ParaseleneInstaller = (() => {
             });
         }
 
-        const existingMacroCanonicalNames = existingMacros.map(macro => {
+        // Get a fresh list of the existing Paraselene macro names, since some may have been removed.
+        const existingMacroCanonicalNames = findObjs({
+            type: 'macro',
+        }).filter(macro => {
+            return isParaseleneAction(macro.get('action'));
+        }).map(macro => {
             return getParaseleneActionCanonicalName(macro.get('action'));
         });
         const actionsToInstall = paraseleneMacros.filter(action => {
