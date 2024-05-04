@@ -1,3 +1,0 @@
-!# Ping-Character
-!# Version 3.0.0
-!Paraselene-Tools-Ping-Character --speakAs Ping-Character

@@ -1,3 +1,0 @@
-!# AOE-Remove
-!# Version 1.0.0
-!smartremove
