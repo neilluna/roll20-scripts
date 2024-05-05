@@ -1,6 +1,6 @@
 // Paraselene-Common
 // Common utilites used by other Paraselene scripts.
-// Version 1.0.0
+// Version 1.0.2
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneCommon = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.0',
+    version: '1.0.2',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.

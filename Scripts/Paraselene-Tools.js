@@ -1,6 +1,6 @@
 // Paraselene-Tools
 // Game-independent tools.
-// Version 1.0.1
+// Version 1.0.2
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneTools = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.1',
+    version: '1.0.2',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -106,7 +106,7 @@ const ParaseleneTools = (() => {
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
         const selectedTokenId = msg.selected[0]._id;
-        const playerId = msg.playerid
+        const playerId = msg.playerid;
 
         sendChat(speakAs, `!${scriptName}-Get-Token-Info-API --speakAs ${speakAs} ${playerId} ${selectedTokenId}`);
     };
@@ -387,7 +387,7 @@ const ParaseleneTools = (() => {
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
-        const playerId = msg.playerid
+        const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 
@@ -591,6 +591,31 @@ const ParaseleneTools = (() => {
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
     };
 
+    // Rotate a token to the next 45-degree increment.
+    const rotateToken = (msg) => {
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const commandName = `${scriptName}-Rotate-Token`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+
+        const token = findObjs({
+            id: msg.selected[0]._id,
+            subtype: 'token',
+            type: 'graphic',
+        })[0];
+
+        let newRotation = Math.ceil((token.get('rotation') + 45) / 45) * 45;
+        if (newRotation >= 360) {
+            newRotation -= 360;
+        }
+        token.set("rotation", newRotation);
+    };
+
     // Register event handlers.
     const registerEventHandlers = () => {
         on('chat:message', deleteTokenAPI);
@@ -600,6 +625,7 @@ const ParaseleneTools = (() => {
         on('chat:message', pingCharacter);
         on('chat:message', pingTokenAPI);
         on('chat:message', listPullTokensAPI);
+        on('chat:message', rotateToken);
     };
 
     // When all scripts have loaded ...
