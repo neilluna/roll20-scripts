@@ -107,37 +107,6 @@ const ParaseleneInstaller = (() => {
 
     // ParaseleneDnD5e abilities.
     const paraseleneDnD5eAbilities = [
-
-        [
-            '!# Paraselene-AddAOEPattern',
-            '/w @{selected|character_name} &{template:traits}{{name=Add AOE Pattern}} {{description=' +
-            'For @{selected|character_name}',
-            '[Burning Hands](~ParaseleneDnD5e|AddAOEBurningHands)',
-            '[Call Lightning - Cloud](~ParaseleneDnD5e|AddAOECallLightningCloud)',
-            '[Call Lightning - Strike](~ParaseleneDnD5e|AddAOECallLightningStrike)',
-            '[Control Water](~ParaseleneDnD5e|AddAOEControlWater)',
-            '[Destructive Wave](~ParaseleneDnD5e|AddAOEDestructiveWave)',
-            '[Detect Evil and Good](~ParaseleneDnD5e|AddAOEDetectEvilAndGood)',
-            '[Detect Magic](~ParaseleneDnD5e|AddAOEDetectMagic)',
-            '[Dragon\'s Breath](~ParaseleneDnD5e|AddAOEDragonsBreath)',
-            '[Earth Tremor](~ParaseleneDnD5e|AddAOEEarthTremor)',
-            '[Flaming Sphere](~ParaseleneDnD5e|AddAOEFlamingSphere)',
-            '[Fog Cloud](~ParaseleneDnD5e|AddAOEFogCloud)',
-            '[Guardian of Faith](~ParaseleneDnD5e|AddAOEGuardianOfFaith)',
-            '[Gust of Wind](~ParaseleneDnD5e|AddAOEGustOfWind)',
-            '[Hallow](~ParaseleneDnD5e|AddAOEHallow)',
-            '[Ice Storm](~ParaseleneDnD5e|AddAOEIceStorm)',
-            '[Insect Plague](~ParaseleneDnD5e|AddAOEInsectPlague)',
-            '[Mass Cure Wounds](~ParaseleneDnD5e|AddAOEMassCureWounds)',
-            '[Shatter](~ParaseleneDnD5e|AddAOEShatter)',
-            '[Silence](~ParaseleneDnD5e|AddAOESilence)',
-            '[Sleep](~ParaseleneDnD5e|AddAOESleep)',
-            '[Sleet Storm](~ParaseleneDnD5e|AddAOESleetStorm)',
-            '[Thunderwave](~ParaseleneDnD5e|AddAOEThunderwave)',
-            '[Trajectory](~ParaseleneDnD5e|AddAOETrajectory)',
-            '[Zone of Truth](~ParaseleneDnD5e|AddAOEZoneOfTruth)',
-            '}}',
-        ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOEBurningHands',
             '!# https://www.dndbeyond.com/spells/burning-hands',
@@ -755,11 +724,6 @@ const ParaseleneInstaller = (() => {
     // Paraselene macros.
     const paraseleneMacros = [
         [
-            '!# Paraselene-Add-AOE-Pattern',
-            '!# Settings: Token Action: Yes, Visibility: All Players',
-            '%{ParaseleneDnD5e|AddAOEPattern}',
-        ].join('\n') + '\n',
-        [
             '!# Paraselene-Remove-AOE-Pattern',
             '!# Settings: Token Action: Yes, Visibility: All Players',
             '!smartremove',
@@ -785,7 +749,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Get-Token-Info',
             '!# Settings: Token Action: Yes',
-            '!Paraselene-Tools-Get-Token-Info --speakAs Info',
+            '!Paraselene-Tools-Get-Token-Info --speakAs Get-Token-Info',
         ].join('\n') + '\n',
         [
             '!# Paraselene-Install',

@@ -92,29 +92,193 @@ const ParaseleneDnD5e = (() => {
         return true;
     };
 
-    // Say hello to the world.
-    const helloWorld = (msg) => {
+    // Present a list of AOE patterns to add.
+    const addAoePattern = (msg) => {
         if (!isParseleneCommonLoaded()) {
             return;
         }
 
-        const commandName = `${scriptName}-Hello-World`;
+        const commandName = `${scriptName}-Add-AOE-Pattern`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
+        const selected = msg.selected;
+        const token = getObj("graphic", selected[0]._id);
+
         const playerId = msg.playerid
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 
-        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>Hello World.`);
+        let spells = {
+            BurningHands: false,
+            CallLightning: false,
+            ControlWater: false,
+            DestructiveWave: false,
+            DetectEvilAndGood: false,
+            DetectMagic: false,
+            DragonsBreath: false,
+            EarthTremor: false,
+            FlamingSphere: false,
+            FogCloud: false,
+            GuardianOfFaith: false,
+            GustOfWind: false,
+            Hallow: false,
+            IceStorm: false,
+            InsectPlague: false,
+            MassCureWounds: false,
+            Shatter: false,
+            Silence: false,
+            Sleep: false,
+            SleetStorm: false,
+            Thunderwave: false,
+            Trajectory: false,
+            ZoneOfTruth: false,
+        };
+
+        let index = 1;
+        while (index < args.length) {
+            const arg = args[index++].match(/^\s*(.*?)(<br\/>)?\s*$/)[1];
+            if (arg === '{{' || arg === '}}') {
+                continue;
+            }
+            if (!spells.hasOwnProperty(arg)) {
+                pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>"${arg}" is not recognized.`);
+            }
+            spells[arg] = true;
+        }
+
+        let menu = [`&{template:traits}{{name=Add AOE Pattern}} {{description=${token.get('name')}`];
+        if (spells.BurningHands) {
+            menu.push('[Burning Hands](~ParaseleneDnD5e|AddAOEBurningHands)');
+        }
+        if (spells.CallLightning) {
+            menu.push('[Call Lightning - Cloud](~ParaseleneDnD5e|AddAOECallLightningCloud)');
+            menu.push('[Call Lightning - Strike](~ParaseleneDnD5e|AddAOECallLightningStrike)');
+        }
+        if (spells.ControlWater) {
+            menu.push('[Control Water](~ParaseleneDnD5e|AddAOEControlWater)');
+        }
+        if (spells.DestructiveWave) {
+            menu.push('[Destructive Wave](~ParaseleneDnD5e|AddAOEDestructiveWave)');
+        }
+        if (spells.DetectEvilAndGood) {
+            menu.push('[Detect Evil and Good](~ParaseleneDnD5e|AddAOEDetectEvilAndGood)');
+        }
+        if (spells.DetectMagic) {
+            menu.push('[Detect Magic](~ParaseleneDnD5e|AddAOEDetectMagic)');
+        }
+        if (spells.DragonsBreath) {
+            menu.push('[Dragon\'s Breath](~ParaseleneDnD5e|AddAOEDragonsBreath)');
+        }
+        if (spells.EarthTremor) {
+            menu.push('[Earth Tremor](~ParaseleneDnD5e|AddAOEEarthTremor)');
+        }
+        if (spells.FlamingSphere) {
+            menu.push('[Flaming Sphere](~ParaseleneDnD5e|AddAOEFlamingSphere)');
+        }
+        if (spells.FogCloud) {
+            menu.push('[Fog Cloud](~ParaseleneDnD5e|AddAOEFogCloud)');
+        }
+        if (spells.GuardianOfFaith) {
+            menu.push('[Guardian of Faith](~ParaseleneDnD5e|AddAOEGuardianOfFaith)');
+        }
+        if (spells.GustOfWind) {
+            menu.push('[Gust of Wind](~ParaseleneDnD5e|AddAOEGustOfWind)');
+        }
+        if (spells.Hallow) {
+            menu.push('[Hallow](~ParaseleneDnD5e|AddAOEHallow)');
+        }
+        if (spells.IceStorm) {
+            menu.push('[Ice Storm](~ParaseleneDnD5e|AddAOEIceStorm)');
+        }
+        if (spells.InsectPlague) {
+            menu.push('[Insect Plague](~ParaseleneDnD5e|AddAOEInsectPlague)');
+        }
+        if (spells.MassCureWounds) {
+            menu.push('[Mass Cure Wounds](~ParaseleneDnD5e|AddAOEMassCureWounds)');
+        }
+        if (spells.Shatter) {
+            menu.push('[Shatter](~ParaseleneDnD5e|AddAOEShatter)');
+        }
+        if (spells.Silence) {
+            menu.push('[Silence](~ParaseleneDnD5e|AddAOESilence)');
+        }
+        if (spells.Sleep) {
+            menu.push('[Sleep](~ParaseleneDnD5e|AddAOESleep)');
+        }
+        if (spells.SleetStorm) {
+            menu.push('[Sleet Storm](~ParaseleneDnD5e|AddAOESleetStorm)');
+        }
+        if (spells.Thunderwave) {
+            menu.push('[Thunderwave](~ParaseleneDnD5e|AddAOEThunderwave)');
+        }
+        if (spells.Trajectory) {
+            menu.push('[Trajectory](~ParaseleneDnD5e|AddAOETrajectory)');
+        }
+        if (spells.ZoneOfTruth) {
+            menu.push('[Zone of Truth](~ParaseleneDnD5e|AddAOEZoneOfTruth)');
+        }
+        menu.push('}}');
+
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${menu.join('\n')}`);
+    };
+
+    // Present a list of spells to cast.
+    const castSpell = (msg) => {
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const commandName = `${scriptName}-Cast-Spell`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+
+        const selected = msg.selected;
+        const token = getObj("graphic", selected[0]._id);
+
+        const playerId = msg.playerid
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
+
+        let spells = {
+            ChaosBolt: false,
+            MagicMissile: false,
+        };
+
+        let index = 1;
+        while (index < args.length) {
+            const arg = args[index++].match(/^\s*(.*?)(<br\/>)?\s*$/)[1];
+            if (arg === '{{' || arg === '}}') {
+                continue;
+            }
+            if (!spells.hasOwnProperty(arg)) {
+                pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>"${arg}" is not recognized.`);
+            }
+            spells[arg] = true;
+        }
+
+        let menu = [`&{template:traits}{{name=Cast Spell}} {{description=${token.get('name')}`];
+        if (spells.ChaosBolt) {
+            menu.push('[Chaos Bolt](~ParaseleneDnD5e|ChaosBolt)');
+        }
+        if (spells.MagicMissile) {
+            menu.push('[Magic Missile](~ParaseleneDnD5e|MagicMissile)');
+        }
+        menu.push('}}');
+
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${menu.join('\n')}`);
     };
 
     // Register event handlers.
     const registerEventHandlers = () => {
-        on('chat:message', helloWorld);
+        on('chat:message', addAoePattern);
+        on('chat:message', castSpell);
     };
 
     // When all scripts have loaded ...

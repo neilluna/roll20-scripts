@@ -1,0 +1,27 @@
+!# Paraselene-Add-AOE-Pattern.
+!# Settings: Token Action: Yes
+!Paraselene-DnD5e-Add-AOE-Pattern --speakAs Add-AOE-Pattern {{
+    BurningHands
+    CallLightning
+    ControlWater
+    DestructiveWave
+    DetectEvilAndGood
+    DetectMagic
+    DragonsBreath
+    EarthTremor
+    FlamingSphere
+    FogCloud
+    GuardianOfFaith
+    GustOfWind
+    Hallow
+    IceStorm
+    InsectPlague
+    MassCureWounds
+    Shatter
+    Silence
+    Sleep
+    SleetStorm
+    Thunderwave
+    Trajectory
+    ZoneOfTruth
+}}
