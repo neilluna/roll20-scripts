@@ -1,0 +1,6 @@
+!# Paraselene-Cast-Spell.
+!# Settings: Token Action: Yes
+!Paraselene-DnD5e-Cast-Spell --speakAs Cast-Spell {{
+    ChaosBolt
+    MagicMissile
+}}
