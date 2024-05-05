@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.0.0
+// Version 1.0.2
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.0',
+    version: '1.0.2',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -807,6 +807,11 @@ const ParaseleneInstaller = (() => {
             '!# Settings: Token Action: Yes',
             '!deleteta',
         ].join('\n') + '\n',
+        [
+            '!# Paraselene-Rotate-Token',
+            '!# Settings: Token Action: Yes, Visibility: All Players',
+            '!Paraselene-Tools-Rotate-Token',
+        ].join('\n') + '\n',
     ];
 
     // Update, remove, and install abilities and macros in the Paraselene ecosystem.
@@ -822,7 +827,7 @@ const ParaseleneInstaller = (() => {
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
-        const playerId = msg.playerid
+        const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 

@@ -1,6 +1,6 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.0.0
+// Version 1.0.2
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.0',
+    version: '1.0.2',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -108,7 +108,7 @@ const ParaseleneDnD5e = (() => {
         const selected = msg.selected;
         const token = getObj("graphic", selected[0]._id);
 
-        const playerId = msg.playerid
+        const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 
@@ -242,7 +242,7 @@ const ParaseleneDnD5e = (() => {
         const selected = msg.selected;
         const token = getObj("graphic", selected[0]._id);
 
-        const playerId = msg.playerid
+        const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 
