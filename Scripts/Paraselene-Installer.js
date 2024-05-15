@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.0.2
+// Version 1.1.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -108,11 +108,21 @@ const ParaseleneInstaller = (() => {
     // ParaseleneDnD5e abilities.
     const paraseleneDnD5eAbilities = [
         [
+            '!# Paraselene-AddAOEAcidSplash',
+            '!# https://www.dndbeyond.com/spells/acid-splash',
+            '!smartaoe ' +
+                '--aoeColor|#00ff0050 ' +  // Green
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|5ft ' +
+                '--tooltip|@{selected|token_name} - Acid Splash',
+        ].join('\n') + '\n',
+        [
             '!# Paraselene-AddAOEBurningHands',
             '!# https://www.dndbeyond.com/spells/burning-hands',
-            '!# Red - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ff000050 ' +
+                '--aoeColor|#ff000050 ' +  // Red
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|5econe ' +
                 '--forceIntersection|0 ' +
@@ -123,9 +133,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOECallLightningCloud',
             '!# https://www.dndbeyond.com/spells/call-lightning',
-            '!# DarkGrey - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#a9a9a950 ' +
+                '--aoeColor|#88888850 ' +  // Grey
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -135,9 +144,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOECallLightningStrike',
             '!# https://www.dndbeyond.com/spells/call-lightning',
-            '!# White - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ffffff ' +
+                '--aoeColor|#ffffff50 ' +  // White
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -147,9 +155,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEControlWater',
             '!# https://www.dndbeyond.com/spells/control-water',
-            '!# SeaGreen - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#2e8b5750 ' +
+                '--aoeColor|#00ffff50 ' +  // Cyan
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|square, float ' +
                 '--forceIntersection|0 ' +
@@ -159,9 +166,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDestructiveWave',
             '!# https://www.dndbeyond.com/spells/destructive-wave',
-            '!# Tan - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#d2b48c50 ' +
+                '--aoeColor|#ff880050 ' +  // Orange
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -172,9 +178,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDetectEvilAndGood',
             '!# https://www.dndbeyond.com/spells/detect-evil-and-good',
-            '!# Magenta - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ff00ff50 ' +
+                '--aoeColor|#ff00ff50 ' +  // Magenta
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -185,9 +190,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDetectMagic',
             '!# https://www.dndbeyond.com/spells/detect-magic',
-            '!# Magenta - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ff00ff50 ' +
+                '--aoeColor|#ff00ff50 ' +  // Magenta
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -198,9 +202,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDragonsBreath',
             '!# https://www.dndbeyond.com/spells/dragons-breath',
-            '!# Red - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ff000050 ' +
+                '--aoeColor|#ff000050 ' +   // Red
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|5econe ' +
                 '--forceIntersection|0 ' +
@@ -211,9 +214,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEEarthTremor',
             '!# https://www.dndbeyond.com/spells/earth-tremor',
-            '!# Tan - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#d2b48c50 ' +
+                '--aoeColor|#ff880050 ' +  // Orange
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -224,9 +226,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEFlamingSphere',
             '!# https://www.dndbeyond.com/spells/flaming-sphere',
-            '!# Red - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ff000050 ' +
+                '--aoeColor|#ff000050 ' +  // Red
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -236,9 +237,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEFogCloud',
             '!# https://www.dndbeyond.com/spells/fog-cloud',
-            '!# Grey - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#80808050 ' +
+                '--aoeColor|#88888850 ' +  // Grey
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -248,9 +248,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEGuardianOfFaith',
             '!# https://www.dndbeyond.com/spells/guardian-of-faith',
-            '!# Gold - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ffd70050 ' +
+                '--aoeColor|#ffff0050 ' +  // Yellow
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -260,9 +259,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEGustOfWind',
             '!# https://www.dndbeyond.com/spells/gust-of-wind',
-            '!# SkyBlue - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#87ceeb50 ' +
+                '--aoeColor|#00ffff50 ' +  // Cyan
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|wall ' +
                 '--forceIntersection|0 ' +
@@ -274,9 +272,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEHallow',
             '!# https://www.dndbeyond.com/spells/hallow',
-            '!# Gold - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ffd70050 ' +
+                '--aoeColor|#ffff0050 ' +  // Yellow
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -286,9 +283,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEIceStorm',
             '!# https://www.dndbeyond.com/spells/ice-storm',
-            '!# Snow - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#fffafa50 ' +
+                '--aoeColor|#ffffff50 ' +  // White
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -298,9 +294,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEInsectPlague',
             '!# https://www.dndbeyond.com/spells/insect-plague',
-            '!# GreenYellow - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#adff2f50 ' +
+                '--aoeColor|#88ff0050 ' +  // Chartreuse
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -310,9 +305,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEMassCureWounds',
             '!# https://www.dndbeyond.com/spells/mass-cure-wounds',
-            '!# Cyan - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#00ffff50 ' +
+                '--aoeColor|#ffff0050 ' +  // Yellow
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -322,9 +316,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEShatter',
             '!# https://www.dndbeyond.com/spells/shatter',
-            '!# DarkSlateBlue - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#483d8b50 ' +
+                '--aoeColor|#ff880050 ' +  // Orange
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -334,9 +327,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOESilence',
             '!# https://www.dndbeyond.com/spells/silence',
-            '!# GoldenRod - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#daa52050 ' +
+                '--aoeColor|#0088ff50 ' +  // Azure
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -346,9 +338,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOESleep',
             '!# https://www.dndbeyond.com/spells/sleep',
-            '!# LightBlue - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#add8e650 ' +
+                '--aoeColor|#0088ff50 ' +  // Azure
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -358,9 +349,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOESleetStorm',
             '!# https://www.dndbeyond.com/spells/sleet-storm',
-            '!# Snow - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#fffafa50 ' +
+                '--aoeColor|#ffffff50 ' +  // White
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
@@ -368,11 +358,34 @@ const ParaseleneInstaller = (() => {
                 '--tooltip|@{selected|token_name} - Sleet Storm',
         ].join('\n') + '\n',
         [
+            '!# Paraselene-AddAOESwordBurst',
+            '!# https://www.dndbeyond.com/spells/sword-burst',
+            '!smartaoe ' +
+                '--aoeColor|#ff880050 ' +  // Orange
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|5ft ' +
+                '--controlTokName|self ' +
+                '--tooltip|@{selected|token_name} - Sword Burst',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEThunderclap',
+            '!# https://www.dndbeyond.com/spells/thunderclap',
+            '!smartaoe ' +
+                '--aoeColor|#ff880050 ' +  // Orange
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|5ft ' +
+                '--controlTokName|self ' +
+                '--tooltip|@{selected|token_name} - Thunderclap',
+        ].join('\n') + '\n',
+        [
             '!# Paraselene-AddAOEThunderwave',
             '!# https://www.dndbeyond.com/spells/thunderwave',
-            '!# SeaGreen - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#2e8b5750 ' +
+                '--aoeColor|#ff880050 ' +  // Orange
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|wall ' +
                 '--forceIntersection|0 ' +
@@ -383,9 +396,8 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOETrajectory',
-            '!# Grey - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#80808050 ' +
+                '--aoeColor|#88888850 ' +  // Grey
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|line ' +
                 '--forceIntersection|0 ' +
@@ -395,9 +407,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEZoneOfTruth',
             '!# https://www.dndbeyond.com/spells/zone-of-truth',
-            '!# Gold - https://www.w3schools.com/colors/colors_picker.asp',
             '!smartaoe ' +
-                '--aoeColor|#ffd70050 ' +
+                '--aoeColor|#0088ff50 ' +  // Azure
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
