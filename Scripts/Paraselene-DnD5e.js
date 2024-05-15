@@ -1,6 +1,6 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.0.2
+// Version 1.1.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -113,6 +113,7 @@ const ParaseleneDnD5e = (() => {
         const playerName = player.get('displayname');
 
         let spells = {
+            AcidSplash: false,
             BurningHands: false,
             CallLightning: false,
             ControlWater: false,
@@ -133,6 +134,8 @@ const ParaseleneDnD5e = (() => {
             Silence: false,
             Sleep: false,
             SleetStorm: false,
+            SwordBurst: false,
+            Thunderclap: false,
             Thunderwave: false,
             Trajectory: false,
             ZoneOfTruth: false,
@@ -151,6 +154,9 @@ const ParaseleneDnD5e = (() => {
         }
 
         let menu = [`&{template:traits}{{name=Add AOE Pattern}} {{description=${token.get('name')}`];
+        if (spells.AcidSplash) {
+            menu.push('[Acid Splash](~ParaseleneDnD5e|AddAOEAcidSplash)');
+        }
         if (spells.BurningHands) {
             menu.push('[Burning Hands](~ParaseleneDnD5e|AddAOEBurningHands)');
         }
@@ -211,6 +217,12 @@ const ParaseleneDnD5e = (() => {
         }
         if (spells.SleetStorm) {
             menu.push('[Sleet Storm](~ParaseleneDnD5e|AddAOESleetStorm)');
+        }
+        if (spells.SwordBurst) {
+            menu.push('[Sword Burst](~ParaseleneDnD5e|AddAOESwordBurst)');
+        }
+        if (spells.Thunderclap) {
+            menu.push('[Thunderclap](~ParaseleneDnD5e|AddAOEThunderclap)');
         }
         if (spells.Thunderwave) {
             menu.push('[Thunderwave](~ParaseleneDnD5e|AddAOEThunderwave)');

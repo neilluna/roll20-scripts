@@ -1,6 +1,7 @@
 !# Paraselene-Add-AOE-Pattern.
 !# Settings: Token Action: Yes
 !Paraselene-DnD5e-Add-AOE-Pattern --speakAs Add-AOE-Pattern {{
+    AcidSplash
     BurningHands
     CallLightning
     ControlWater
@@ -21,6 +22,8 @@
     Silence
     Sleep
     SleetStorm
+    SwordBurst
+    Thunderclap
     Thunderwave
     Trajectory
     ZoneOfTruth
