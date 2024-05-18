@@ -1,6 +1,6 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.1.0
+// Version 1.2.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.2',
+    version: '1.2.0',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -116,6 +116,8 @@ const ParaseleneDnD5e = (() => {
             AcidSplash: false,
             BurningHands: false,
             CallLightning: false,
+            CloudOfDaggers: false,
+            Confusion: false,
             ControlWater: false,
             DestructiveWave: false,
             DetectEvilAndGood: false,
@@ -124,12 +126,16 @@ const ParaseleneDnD5e = (() => {
             EarthTremor: false,
             FlamingSphere: false,
             FogCloud: false,
+            GraspingVine: false,
             GuardianOfFaith: false,
             GustOfWind: false,
             Hallow: false,
             IceStorm: false,
             InsectPlague: false,
+            LeomundsTinyHut: false,
             MassCureWounds: false,
+            Passwall: false,
+            PassWithoutTrace: false,
             Shatter: false,
             Silence: false,
             Sleep: false,
@@ -164,6 +170,12 @@ const ParaseleneDnD5e = (() => {
             menu.push('[Call Lightning - Cloud](~ParaseleneDnD5e|AddAOECallLightningCloud)');
             menu.push('[Call Lightning - Strike](~ParaseleneDnD5e|AddAOECallLightningStrike)');
         }
+        if (spells.CloudOfDaggers) {
+            menu.push('[Cloud of Daggers](~ParaseleneDnD5e|AddAOECloudOfDaggers)');
+        }
+        if (spells.Confusion) {
+            menu.push('[Confusion](~ParaseleneDnD5e|AddAOEConfusion)');
+        }
         if (spells.ControlWater) {
             menu.push('[Control Water](~ParaseleneDnD5e|AddAOEControlWater)');
         }
@@ -188,6 +200,9 @@ const ParaseleneDnD5e = (() => {
         if (spells.FogCloud) {
             menu.push('[Fog Cloud](~ParaseleneDnD5e|AddAOEFogCloud)');
         }
+        if (spells.GraspingVine) {
+            menu.push('[Grasping Vine](~ParaseleneDnD5e|AddAOEGraspingVine)');
+        }
         if (spells.GuardianOfFaith) {
             menu.push('[Guardian of Faith](~ParaseleneDnD5e|AddAOEGuardianOfFaith)');
         }
@@ -203,8 +218,17 @@ const ParaseleneDnD5e = (() => {
         if (spells.InsectPlague) {
             menu.push('[Insect Plague](~ParaseleneDnD5e|AddAOEInsectPlague)');
         }
+        if (spells.LeomundsTinyHut) {
+            menu.push('[Leomund\'s Tiny Hut](~ParaseleneDnD5e|AddAOELeomundsTinyHut)');
+        }
         if (spells.MassCureWounds) {
             menu.push('[Mass Cure Wounds](~ParaseleneDnD5e|AddAOEMassCureWounds)');
+        }
+        if (spells.Passwall) {
+            menu.push('[Passwall](~ParaseleneDnD5e|AddAOEPasswall)');
+        }
+        if (spells.PassWithoutTrace) {
+            menu.push('[Pass Without Trace](~ParaseleneDnD5e|AddAOEPassWithoutTrace)');
         }
         if (spells.Shatter) {
             menu.push('[Shatter](~ParaseleneDnD5e|AddAOEShatter)');
