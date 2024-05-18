@@ -4,6 +4,8 @@
     AcidSplash
     BurningHands
     CallLightning
+    CloudOfDaggers
+    Confusion
     ControlWater
     DestructiveWave
     DetectEvilAndGood
@@ -12,12 +14,16 @@
     EarthTremor
     FlamingSphere
     FogCloud
+    GraspingVine
     GuardianOfFaith
     GustOfWind
     Hallow
     IceStorm
     InsectPlague
+    LeomundsTinyHut
     MassCureWounds
+    Passwall
+    PassWithoutTrace
     Shatter
     Silence
     Sleep

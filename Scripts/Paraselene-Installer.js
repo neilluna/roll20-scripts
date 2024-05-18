@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.1.0
+// Version 1.2.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.2',
+    version: '1.2.0',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -153,6 +153,28 @@ const ParaseleneInstaller = (() => {
                 '--tooltip|@{selected|token_name} - Call Lightning Strike',
         ].join('\n') + '\n',
         [
+            '!# Paraselene-AddAOECloudOfDaggers',
+            '!# https://www.dndbeyond.com/spells/cloud-of-daggers',
+            '!smartaoe ' +
+                '--aoeColor|#ff880050 ' +  // Orange
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|square, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|2.5ft ' +
+                '--tooltip|@{selected|token_name} - Cloud of Daggers',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEConfusion',
+            '!# https://www.dndbeyond.com/spells/confusion',
+            '!smartaoe ' +
+                '--aoeColor|#ff008850 ' +  // Rose
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|[[?{Confusion - Cast at what Level?|4,10|5,15|6,20|7,25|8,30|9,35}]]ft ' +
+                '--tooltip|@{selected|token_name} - Confusion',
+        ].join('\n') + '\n',
+        [
             '!# Paraselene-AddAOEControlWater',
             '!# https://www.dndbeyond.com/spells/control-water',
             '!smartaoe ' +
@@ -171,7 +193,7 @@ const ParaseleneInstaller = (() => {
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
-                '--radius|30ft ' +
+                '--radius|27.5ft ' +
                 '--controlTokName|self ' +
                 '--tooltip|@{selected|token_name} - Destructive Wave',
         ].join('\n') + '\n',
@@ -183,7 +205,7 @@ const ParaseleneInstaller = (() => {
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
-                '--radius|30ft ' +
+                '--radius|27.5ft ' +
                 '--controlTokName|self ' +
                 '--tooltip|@{selected|token_name} - Detect Evil And Good',
         ].join('\n') + '\n',
@@ -195,7 +217,7 @@ const ParaseleneInstaller = (() => {
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
-                '--radius|30ft ' +
+                '--radius|27.5ft ' +
                 '--controlTokName|self ' +
                 '--tooltip|@{selected|token_name} - Detect Magic',
         ].join('\n') + '\n',
@@ -219,7 +241,7 @@ const ParaseleneInstaller = (() => {
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
-                '--radius|10ft ' +
+                '--radius|7.5ft ' +
                 '--controlTokName|self ' +
                 '--tooltip|@{selected|token_name} - Earth Tremor',
         ].join('\n') + '\n',
@@ -244,6 +266,17 @@ const ParaseleneInstaller = (() => {
                 '--forceIntersection|0 ' +
                 '--radius|[[(?{Fog Cloud - Cast at what Level?|1|2|3|4|5|6|7|8|9}*20)]]ft ' +
                 '--tooltip|@{selected|token_name} - Fog Cloud',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEGraspingVine',
+            '!# https://www.dndbeyond.com/spells/grasping-vine',
+            '!smartaoe ' +
+                '--aoeColor|#00ff0050 ' +  // Green
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|30ft ' +
+                '--tooltip|@{selected|token_name} - Grasping Vine',
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOEGuardianOfFaith',
@@ -303,6 +336,17 @@ const ParaseleneInstaller = (() => {
                 '--tooltip|@{selected|token_name} - Insect Plague',
         ].join('\n') + '\n',
         [
+            '!# Paraselene-AddAOELeomundsTinyHut',
+            '!# https://www.dndbeyond.com/spells/leomunds-tiny-hut',
+            '!smartaoe ' +
+                '--aoeColor|#0000ff50 ' +  // Blue
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|10ft ' +
+                "--tooltip|@{selected|token_name} - Leomund's Tiny Hut",
+        ].join('\n') + '\n',
+        [
             '!# Paraselene-AddAOEMassCureWounds',
             '!# https://www.dndbeyond.com/spells/mass-cure-wounds',
             '!smartaoe ' +
@@ -312,6 +356,30 @@ const ParaseleneInstaller = (() => {
                 '--forceIntersection|0 ' +
                 '--radius|30ft ' +
                 '--tooltip|@{selected|token_name} - Mass Cure Wounds',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEPasswall',
+            '!# https://www.dndbeyond.com/spells/passwall',
+            '!smartaoe ' +
+                '--aoeColor|#ff880050 ' +  // Orange
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|wall ' +
+                '--forceIntersection|0 ' +
+                '--radius|[[?{Passwall - Length?|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20}]]ft ' +
+                '--width|[[?{Passwall - Width?|1|2|3|4|5}]]ft ' +
+                '--tooltip|@{selected|token_name} - Passwall',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEPassWithoutTrace',
+            '!# https://www.dndbeyond.com/spells/pass-without-trace',
+            '!smartaoe ' +
+                '--aoeColor|#0088ff50 ' +  // Azure
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|27.5ft ' +
+                '--controlTokName|self ' +
+                '--tooltip|@{selected|token_name} - Pass without Trace',
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOEShatter',
@@ -365,7 +433,7 @@ const ParaseleneInstaller = (() => {
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
-                '--radius|5ft ' +
+                '--radius|2.5ft ' +
                 '--controlTokName|self ' +
                 '--tooltip|@{selected|token_name} - Sword Burst',
         ].join('\n') + '\n',
@@ -377,7 +445,7 @@ const ParaseleneInstaller = (() => {
                 '--aoeOutlineColor|#00000050 ' +
                 '--aoeType|circle, float ' +
                 '--forceIntersection|0 ' +
-                '--radius|5ft ' +
+                '--radius|2.5ft ' +
                 '--controlTokName|self ' +
                 '--tooltip|@{selected|token_name} - Thunderclap',
         ].join('\n') + '\n',
