@@ -2,9 +2,12 @@
 !# Settings: Token Action: Yes
 !Paraselene-DnD5e-Add-AOE-Pattern --speakAs Add-AOE-Pattern {{
     AcidSplash
+    AuraOfProtection
+    AuraOfVitality
     BurningHands
     CallLightning
     CloudOfDaggers
+    ColorSpray
     Confusion
     ControlWater
     DestructiveWave
@@ -12,15 +15,19 @@
     DetectMagic
     DragonsBreath
     EarthTremor
+    Entangle
+    FireShield
     FlamingSphere
     FogCloud
     GraspingVine
+    Grease
     GuardianOfFaith
     GustOfWind
     Hallow
     IceStorm
     InsectPlague
     LeomundsTinyHut
+    LightningBolt
     MassCureWounds
     Passwall
     PassWithoutTrace

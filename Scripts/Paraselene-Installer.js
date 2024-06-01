@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.2.0
+// Version 1.3.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.2.0',
+    version: '1.3.0',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -119,6 +119,30 @@ const ParaseleneInstaller = (() => {
                 '--tooltip|@{selected|token_name} - Acid Splash',
         ].join('\n') + '\n',
         [
+            '!# Paraselene-AddAOEAuraOfProtection',
+            '!# https://www.dndbeyond.com/sources/basic-rules/classes#AuraofProtection',
+            '!smartaoe ' +
+                '--aoeColor|#ffff0050 ' +  // Yellow
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|[[?{Aura of Protection - Cast at what Level?|6,7.5|18,27.5}]]ft ' +
+                '--controlTokName|self ' +
+                '--tooltip|@{selected|token_name} - Aura of Protection',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEAuraOfVitality',
+            '!# https://www.dndbeyond.com/spells/aura-of-vitality',
+            '!smartaoe ' +
+                '--aoeColor|#ffff0050 ' +  // Yellow
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|27.5ft ' +
+                '--controlTokName|self ' +
+                '--tooltip|@{selected|token_name} - Aura of Vitality',
+        ].join('\n') + '\n',
+        [
             '!# Paraselene-AddAOEBurningHands',
             '!# https://www.dndbeyond.com/spells/burning-hands',
             '!smartaoe ' +
@@ -162,6 +186,18 @@ const ParaseleneInstaller = (() => {
                 '--forceIntersection|0 ' +
                 '--radius|2.5ft ' +
                 '--tooltip|@{selected|token_name} - Cloud of Daggers',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEColorSpray',
+            '!# https://www.dndbeyond.com/spells/color-spray',
+            '!smartaoe ' +
+                '--aoeColor|#ff008850 ' +   // Rose
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|5econe ' +
+                '--forceIntersection|0 ' +
+                '--radius|15ft ' +
+                '--origin|nearest, face ' +
+                '--tooltip|@{selected|token_name} - Color Spray',
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOEConfusion',
@@ -246,6 +282,29 @@ const ParaseleneInstaller = (() => {
                 '--tooltip|@{selected|token_name} - Earth Tremor',
         ].join('\n') + '\n',
         [
+            '!# Paraselene-AddAOEEntangle',
+            '!# https://www.dndbeyond.com/spells/entangle',
+            '!smartaoe ' +
+                '--aoeColor|#00ff0050 ' +  // Grey
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|square, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|10ft ' +
+                '--tooltip|@{selected|token_name} - Entangle',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEFireShield',
+            '!# https://www.dndbeyond.com/spells/fire-shield',
+            '!smartaoe ' +
+                '--aoeColor|#ff000050 ' +  // Red
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|circle, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|2.5ft ' +
+                '--controlTokName|self ' +
+                '--tooltip|@{selected|token_name} - Fire Shield',
+        ].join('\n') + '\n',
+        [
             '!# Paraselene-AddAOEFlamingSphere',
             '!# https://www.dndbeyond.com/spells/flaming-sphere',
             '!smartaoe ' +
@@ -277,6 +336,17 @@ const ParaseleneInstaller = (() => {
                 '--forceIntersection|0 ' +
                 '--radius|30ft ' +
                 '--tooltip|@{selected|token_name} - Grasping Vine',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOEGrease',
+            '!# https://www.dndbeyond.com/spells/grease',
+            '!smartaoe ' +
+                '--aoeColor|#88888850 ' +  // Grey
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|square, float ' +
+                '--forceIntersection|0 ' +
+                '--radius|5ft ' +
+                '--tooltip|@{selected|token_name} - Grease',
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOEGuardianOfFaith',
@@ -345,6 +415,19 @@ const ParaseleneInstaller = (() => {
                 '--forceIntersection|0 ' +
                 '--radius|10ft ' +
                 "--tooltip|@{selected|token_name} - Leomund's Tiny Hut",
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOELightningBolt',
+            '!# https://www.dndbeyond.com/spells/lightning-bolt',
+            '!smartaoe ' +
+                '--aoeColor|#ffffff50 ' +  // White
+                '--aoeOutlineColor|#00000050 ' +
+                '--aoeType|wall ' +
+                '--forceIntersection|0 ' +
+                '--radius|100ft ' +
+                '--origin|nearest, face ' +
+                '--width|5ft ' +
+                '--tooltip|@{selected|token_name} - Lightning Bolt',
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOEMassCureWounds',
