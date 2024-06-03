@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.3.0
+// Version 1.4.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.3.0',
+    version: '1.4.0',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -1021,27 +1021,36 @@ const ParaseleneInstaller = (() => {
         // Create an index of the new actions.
         const newActionsIndex = indexParaseleneActions(newActionsList);
 
-        let summary = '';
+        const table = new Table();
         if (existingAbilities.length > 0) {
-            summary += `Updating and removing ${characterName} abilities<br/>`;
+            table.add(new Row()
+                .add(new Header(
+                    `Updating and removing<br/>${characterName}<br/>abilities`,
+                    'text-align: center;',
+                ))
+            );
             existingAbilities.forEach(ability => {
                 const name = ability.get('name');
                 const action = ability.get('action');
                 const canonicalName = getParaseleneActionCanonicalName(action);
+                let summary = `${name}<br/>`;
                 if (newActionsIndex.hasOwnProperty(canonicalName)) {
                     const newAction = newActionsList[newActionsIndex[canonicalName]];
                     if (action == newAction) {
-                        summary += `- ${name} is up to date.<br/>`;
+                        summary += 'Up to date';
                     } else {
                         ability.set({
                             action: newAction,
                         });
-                        summary += `- ${name} updated.<br/>`;
+                        summary += new Element('span', 'Updated', 'color: green').render();
                     }
                 } else {
                     ability.remove();
-                    summary += `- ${name} removed.<br/>`;
+                    summary += new Element('span', 'Removed', 'color: red').render();
                 }
+                table.add(new Row()
+                    .add(new Cell(summary, 'text-align: center;'))
+                );
             });
         }
 
@@ -1057,7 +1066,12 @@ const ParaseleneInstaller = (() => {
         });
 
         if (actionsToInstall.length > 0) {
-            summary += `Installing ${characterName} abilities<br/>`;
+            table.add(new Row()
+                .add(new Header(
+                    `Installing<br/>${characterName}<br/>abilities`,
+                    'text-align: center;',
+                ))
+            );
             actionsToInstall.forEach(action => {
                 const name = getParaseleneAbilityName(action);
                 createObj(
@@ -1068,11 +1082,16 @@ const ParaseleneInstaller = (() => {
                         characterid: character.id,
                     }
                 );
-                summary += `- ${name} installed.<br/>`;
+                table.add(new Row()
+                    .add(new Cell(
+                        `${name}<br/>` + new Element('span', 'Installed', 'color: green').render(),
+                        'text-align: center;',
+                    ))
+                );
             });
         };
 
-        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${summary}`);
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
     };
 
     // Update, remove, and install Paraselene macros.
@@ -1088,29 +1107,37 @@ const ParaseleneInstaller = (() => {
         // Create an index of the new actions.
         const newActionIndex = indexParaseleneActions(paraseleneMacros);
 
-        let summary = '';
+        const table = new Table();
         if (existingMacros.length > 0) {
-            summary += 'Updating and removing macros<br/>';
+            table.add(new Row()
+                .add(new Header(
+                    `Updating and removing macros`,
+                    'text-align: center;',
+                ))
+            );
             existingMacros.forEach(macro => {
                 const name = macro.get('name');
                 const action = macro.get('action');
                 const canonicalName = getParaseleneActionCanonicalName(action);
-                const displayName = name == canonicalName ? name : `${name} (${canonicalName})`;
+                const displayName = name == canonicalName ? name : `${name}<br/>(${canonicalName})`;
+                let summary = `${displayName}<br/>`;
                 if (newActionIndex.hasOwnProperty(canonicalName)) {
                     const newAction = paraseleneMacros[newActionIndex[canonicalName]];
                     if (action == newAction) {
-                        summary += `- ${displayName} is up to date.<br/>`;
-                        return;
+                        summary += 'Up to date';
                     } else {
                         macro.set({
                             action: newAction,
                         });
-                        summary += `- ${displayName} updated.<br/>`;
+                        summary += new Element('span', 'Updated', 'color: green').render();
                     }
                 } else {
                     macro.remove();
-                    summary += `- ${displayName} removed.<br/>`;
+                    summary += new Element('span', 'Removed', 'color: red').render();
                 }
+                table.add(new Row()
+                    .add(new Cell(summary, 'text-align: center;'))
+                );
             });
         }
 
@@ -1127,7 +1154,12 @@ const ParaseleneInstaller = (() => {
         });
 
         if (actionsToInstall.length > 0) {
-            summary += 'Installing macros<br/>';
+            table.add(new Row()
+                .add(new Header(
+                    `Installing macros`,
+                    'text-align: center;',
+                ))
+            );
             actionsToInstall.forEach(action => {
                 const name = getParaseleneActionCanonicalName(action);
                 const settings = getParaseleneMacroSettings(action);
@@ -1144,11 +1176,16 @@ const ParaseleneInstaller = (() => {
                     'macro',
                     macroAttributes,
                 );
-                summary += `- ${name} installed.<br/>`;
+                table.add(new Row()
+                    .add(new Cell(
+                        `${name}<br/>` + new Element('span', 'Installed', 'color: green').render(),
+                        'text-align: center;',
+                    ))
+                );
             });
         }
 
-        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${summary}`);
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
     };
 
     // Is an action a Paraselene action?
