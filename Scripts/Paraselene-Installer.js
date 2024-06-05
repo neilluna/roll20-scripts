@@ -29,7 +29,7 @@ const ParaseleneInstaller = (() => {
 
     const scriptName = 'Paraselene-Installer';
     const version = API_Meta.ParaseleneInstaller.version;
-    const schemaVersion = '1.0.0';
+    const schemaVersion = '2.0.0';
     const scriptAuthor = 'Neil Luna';
  
     // Convenience aliases for ParaseleneCommon.
@@ -41,19 +41,21 @@ const ParaseleneInstaller = (() => {
     let Header = null;
     let Cell = null;
     let Link = null;
+    let Span = null;
 
     // Log the version info.
     const versionInfo = () => {
-        log(`-=> ${scriptName} - ${version} by ${scriptAuthor} <=- Meta offset: ${API_Meta.ParaseleneInstaller.offset}`);
+        log(`-=> ${scriptName} - ${version} by ${scriptAuthor}`);
     };
 
-    // Check the schema version and update if necessary.
+    // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
         if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
-                case '1.0.0':
+                case '1.0.0':  // Migrate from 1.0.0 to 2.0.0.
+                    setStateToDefaults();
                     // No break statement. This must fall through.
 
                 case 'UpdateSchemaVersion':
@@ -61,12 +63,27 @@ const ParaseleneInstaller = (() => {
                     break;
 
                 default:
-                    state[scriptName] = {
-                        version: schemaVersion,
-                    };
+                    setStateToDefaults();
+                    state[scriptName].version = schemaVersion;
                     break;
             }
         }
+    };
+
+    // Set the state to the schema version 2.0.0 defaults.
+    const setStateToDefaults = () => {
+        state[scriptName] = {
+            installedFeatures: {
+                DynamicLightingTool: true,
+                MapChange: true,
+                ScriptCards: true,
+                SmartAOE: true,
+                Teleport: true,
+                TokenActions: true,
+                TokenMod: true,
+                TurnOrder: true,
+            },
+        };
     };
 
     // Check if Paraselene-Common is loaded.
@@ -75,12 +92,22 @@ const ParaseleneInstaller = (() => {
             return true;
         }
         if (API_Meta.ParaseleneCommon === undefined) {
-            sendChat(speakAs, `/w "${playerName}" <br/>Paraselene-Common is not loaded.`, null, { noarchive: true });
+            log(`${scriptName}: Error: Paraselene-Common is not loaded.`);
+            return false;
+        }
+
+        pc = ParaseleneCommon;
+        const requiredVersion = '1.1.0';
+        if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
+            log(
+                `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
+                `Please update Paraselene-Common to version ${requiredVersion} or higher.`
+            );
+            pc = null;
             return false;
         }
 
         // Set up the convenience aliases for ParaseleneCommon.
-        pc = ParaseleneCommon;
         Attribute = pc.HtmlAttribute;
         Element = pc.HtmlElement;
         Table = pc.HtmlBorderedTable;
@@ -88,6 +115,7 @@ const ParaseleneInstaller = (() => {
         Header = pc.HtmlBorderedTableHeader;
         Cell = pc.HtmlBorderedTableCell;
         Link = pc.HtmlLink;
+        Span = pc.HtmlSpan;
 
         return true;
     };
@@ -105,8 +133,8 @@ const ParaseleneInstaller = (() => {
         'Paraselene-Updater',
     ];
 
-    // ParaseleneDnD5e abilities.
-    const paraseleneDnD5eAbilities = [
+    // ParaseleneDnD5e SmartAOE abilities.
+    const dnd5eSmartAOEAbilities = [
         [
             '!# Paraselene-AddAOEAcidSplash',
             '!# https://www.dndbeyond.com/spells/acid-splash',
@@ -566,6 +594,10 @@ const ParaseleneInstaller = (() => {
                 '--radius|15ft ' +
                 '--tooltip|@{selected|token_name} - Zone of Truth',
         ].join('\n') + '\n',
+    ];
+
+    // ParaseleneDnD5e ScriptCards abilities.
+    const dnd5eScriptCardsAbilities = [
         [
             '!# Paraselene-ChaosBolt',
             '!script{{',
@@ -726,6 +758,10 @@ const ParaseleneInstaller = (() => {
             '--:skipDecSpellSlots|',
             '}}',
         ].join('\n') + '\n',
+    ];
+
+    // ParaseleneDnD5e TokenMod abilities.
+    const dnd5eTokenModAbilities = [
         [
             '!# Paraselene-SetTokenDefaults',
             '!token-mod ' +
@@ -830,8 +866,8 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
     ];
 
-    // ParaseleneTools abilities.
-    const paraseleneToolsAbilities = [
+    // ParaseleneTools TurnOrder abilities.
+    const toolsTurnOrderAbilities = [
         [
             '!# Paraselene-ManageTurnOrder',
             '/w gm &{template:traits} {{name=Manage Turn Order}} {{description=' +
@@ -883,13 +919,17 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
     ];
 
-    // Paraselene macros.
-    const paraseleneMacros = [
+    // ParaseleneTools SmartAOE macros.
+    const smartAOEMacros = [
         [
             '!# Paraselene-Remove-AOE-Pattern',
             '!# Settings: Token Action: Yes, Visibility: All Players',
             '!smartremove',
         ].join('\n') + '\n',
+    ];
+
+    // ParaseleneTools MapChange macros.
+    const mapChangeMacros = [
         [
             '!# Paraselene-Change-Map',
             '!# Settings: Visibility: All Players',
@@ -899,41 +939,19 @@ const ParaseleneInstaller = (() => {
             '!# Paraselene-Change-Map-GM-Only',
             '!mc menu',
         ].join('\n') + '\n',
+    ];
+
+    // ParaseleneTools TokenMod macros.
+    const tokenModMacros = [
         [
             '!# Paraselene-Clear-Token-Status',
             '!# Settings: Token Action: Yes',
             '!token-mod --set statusmarkers#=',
         ].join('\n') + '\n',
         [
-            '!# Paraselene-Dynamic-Lighting-Tool',
-            '!dltool',
-        ].join('\n') + '\n',
-        [
-            '!# Paraselene-Get-Token-Info',
-            '!# Settings: Token Action: Yes',
-            '!Paraselene-Tools-Get-Token-Info --speakAs Get-Token-Info',
-        ].join('\n') + '\n',
-        [
-            '!# Paraselene-Install',
-            '!Paraselene-Installer-Install',
-        ].join('\n') + '\n',
-        [
             '!# Paraselene-Kill-Token',
             '!# Settings: Token Action: Yes',
             '!token-mod --order top --set layer#map statusmarkers#dead',
-        ].join('\n') + '\n',
-        [
-            '!# Paraselene-Manage-Turn-Order',
-            '%{ParaseleneTools|ManageTurnOrder}',
-        ].join('\n') + '\n',
-        [
-            '!# Paraselene-Manage-Turn-Order-Stack',
-            '%{ParaseleneTools|ManageTurnOrderStack}',
-        ].join('\n') + '\n',
-        [
-            '!# Paraselene-Ping-Character',
-            '!# Settings: Visibility: All Players',
-            '!Paraselene-Tools-Ping-Character --speakAs Ping-Character',
         ].join('\n') + '\n',
         [
             '!# Paraselene-Set-Token-Defaults',
@@ -951,14 +969,42 @@ const ParaseleneInstaller = (() => {
             '%{ParaseleneDnD5e|SetTokenVision}',
         ].join('\n') + '\n',
         [
-            '!# Paraselene-Teleport-Menu',
-            '!teleport --menu',
-        ].join('\n') + '\n',
-        [
             '!# Paraselene-Toggle-Token-Hunters-Mark',
             '!# Settings: Token Action: Yes',
             '!token-mod --set statusmarkers#!archery-target',
         ].join('\n') + '\n',
+    ];
+
+    // ParaseleneTools DynamicLightingTool macros.
+    const dynamicLightingToolMacros = [
+        [
+            '!# Paraselene-Dynamic-Lighting-Tool',
+            '!dltool',
+        ].join('\n') + '\n',
+    ];
+
+    // ParaseleneTools TurnOrder macros.
+    const turnOrderMacros = [
+        [
+            '!# Paraselene-Manage-Turn-Order',
+            '%{ParaseleneTools|ManageTurnOrder}',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-Manage-Turn-Order-Stack',
+            '%{ParaseleneTools|ManageTurnOrderStack}',
+        ].join('\n') + '\n',
+    ];
+
+    // ParaseleneTools Teleport macros.
+    const teleportMacros = [
+        [
+            '!# Paraselene-Teleport-Menu',
+            '!teleport --menu',
+        ].join('\n') + '\n',
+    ];
+
+    // ParaseleneTools TokenAction macros.
+    const tokenActionMacros = [
         [
             '!# Paraselene-Add-Token-Actions',
             '!# Settings: Token Action: Yes',
@@ -969,6 +1015,30 @@ const ParaseleneInstaller = (() => {
             '!# Settings: Token Action: Yes',
             '!deleteta',
         ].join('\n') + '\n',
+    ];
+
+    // ParaseleneDnD5e abilities.
+    let paraseleneDnD5eAbilities = [];
+
+    // ParaseleneTools abilities.
+    let paraseleneToolsAbilities = [];
+
+    // Paraselene macros.
+    let paraseleneMacros = [
+        [
+            '!# Paraselene-Get-Token-Info',
+            '!# Settings: Token Action: Yes',
+            '!Paraselene-Tools-Get-Token-Info --speakAs Get-Token-Info',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-Install',
+            '!Paraselene-Installer-Install',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-Ping-Character',
+            '!# Settings: Visibility: All Players',
+            '!Paraselene-Tools-Ping-Character --speakAs Ping-Character',
+        ].join('\n') + '\n',
         [
             '!# Paraselene-Rotate-Token',
             '!# Settings: Token Action: Yes, Visibility: All Players',
@@ -978,13 +1048,12 @@ const ParaseleneInstaller = (() => {
 
     // Update, remove, and install abilities and macros in the Paraselene ecosystem.
     const install = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Install`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -992,6 +1061,55 @@ const ParaseleneInstaller = (() => {
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+
+        // DynamicLightingTool: true,
+        // MapChange: true,
+        // ScriptCards: true,
+        // SmartAOE: true,
+        // Teleport: true,
+        // TokenActions: true,
+        // TokenMod: true,
+        // TurnOrder: true,
+
+        // dnd5eSmartAOEAbilities
+        // dnd5eScriptCardsAbilities
+        // dnd5eTokenModAbilities
+        // toolsTurnOrderAbilities
+        // smartAOEMacros
+        // mapChangeMacros
+        // tokenModMacros
+        // dynamicLightingToolMacros
+        // turnOrderMacros
+        // teleportMacros
+        // tokenActionMacros
+
+        if (state[scriptName].installedFeatures.DynamicLightingTool) {
+            paraseleneMacros = paraseleneMacros.concat(dynamicLightingToolMacros);
+        }
+        if (state[scriptName].installedFeatures.MapChange) {
+            paraseleneMacros = paraseleneMacros.concat(mapChangeMacros);
+        }
+        if (state[scriptName].installedFeatures.ScriptCards) {
+            paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eScriptCardsAbilities);
+        }
+        if (state[scriptName].installedFeatures.SmartAOE) {
+            paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eSmartAOEAbilities);
+            paraseleneMacros = paraseleneMacros.concat(smartAOEMacros);
+        }
+        if (state[scriptName].installedFeatures.Teleport) {
+            paraseleneMacros = paraseleneMacros.concat(teleportMacros);
+        }
+        if (state[scriptName].installedFeatures.TokenActions) {
+            paraseleneMacros = paraseleneMacros.concat(tokenActionMacros);
+        }
+        if (state[scriptName].installedFeatures.TokenMod) {
+            paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eTokenModAbilities);
+            paraseleneMacros = paraseleneMacros.concat(tokenModMacros);
+        }
+        if (state[scriptName].installedFeatures.TurnOrder) {
+            paraseleneToolsAbilities = paraseleneToolsAbilities.concat(toolsTurnOrderAbilities);
+            paraseleneMacros = paraseleneMacros.concat(turnOrderMacros);
+        }
 
         updateAbilities(speakAs, playerName, 'ParaseleneDnD5e', paraseleneDnD5eAbilities);
         updateAbilities(speakAs, playerName, 'ParaseleneTools', paraseleneToolsAbilities);
@@ -1042,11 +1160,11 @@ const ParaseleneInstaller = (() => {
                         ability.set({
                             action: newAction,
                         });
-                        summary += new Element('span', 'Updated', 'color: green').render();
+                        summary += new Span('Updated', 'color: green').render();
                     }
                 } else {
                     ability.remove();
-                    summary += new Element('span', 'Removed', 'color: red').render();
+                    summary += new Span('Removed', 'color: red').render();
                 }
                 table.add(new Row()
                     .add(new Cell(summary, 'text-align: center;'))
@@ -1084,7 +1202,7 @@ const ParaseleneInstaller = (() => {
                 );
                 table.add(new Row()
                     .add(new Cell(
-                        `${name}<br/>` + new Element('span', 'Installed', 'color: green').render(),
+                        `${name}<br/>` + new Span('Installed', 'color: green').render(),
                         'text-align: center;',
                     ))
                 );
@@ -1129,11 +1247,11 @@ const ParaseleneInstaller = (() => {
                         macro.set({
                             action: newAction,
                         });
-                        summary += new Element('span', 'Updated', 'color: green').render();
+                        summary += new Span('Updated', 'color: green').render();
                     }
                 } else {
                     macro.remove();
-                    summary += new Element('span', 'Removed', 'color: red').render();
+                    summary += new Span('Removed', 'color: red').render();
                 }
                 table.add(new Row()
                     .add(new Cell(summary, 'text-align: center;'))
@@ -1178,7 +1296,7 @@ const ParaseleneInstaller = (() => {
                 );
                 table.add(new Row()
                     .add(new Cell(
-                        `${name}<br/>` + new Element('span', 'Installed', 'color: green').render(),
+                        `${name}<br/>` + new Span('Installed', 'color: green').render(),
                         'text-align: center;',
                     ))
                 );

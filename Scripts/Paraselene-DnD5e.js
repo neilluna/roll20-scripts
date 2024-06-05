@@ -1,6 +1,6 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.3.0
+// Version 1.4.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.3.0',
+    version: '1.4.0',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -44,18 +44,15 @@ const ParaseleneDnD5e = (() => {
 
     // Log the version info.
     const versionInfo = () => {
-        log(`-=> ${scriptName} - ${version} by ${scriptAuthor} <=- Meta offset: ${API_Meta.ParaseleneDnD5e.offset}`);
+        log(`-=> ${scriptName} - ${version} by ${scriptAuthor}`);
     };
 
-    // Check the schema version and update if necessary.
+    // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
         if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
-                case '1.0.0':
-                    // No break statement. This must fall through.
-
                 case 'UpdateSchemaVersion':
                     state[scriptName].version = schemaVersion;
                     break;
@@ -75,12 +72,22 @@ const ParaseleneDnD5e = (() => {
             return true;
         }
         if (API_Meta.ParaseleneCommon === undefined) {
-            sendChat(speakAs, `/w "${playerName}" <br/>Paraselene-Common is not loaded.`, null, { noarchive: true });
+            log(`${scriptName}: Error: Paraselene-Common is not loaded.`);
+            return false;
+        }
+
+        pc = ParaseleneCommon;
+        const requiredVersion = '1.1.0';
+        if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
+            log(
+                `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
+                `Please update Paraselene-Common to version ${requiredVersion} or higher.`
+            );
+            pc = null;
             return false;
         }
 
         // Set up the convenience aliases for ParaseleneCommon.
-        pc = ParaseleneCommon;
         Attribute = pc.HtmlAttribute;
         Element = pc.HtmlElement;
         Table = pc.HtmlBorderedTable;
@@ -94,13 +101,12 @@ const ParaseleneDnD5e = (() => {
 
     // Present a list of AOE patterns to add.
     const addAoePattern = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Add-AOE-Pattern`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -292,13 +298,12 @@ const ParaseleneDnD5e = (() => {
 
     // Present a list of spells to cast.
     const castSpell = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Cast-Spell`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);

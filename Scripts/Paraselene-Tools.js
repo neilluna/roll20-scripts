@@ -1,6 +1,6 @@
 // Paraselene-Tools
 // Game-independent tools.
-// Version 1.0.2
+// Version 1.1.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneTools = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.2',
+    version: '1.1.0',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -44,18 +44,15 @@ const ParaseleneTools = (() => {
 
     // Log the version info.
     const versionInfo = () => {
-        log(`-=> ${scriptName} - ${version} by ${scriptAuthor} <=- Meta offset: ${API_Meta.ParaseleneTools.offset}`);
+        log(`-=> ${scriptName} - ${version} by ${scriptAuthor}`);
     };
 
-    // Check the schema version and update if necessary.
+    // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
         if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
-                case '1.0.0':
-                    // No break statement. This must fall through.
-
                 case 'UpdateSchemaVersion':
                     state[scriptName].version = schemaVersion;
                     break;
@@ -75,12 +72,22 @@ const ParaseleneTools = (() => {
             return true;
         }
         if (API_Meta.ParaseleneCommon === undefined) {
-            sendChat(speakAs, `/w "${playerName}" <br/>Paraselene-Common is not loaded.`, null, { noarchive: true });
+            log(`${scriptName}: Error: Paraselene-Common is not loaded.`);
+            return false;
+        }
+
+        pc = ParaseleneCommon;
+        const requiredVersion = '1.1.0';
+        if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
+            log(
+                `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
+                `Please update Paraselene-Common to version ${requiredVersion} or higher.`
+            );
+            pc = null;
             return false;
         }
 
         // Set up the convenience aliases for ParaseleneCommon.
-        pc = ParaseleneCommon;
         Attribute = pc.HtmlAttribute;
         Element = pc.HtmlElement;
         Table = pc.HtmlBorderedTable;
@@ -94,13 +101,12 @@ const ParaseleneTools = (() => {
 
     // Get information about a token.
     const getTokenInfo = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Get-Token-Info`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -113,13 +119,12 @@ const ParaseleneTools = (() => {
 
     // Get information about a token. Intended to be called from other scripts.
     const getTokenInfoAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Get-Token-Info-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -255,13 +260,12 @@ const ParaseleneTools = (() => {
 
     // Delete a token. Meant to be called from other scripts.
     const deleteTokenAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Delete-Token-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -294,13 +298,12 @@ const ParaseleneTools = (() => {
 
     // List all tokens on the same page. Meant to be called from other scripts.
     const listTokensAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-List-Tokens-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -376,13 +379,12 @@ const ParaseleneTools = (() => {
 
     // Present a menu allowing a player to ping and center a token that they control.
     const pingCharacter = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Ping-Character`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -465,13 +467,12 @@ const ParaseleneTools = (() => {
 
     // Ping and center a token.
     const pingTokenAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Ping-Token-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -503,13 +504,12 @@ const ParaseleneTools = (() => {
 
     // Present a menu allowing a player to pull other tokens on the same page to this token.
     const listPullTokensAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-List-Pull-Tokens-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
@@ -593,13 +593,12 @@ const ParaseleneTools = (() => {
 
     // Rotate a token to the next 45-degree increment.
     const rotateToken = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Rotate-Token`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
 

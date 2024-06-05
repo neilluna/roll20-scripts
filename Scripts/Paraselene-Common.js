@@ -1,6 +1,6 @@
 // Paraselene-Common
 // Common utilites used by other Paraselene scripts.
-// Version 1.0.2
+// Version 1.1.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -11,7 +11,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneCommon = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.2',
+    version: '1.1.0',
 };
 {
     const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
@@ -33,18 +33,15 @@ const ParaseleneCommon = (() => {
     const scriptAuthor = 'Neil Luna';
  
     const versionInfo = () => {
-        log(`-=> ${scriptName} - ${version} by ${scriptAuthor} <=- Meta offset: ${API_Meta.ParaseleneCommon.offset}`);
+        log(`-=> ${scriptName} - ${version} by ${scriptAuthor}`);
     };
 
-    // Check the schema version and update if necessary.
+    // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
         if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
-                case '1.0.0':
-                    // No break statement. This must fall through.
-
                 case 'UpdateSchemaVersion':
                     state[scriptName].version = schemaVersion;
                     break;
@@ -56,6 +53,25 @@ const ParaseleneCommon = (() => {
                     break;
             }
         }
+    };
+
+    // Compare two version numbers.
+    const compareVersions = (v1, v2) => {
+        const v1Components = v1.split('.');
+        const v2Components = v2.split('.');
+
+        for (let i = 0; i < 3; ++i) {
+            const v1Component = parseInt(v1Components[i], 10);
+            const v2Component = parseInt(v2Components[i], 10);
+            if (v1Component < v2Component) {
+                return -1;
+            }
+            if (v1Component > v2Component) {
+                return 1;
+            }
+        }
+
+        return 0;
     };
 
     // Extract a command line option from the args array.
@@ -184,6 +200,13 @@ const ParaseleneCommon = (() => {
         }
     };
 
+    // Base class for an HTML span.
+    const HtmlSpan = class extends HtmlElement {
+        constructor(content, style = null) {
+            super('span', content, style);
+        }
+    };
+
     // Create a bordered HTML table.
     const HtmlBorderedTable = class extends HtmlTable {
         constructor(style = null) {
@@ -265,6 +288,7 @@ const ParaseleneCommon = (() => {
 
     // Public interface.
     return {
+        compareVersions: compareVersions,
         extractCommandLineOption: extractCommandLineOption,
         getPlayerPageId: getPlayerPageId,
         HtmlAttribute: HtmlAttribute,
@@ -275,6 +299,7 @@ const ParaseleneCommon = (() => {
         HtmlTableHeader: HtmlTableHeader,
         HtmlTableCell: HtmlTableCell,
         HtmlLink: HtmlLink,
+        HtmlSpan: HtmlSpan,
         HtmlBorderedTable: HtmlBorderedTable,
         HtmlBorderedTableRow: HtmlBorderedTableRow,
         HtmlBorderedTableHeader: HtmlBorderedTableHeader,
