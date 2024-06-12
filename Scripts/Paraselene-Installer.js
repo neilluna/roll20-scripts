@@ -1017,14 +1017,8 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
     ];
 
-    // ParaseleneDnD5e abilities.
-    let paraseleneDnD5eAbilities = [];
-
-    // ParaseleneTools abilities.
-    let paraseleneToolsAbilities = [];
-
-    // Paraselene macros.
-    let paraseleneMacros = [
+    // Paraselene core macros. Always present.
+    const paraseleneCoreMacros = [
         [
             '!# Paraselene-Get-Token-Info',
             '!# Settings: Token Action: Yes',
@@ -1289,6 +1283,11 @@ const ParaseleneInstaller = (() => {
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 
+        let paraseleneDnD5eAbilities = [];
+        let paraseleneToolsAbilities = [];
+        let paraseleneMacros = [];
+
+        paraseleneMacros = paraseleneMacros.concat(paraseleneCoreMacros);
         if (state[scriptName].installedFeatures.DynamicLightingTool) {
             paraseleneMacros = paraseleneMacros.concat(dynamicLightingToolMacros);
         }
@@ -1319,7 +1318,7 @@ const ParaseleneInstaller = (() => {
 
         updateAbilities(speakAs, playerName, 'ParaseleneDnD5e', paraseleneDnD5eAbilities);
         updateAbilities(speakAs, playerName, 'ParaseleneTools', paraseleneToolsAbilities);
-        updateParaseleneMacros(speakAs, playerId, playerName);
+        updateParaseleneMacros(speakAs, playerId, playerName, paraseleneMacros);
     };
 
     // Update, remove, and install ParaseleneDnD5e abilities.
@@ -1419,7 +1418,7 @@ const ParaseleneInstaller = (() => {
     };
 
     // Update, remove, and install Paraselene macros.
-    const updateParaseleneMacros = (speakAs, playerId, playerName) => {
+    const updateParaseleneMacros = (speakAs, playerId, playerName, paraseleneMacros) => {
 
         // Create a list of the existing Paraselene macros.
         let existingMacros = findObjs({
