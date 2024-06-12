@@ -1046,42 +1046,248 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
     ];
 
-    // Update, remove, and install abilities and macros in the Paraselene ecosystem.
+    // Update, remove, and install abilities and macros.
     const install = (msg) => {
         const commandName = `${scriptName}-Install`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
-        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
         const playerId = msg.playerid;
+
+        sendChat(speakAs, `!${scriptName}-Install-Menu-API --speakAs ${speakAs} ${playerId}`);
+    }
+
+    // Present the installation menu.
+    const installMenuAPI = (msg) => {
+        const commandName = `${scriptName}-Install-Menu-API`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = args[1];
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 
-        // DynamicLightingTool: true,
-        // MapChange: true,
-        // ScriptCards: true,
-        // SmartAOE: true,
-        // Teleport: true,
-        // TokenActions: true,
-        // TokenMod: true,
-        // TurnOrder: true,
+        const dynamicLightingTool = state[scriptName].installedFeatures.DynamicLightingTool ? 'On' : 'Off';
+        const mapChange = state[scriptName].installedFeatures.MapChange ? 'On' : 'Off';
+        const scriptCards = state[scriptName].installedFeatures.ScriptCards ? 'On' : 'Off';
+        const smartAOE = state[scriptName].installedFeatures.SmartAOE ? 'On' : 'Off';
+        const teleport = state[scriptName].installedFeatures.Teleport ? 'On' : 'Off';
+        const tokenActions = state[scriptName].installedFeatures.TokenActions ? 'On' : 'Off';
+        const tokenMod = state[scriptName].installedFeatures.TokenMod ? 'On' : 'Off';
+        const turnOrder = state[scriptName].installedFeatures.TurnOrder ? 'On' : 'Off';
 
-        // dnd5eSmartAOEAbilities
-        // dnd5eScriptCardsAbilities
-        // dnd5eTokenModAbilities
-        // toolsTurnOrderAbilities
-        // smartAOEMacros
-        // mapChangeMacros
-        // tokenModMacros
-        // dynamicLightingToolMacros
-        // turnOrderMacros
-        // teleportMacros
-        // tokenActionMacros
+        const dynamicLightingToolSummary = 'Include a macro to invoke the "Dynamic Lighting Tool".<br/>' +
+            'Example: "Dynamic-Lighting-Tool".<br/>' +
+            'Requires the "Dynamic Lighting Tool" script.';
+        const mapChangeSummary = 'Include macros that allow the players to change maps themselves, ' +
+            'and a macro for the GM to easily manage which maps the players are on.<br/>' +
+            'Examples: "Change-Map" and "Change-Map-GM-Only".<br/>' +
+            'Requires the "MapChange" script.';
+        const scriptCardsSummary = 'Include customized abilities and spells.<br/>' +
+            'Examples: "Chaos Bolt" and "Magic Missile".<br/>' +
+            'Requires the "ScriptCards" script.';
+        const smartAOESummary = 'Include abilities and macros for the AOE pattern helpers.<br/>' +
+            'Examples: "Add-AOE-Pattern" and "Remove-AOE-Pattern".<br/>' +
+            'Requires the "smartAoE" script.';
+        const teleportSummary = 'Include a macro to invoke the GM\'s "Teleport" menu tool.<br/>' +
+            'Example: "Teleport-Menu".<br/>' +
+            'Requires the "Teleport" script.';
+        const tokenActionsSummary = 'Include macros to add and remove token actions for the "Actions" of NPCs.<br/>' +
+            'Examples: "Add-Token-Actions" and "Remove-Token-Actions".<br/>' +
+            'Requires the "Token Action Maker" script.';
+        const tokenModSummary = 'Include abilities and macros for the "TokenMod" module.<br/>' +
+            'Examples: "Clear-Token-Status", "Kill-Token", "Set-Token-Defaults", "Set-Token-Light", ' +
+            'and "Set-Token-Vision".<br/>' +
+            'Requires the "TokenMod" script.';
+        const turnOrderSummary = 'Include macros to easily manage the turn order.<br/>' +
+            'Examples: "Manage-Turn-Order" and "Manage-Turn-Order-Stack".<br/>' +
+            'Requires the "AddCustomTurn", "GroupInitiative", and "TurnMarker1" scripts.';
+        const cellStyle = 'padding-left: 10px; padding-right: 10px;';
+        const table = new Table()
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Installation Features', 'font-weight: bold').render() + '<br/>' +
+                    'Turn on which features you want installed. ' +
+                    'Turn off which features you want removed.',
+                    cellStyle + ' text-align: center;'
+                ).addAttribute(new Attribute('colspan', '2')))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Dynamic Lighting Tool', 'font-weight: bold').render() + '<br/>' +
+                    dynamicLightingToolSummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} DynamicLightingTool`,
+                        dynamicLightingTool,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Map Change', 'font-weight: bold').render() + '<br/>' +
+                    mapChangeSummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} MapChange`,
+                        mapChange,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Script Cards', 'font-weight: bold').render() + '<br/>' +
+                    scriptCardsSummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} ScriptCards`,
+                        scriptCards,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Smart AOE', 'font-weight: bold').render() + '<br/>' +
+                    smartAOESummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} SmartAOE`,
+                        smartAOE,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Teleport', 'font-weight: bold').render() + '<br/>' +
+                    teleportSummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} Teleport`,
+                        teleport,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Token Actions', 'font-weight: bold').render() + '<br/>' +
+                    tokenActionsSummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} TokenActions`,
+                        tokenActions,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Token Mod', 'font-weight: bold').render() + '<br/>' +
+                    tokenModSummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} TokenMod`,
+                        tokenMod,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Span('Turn Order', 'font-weight: bold').render() + '<br/>' +
+                    turnOrderSummary,
+                    cellStyle
+                ))
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} TurnOrder`,
+                        turnOrder,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ))
+            )
+            .add(new Row()
+                .add(new Cell(
+                    new Link(
+                        `!${scriptName}-Install-API --speakAs ${speakAs} ${playerId}`,
+                        `Install and remove features`,
+                    ).render(),
+                    cellStyle + ' text-align: center;'
+                ).addAttribute(new Attribute('colspan', '2')))
+            );
+
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
+    }
+
+    // Toggle a feature on or off.
+    const toggleFeatureAPI = (msg) => {
+        const commandName = `${scriptName}-Toggle-Feature-API`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = args[1];
+        const feature = args[2];
+
+        state[scriptName].installedFeatures[feature] = !state[scriptName].installedFeatures[feature];
+
+        sendChat(speakAs, `!${scriptName}-Install-Menu-API --speakAs ${speakAs} ${playerId}`);
+    }
+
+    // Execute the installation and removal of features.
+    const installAPI = (msg) => {
+        const commandName = `${scriptName}-Install-API`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = args[1];
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
 
         if (state[scriptName].installedFeatures.DynamicLightingTool) {
             paraseleneMacros = paraseleneMacros.concat(dynamicLightingToolMacros);
@@ -1349,6 +1555,9 @@ const ParaseleneInstaller = (() => {
     // Register event handlers.
     const registerEventHandlers = () => {
         on('chat:message', install);
+        on('chat:message', installMenuAPI);
+        on('chat:message', toggleFeatureAPI);
+        on('chat:message', installAPI);
     };
 
     // When all scripts have loaded ...

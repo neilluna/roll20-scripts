@@ -106,15 +106,16 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
-        const selectedTokenId = msg.selected[0]._id;
         const playerId = msg.playerid;
+        const tokenId = msg.selected[0]._id;
 
-        sendChat(speakAs, `!${scriptName}-Get-Token-Info-API --speakAs ${speakAs} ${playerId} ${selectedTokenId}`);
+        sendChat(speakAs, `!${scriptName}-Get-Token-Info-API --speakAs ${speakAs} ${playerId} ${tokenId}`);
     };
 
     // Get information about a token. Intended to be called from other scripts.
@@ -124,15 +125,16 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
         const tokenId = args[2];
-
-        const playerName = getObj('player', playerId).get('displayname');
 
         const tokens = findObjs({
             id: tokenId,
@@ -265,16 +267,16 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const tokens = findObjs({
             id: tokenId,
@@ -303,16 +305,16 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const specifiedTokens = findObjs({
             id: tokenId,
@@ -384,15 +386,15 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
-        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
-
         const playerPageId = ParaseleneCommon.getPlayerPageId(playerId);
 
         const characters = findObjs({
@@ -472,16 +474,16 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const tokens = findObjs({
             id: tokenId,
@@ -509,16 +511,16 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const specifiedTokens = findObjs({
             id: tokenId,

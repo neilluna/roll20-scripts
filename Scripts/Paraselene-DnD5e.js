@@ -106,17 +106,17 @@ const ParaseleneDnD5e = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
-        const selected = msg.selected;
-        const token = getObj("graphic", selected[0]._id);
-
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = msg.selected[0]._id;
+        const token = getObj("graphic", tokenId);
 
         let spells = {
             AcidSplash: false,
@@ -303,17 +303,17 @@ const ParaseleneDnD5e = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
-        const selected = msg.selected;
-        const token = getObj("graphic", selected[0]._id);
-
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = msg.selected[0]._id;
+        const token = getObj("graphic", tokenId);
 
         let spells = {
             ChaosBolt: false,
