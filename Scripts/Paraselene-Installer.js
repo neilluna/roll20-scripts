@@ -1321,32 +1321,62 @@ const ParaseleneInstaller = (() => {
         updateParaseleneMacros(speakAs, playerId, playerName, paraseleneMacros);
     };
 
-    // Update, remove, and install ParaseleneDnD5e abilities.
+    // Update, remove, and install Paraselene character abilities.
     const updateAbilities = (speakAs, playerName, characterName, newActionsList) => {
+        let table = null;
+
+        // Create the character if it does not exist and is needed.
+        let character = null;
         const characters = findObjs({
             type: 'character',
             name: characterName,
         });
-
-        if (characters.length == 0) {
-            pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>Could not find character ${characterName}.`);
-            return;
+        if (characters.length > 0) {
+            character = characters[0];
+        } else if (newActionsList.length > 0) {
+            character = createObj(
+                'character',
+                {
+                    name: characterName,
+                    controlledby: 'all',
+                }
+            );
+            table = table ? table : new Table();
+            table.add(new Row()
+                .add(new Cell(
+                    `${characterName} character<br/>` + new Span('Created', 'color: green').render(),
+                    'text-align: center;',
+                ))
+            );
         }
 
-        const character = characters[0];
+        // Remove the character if it exists but is no longer needed.
+        if (character && (newActionsList.length == 0)) {
+            table = table ? table : new Table();
+            character.remove();
+            character = null;
+            table.add(new Row()
+                .add(new Cell(
+                    `${characterName} character<br/>` + new Span('Removed', 'color: yellow').render(),
+                    'text-align: center;',
+                ))
+            );
+        }
 
         // Create a list of the existing Paraselene abilities.
-        let existingAbilities = findObjs({
-            type: 'ability',
-            characterid: character.id,
-        });
+        let existingAbilities = [];
+        if (character) {
+            existingAbilities = findObjs({
+                type: 'ability',
+                characterid: character.id,
+            });
+        }
 
         // Create an index of the new actions.
         const newActionsIndex = indexParaseleneActions(newActionsList);
 
-        let table = null;
         if (existingAbilities.length > 0) {
-            table = new Table();
+            table = table ? table : new Table();
             table.add(new Row()
                 .add(new Header(
                     `Updating and removing<br/>${characterName}<br/>abilities`,
@@ -1370,7 +1400,7 @@ const ParaseleneInstaller = (() => {
                     }
                 } else {
                     ability.remove();
-                    summary += new Span('Removed', 'color: red').render();
+                    summary += new Span('Removed', 'color: yellow').render();
                 }
                 table.add(new Row()
                     .add(new Cell(summary, 'text-align: center;'))
@@ -1379,12 +1409,15 @@ const ParaseleneInstaller = (() => {
         }
 
         // Get a fresh list of the existing Paraselene abilities names, since some may have been removed.
-        const existingAbilityNames = findObjs({
-            type: 'ability',
-            characterid: character.id,
-        }).map(ability => {
-            return ability.get('name');
-        });
+        let existingAbilityNames = [];
+        if (character) {
+            existingAbilityNames = findObjs({
+                type: 'ability',
+                characterid: character.id,
+            }).map(ability => {
+                return ability.get('name');
+            });
+        }
         const actionsToInstall = newActionsList.filter(action => {
             return !(existingAbilityNames.includes(getParaseleneAbilityName(action)));
         });
@@ -1461,7 +1494,7 @@ const ParaseleneInstaller = (() => {
                     }
                 } else {
                     macro.remove();
-                    summary += new Span('Removed', 'color: red').render();
+                    summary += new Span('Removed', 'color: yellow').render();
                 }
                 table.add(new Row()
                     .add(new Cell(summary, 'text-align: center;'))
