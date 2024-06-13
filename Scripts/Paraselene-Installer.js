@@ -1344,8 +1344,9 @@ const ParaseleneInstaller = (() => {
         // Create an index of the new actions.
         const newActionsIndex = indexParaseleneActions(newActionsList);
 
-        const table = new Table();
+        let table = null;
         if (existingAbilities.length > 0) {
+            table = new Table();
             table.add(new Row()
                 .add(new Header(
                     `Updating and removing<br/>${characterName}<br/>abilities`,
@@ -1389,6 +1390,7 @@ const ParaseleneInstaller = (() => {
         });
 
         if (actionsToInstall.length > 0) {
+            table = table ? table : new Table();
             table.add(new Row()
                 .add(new Header(
                     `Installing<br/>${characterName}<br/>abilities`,
@@ -1414,7 +1416,9 @@ const ParaseleneInstaller = (() => {
             });
         };
 
-        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
+        if (table) {
+            pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
+        }
     };
 
     // Update, remove, and install Paraselene macros.
@@ -1430,8 +1434,9 @@ const ParaseleneInstaller = (() => {
         // Create an index of the new actions.
         const newActionIndex = indexParaseleneActions(paraseleneMacros);
 
-        const table = new Table();
+        let table = null;
         if (existingMacros.length > 0) {
+            table = new Table();
             table.add(new Row()
                 .add(new Header(
                     `Updating and removing macros`,
@@ -1477,6 +1482,7 @@ const ParaseleneInstaller = (() => {
         });
 
         if (actionsToInstall.length > 0) {
+            table = table ? table : new Table();
             table.add(new Row()
                 .add(new Header(
                     `Installing macros`,
@@ -1508,7 +1514,9 @@ const ParaseleneInstaller = (() => {
             });
         }
 
-        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
+        if (table) {
+            pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
+        }
     };
 
     // Is an action a Paraselene action?
