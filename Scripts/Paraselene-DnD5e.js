@@ -1,20 +1,21 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.3.0
+// Version 1.4.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
 // Contact:  https://app.roll20.net/users/280391/neil-luna
 
 // Register the offset of the start of this script.
+// eslint-disable-next-line no-var
 var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.3.0',
+    version: '1.4.0',
 };
 {
-    const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
+    const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
     try {
         throw new Error('');  // Set errorLineNumber (above) to this line number.
     }
@@ -25,6 +26,7 @@ API_Meta.ParaseleneDnD5e = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const ParaseleneDnD5e = (() => {
 
     const scriptName = 'Paraselene-DnD5e';
@@ -34,28 +36,18 @@ const ParaseleneDnD5e = (() => {
  
     // Convenience aliases for ParaseleneCommon.
     let pc = null;
-    let Attribute = null;
-    let Element = null;
-    let Table = null;
-    let Row = null;
-    let Header = null;
-    let Cell = null;
-    let Link = null;
 
     // Log the version info.
     const versionInfo = () => {
-        log(`-=> ${scriptName} - ${version} by ${scriptAuthor} <=- Meta offset: ${API_Meta.ParaseleneDnD5e.offset}`);
+        log(`-=> ${scriptName} - ${version} by ${scriptAuthor}`);
     };
 
-    // Check the schema version and update if necessary.
+    // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
-        if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
+        if (!Object.prototype.hasOwnProperty.call(state, scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
-                case '1.0.0':
-                    // No break statement. This must fall through.
-
                 case 'UpdateSchemaVersion':
                     state[scriptName].version = schemaVersion;
                     break;
@@ -75,44 +67,45 @@ const ParaseleneDnD5e = (() => {
             return true;
         }
         if (API_Meta.ParaseleneCommon === undefined) {
-            sendChat(speakAs, `/w "${playerName}" <br/>Paraselene-Common is not loaded.`, null, { noarchive: true });
+            log(`${scriptName}: Error: Paraselene-Common is not loaded.`);
             return false;
         }
 
-        // Set up the convenience aliases for ParaseleneCommon.
+        // eslint-disable-next-line no-undef
         pc = ParaseleneCommon;
-        Attribute = pc.HtmlAttribute;
-        Element = pc.HtmlElement;
-        Table = pc.HtmlBorderedTable;
-        Row = pc.HtmlBorderedTableRow;
-        Header = pc.HtmlBorderedTableHeader;
-        Cell = pc.HtmlBorderedTableCell;
-        Link = pc.HtmlLink;
+        const requiredVersion = '1.1.0';
+        if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
+            log(
+                `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
+                `Please update Paraselene-Common to version ${requiredVersion} or higher.`,
+            );
+            pc = null;
+            return false;
+        }
 
         return true;
     };
 
     // Present a list of AOE patterns to add.
     const addAoePattern = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Add-AOE-Pattern`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
-        const selected = msg.selected;
-        const token = getObj("graphic", selected[0]._id);
-
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = msg.selected[0]._id;
+        const token = getObj("graphic", tokenId);
 
-        let spells = {
+        const spells = {
             AcidSplash: false,
             AuraOfProtection: false,
             AuraOfVitality: false,
@@ -160,13 +153,13 @@ const ParaseleneDnD5e = (() => {
             if (arg === '{{' || arg === '}}') {
                 continue;
             }
-            if (!spells.hasOwnProperty(arg)) {
+            if (!Object.prototype.hasOwnProperty.call(spells, arg)) {
                 pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>"${arg}" is not recognized.`);
             }
             spells[arg] = true;
         }
 
-        let menu = [`&{template:traits}{{name=Add AOE Pattern}} {{description=${token.get('name')}`];
+        const menu = [`&{template:traits}{{name=Add AOE Pattern}} {{description=${token.get('name')}`];
         if (spells.AcidSplash) {
             menu.push('[Acid Splash](~ParaseleneDnD5e|AddAOEAcidSplash)');
         }
@@ -292,25 +285,24 @@ const ParaseleneDnD5e = (() => {
 
     // Present a list of spells to cast.
     const castSpell = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Cast-Spell`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
-        const selected = msg.selected;
-        const token = getObj("graphic", selected[0]._id);
-
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = msg.selected[0]._id;
+        const token = getObj("graphic", tokenId);
 
-        let spells = {
+        const spells = {
             ChaosBolt: false,
             MagicMissile: false,
         };
@@ -321,13 +313,13 @@ const ParaseleneDnD5e = (() => {
             if (arg === '{{' || arg === '}}') {
                 continue;
             }
-            if (!spells.hasOwnProperty(arg)) {
+            if (!Object.prototype.hasOwnProperty.call(spells, arg)) {
                 pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>"${arg}" is not recognized.`);
             }
             spells[arg] = true;
         }
 
-        let menu = [`&{template:traits}{{name=Cast Spell}} {{description=${token.get('name')}`];
+        const menu = [`&{template:traits}{{name=Cast Spell}} {{description=${token.get('name')}`];
         if (spells.ChaosBolt) {
             menu.push('[Chaos Bolt](~ParaseleneDnD5e|ChaosBolt)');
         }

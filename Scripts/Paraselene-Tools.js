@@ -1,20 +1,21 @@
 // Paraselene-Tools
 // Game-independent tools.
-// Version 1.0.2
+// Version 1.1.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
 // Contact:  https://app.roll20.net/users/280391/neil-luna
 
 // Register the offset of the start of this script.
+// eslint-disable-next-line no-var
 var API_Meta = API_Meta || {};
 API_Meta.ParaseleneTools = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.2',
+    version: '1.1.0',
 };
 {
-    const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
+    const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
     try {
         throw new Error('');  // Set errorLineNumber (above) to this line number.
     }
@@ -25,6 +26,7 @@ API_Meta.ParaseleneTools = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const ParaseleneTools = (() => {
 
     const scriptName = 'Paraselene-Tools';
@@ -44,18 +46,15 @@ const ParaseleneTools = (() => {
 
     // Log the version info.
     const versionInfo = () => {
-        log(`-=> ${scriptName} - ${version} by ${scriptAuthor} <=- Meta offset: ${API_Meta.ParaseleneTools.offset}`);
+        log(`-=> ${scriptName} - ${version} by ${scriptAuthor}`);
     };
 
-    // Check the schema version and update if necessary.
+    // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
-        if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
+        if (!Object.prototype.hasOwnProperty.call(state, scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
-                case '1.0.0':
-                    // No break statement. This must fall through.
-
                 case 'UpdateSchemaVersion':
                     state[scriptName].version = schemaVersion;
                     break;
@@ -75,12 +74,23 @@ const ParaseleneTools = (() => {
             return true;
         }
         if (API_Meta.ParaseleneCommon === undefined) {
-            sendChat(speakAs, `/w "${playerName}" <br/>Paraselene-Common is not loaded.`, null, { noarchive: true });
+            log(`${scriptName}: Error: Paraselene-Common is not loaded.`);
+            return false;
+        }
+
+        // eslint-disable-next-line no-undef
+        pc = ParaseleneCommon;
+        const requiredVersion = '1.1.0';
+        if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
+            log(
+                `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
+                `Please update Paraselene-Common to version ${requiredVersion} or higher.`,
+            );
+            pc = null;
             return false;
         }
 
         // Set up the convenience aliases for ParaseleneCommon.
-        pc = ParaseleneCommon;
         Attribute = pc.HtmlAttribute;
         Element = pc.HtmlElement;
         Table = pc.HtmlBorderedTable;
@@ -94,40 +104,40 @@ const ParaseleneTools = (() => {
 
     // Get information about a token.
     const getTokenInfo = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Get-Token-Info`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
-        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
-        const selectedTokenId = msg.selected[0]._id;
-        const playerId = msg.playerid;
-
-        sendChat(speakAs, `!${scriptName}-Get-Token-Info-API --speakAs ${speakAs} ${playerId} ${selectedTokenId}`);
-    };
-
-    // Get information about a token. Intended to be called from other scripts.
-    const getTokenInfoAPI = (msg) => {
         if (!isParseleneCommonLoaded()) {
             return;
         }
 
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = msg.playerid;
+        const tokenId = msg.selected[0]._id;
+
+        sendChat(speakAs, `!${scriptName}-Get-Token-Info-API --speakAs ${speakAs} ${playerId} ${tokenId}`);
+    };
+
+    // Get information about a token. Intended to be called from other scripts.
+    const getTokenInfoAPI = (msg) => {
         const commandName = `${scriptName}-Get-Token-Info-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
         const tokenId = args[2];
-
-        const playerName = getObj('player', playerId).get('displayname');
 
         const tokens = findObjs({
             id: tokenId,
@@ -159,16 +169,16 @@ const ParaseleneTools = (() => {
             .add(new Row()
                 .add(new Cell(
                     `Information for token<br/>${name}`,
-                    'text-align: center;'
-                ).addAttribute(new Attribute('colspan', '2')))
+                    'text-align: center;',
+                ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
                 .add(new Header('id'))
-                .add(new Cell(id, cellStyle))
+                .add(new Cell(id, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('name'))
-                .add(new Cell(name, cellStyle))
+                .add(new Cell(name, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('imgsrc'))
@@ -183,39 +193,39 @@ const ParaseleneTools = (() => {
                         .addAttribute(new Attribute('target', '_blank'))
                         .render(),
                     cellStyle,
-                ))
+                )),
             )
             .add(new Row()
                 .add(new Header('represents'))
-                .add(new Cell(represents, cellStyle))
+                .add(new Cell(represents, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('left'))
-                .add(new Cell(left, cellStyle))
+                .add(new Cell(left, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('top'))
-                .add(new Cell(top, cellStyle))
+                .add(new Cell(top, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('width'))
-                .add(new Cell(width, cellStyle))
+                .add(new Cell(width, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('height'))
-                .add(new Cell(height, cellStyle))
+                .add(new Cell(height, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('rotation'))
-                .add(new Cell(rotation, cellStyle))
+                .add(new Cell(rotation, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('layer'))
-                .add(new Cell(layer, cellStyle))
+                .add(new Cell(layer, cellStyle)),
             )
             .add(new Row()
                 .add(new Header('controlledby'))
-                .add(new Cell(controlledby, cellStyle))
+                .add(new Cell(controlledby, cellStyle)),
             )
             .add(new Row()
                 .add(new Cell(
@@ -223,7 +233,7 @@ const ParaseleneTools = (() => {
                         `!${scriptName}-Delete-Token-API --speakAs ${speakAs} ${playerId} ${id}`,
                         `Delete this token`,
                     ).render(),
-                ).addAttribute(new Attribute('colspan', '2')))
+                ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
                 .add(new Cell(
@@ -231,7 +241,7 @@ const ParaseleneTools = (() => {
                         `!${scriptName}-List-Tokens-API --speakAs ${speakAs} ${playerId} ${id}`,
                         `List other tokens on this token's page`,
                     ).render(),
-                ).addAttribute(new Attribute('colspan', '2')))
+                ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
                 .add(new Cell(
@@ -239,7 +249,7 @@ const ParaseleneTools = (() => {
                         `!${scriptName}-Ping-Token-API --speakAs ${speakAs} ${playerId} ${id}`,
                         `Ping this token and center on its location`,
                     ).render(),
-                ).addAttribute(new Attribute('colspan', '2')))
+                ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
                 .add(new Cell(
@@ -247,7 +257,7 @@ const ParaseleneTools = (() => {
                         `!${scriptName}-List-Pull-Tokens-API --speakAs ${speakAs} ${playerId} ${id}`,
                         `Pull tokens to this token`,
                     ).render(),
-                ).addAttribute(new Attribute('colspan', '2')))
+                ).addAttribute(new Attribute('colspan', '2'))),
             );
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
@@ -255,22 +265,21 @@ const ParaseleneTools = (() => {
 
     // Delete a token. Meant to be called from other scripts.
     const deleteTokenAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Delete-Token-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const tokens = findObjs({
             id: tokenId,
@@ -294,22 +303,21 @@ const ParaseleneTools = (() => {
 
     // List all tokens on the same page. Meant to be called from other scripts.
     const listTokensAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-List-Tokens-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const specifiedTokens = findObjs({
             id: tokenId,
@@ -341,14 +349,14 @@ const ParaseleneTools = (() => {
                 .add(new Cell(
                     `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})`,
                     'text-align: center;',
-                ).addAttribute(new Attribute('colspan', '2')))
+                ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
                 .add(new Header('Token'))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
                     'padding-left: 10px; padding-right: 10px;',
-                ))
+                )),
             );
         pageTokens.forEach(token => {
             const id = token.get('id');
@@ -362,13 +370,13 @@ const ParaseleneTools = (() => {
                 .add(new Row()
                     .add(new Cell(
                         new Link(`!${scriptName}-Get-Token-Info-API --speakAs ${speakAs} ${playerId} ${id}`, name)
-                            .render()
+                            .render(),
                     ))
                     .add(new Cell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
                         'padding-left: 10px; padding-right: 10px;',
-                    ))
-                )
+                    )),
+                );
         });
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
@@ -376,22 +384,21 @@ const ParaseleneTools = (() => {
 
     // Present a menu allowing a player to ping and center a token that they control.
     const pingCharacter = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Ping-Character`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
-        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
 
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
-
-        const playerPageId = ParaseleneCommon.getPlayerPageId(playerId);
+        const playerPageId = pc.getPlayerPageId(playerId);
 
         const characters = findObjs({
             type: 'character',
@@ -426,7 +433,7 @@ const ParaseleneTools = (() => {
         }
     
         if (tokens.length > 1) {
-            tokens = ParaseleneCommon.sortTokens(tokens);
+            tokens = pc.sortTokens(tokens);
         }
 
         const pageTokensTable = new Table()
@@ -435,7 +442,7 @@ const ParaseleneTools = (() => {
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
                     'padding-left: 10px; padding-right: 10px;',
-                ))
+                )),
             );
         tokens.forEach(token => {
             const id = token.get('id');
@@ -449,15 +456,15 @@ const ParaseleneTools = (() => {
                 .add(new Row()
                     .add(new Cell(
                         new Link(`!${scriptName}-Ping-Token-API --speakAs ${speakAs} ${playerId} ${id}`, name)
-                            .render()
+                            .render(),
                     ))
                 .add(
-                    new ParaseleneCommon.HtmlTableCell(
+                    new pc.HtmlTableCell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
                         'padding-left: 10px; padding-right: 10px;',
-                    )
-                )
-            )
+                    ),
+                ),
+            );
         });
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
@@ -465,22 +472,21 @@ const ParaseleneTools = (() => {
 
     // Ping and center a token.
     const pingTokenAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Ping-Token-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const tokens = findObjs({
             id: tokenId,
@@ -503,22 +509,21 @@ const ParaseleneTools = (() => {
 
     // Present a menu allowing a player to pull other tokens on the same page to this token.
     const listPullTokensAPI = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-List-Pull-Tokens-API`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
-
         const playerId = args[1];
-        const tokenId = args[2];
-
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+        const tokenId = args[2];
 
         const specifiedTokens = findObjs({
             id: tokenId,
@@ -554,14 +559,14 @@ const ParaseleneTools = (() => {
                     `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})<br/>` +
                     'Which token do you wish to pull to this token?',
                     'text-align: center;',
-                ).addAttribute(new Attribute('colspan', '2')))
+                ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
                 .add(new Header('Token'))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
                     'padding-left: 10px; padding-right: 10px;',
-                ))
+                )),
             );
         pageTokens.forEach(token => {
             const id = token.get('id');
@@ -579,13 +584,13 @@ const ParaseleneTools = (() => {
                                 `--order tofront --set layer#${tokenLayer} ` +
                                 `left#${tokenLeft} top#${tokenTop}`,
                             name,
-                        ).render()
+                        ).render(),
                     ))
                     .add(new Cell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
                         'padding-left: 10px; padding-right: 10px;',
-                    ))
-                )
+                    )),
+                );
         });
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
@@ -593,13 +598,12 @@ const ParaseleneTools = (() => {
 
     // Rotate a token to the next 45-degree increment.
     const rotateToken = (msg) => {
-        if (!isParseleneCommonLoaded()) {
-            return;
-        }
-
         const commandName = `${scriptName}-Rotate-Token`;
         const args = msg.content.split(/\s+/);
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+        if (!isParseleneCommonLoaded()) {
             return;
         }
 

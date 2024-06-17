@@ -1,20 +1,21 @@
 // Paraselene-Common
 // Common utilites used by other Paraselene scripts.
-// Version 1.0.2
+// Version 1.1.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
 // Contact:  https://app.roll20.net/users/280391/neil-luna
 
 // Register the offset of the start of this script.
+// eslint-disable-next-line no-var
 var API_Meta = API_Meta || {};
 API_Meta.ParaseleneCommon = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.0.2',
+    version: '1.1.0',
 };
 {
-    const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
+    const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
     try {
         throw new Error('');  // Set errorLineNumber (above) to this line number.
     }
@@ -25,6 +26,7 @@ API_Meta.ParaseleneCommon = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const ParaseleneCommon = (() => {
 
     const scriptName = 'Paraselene-Common';
@@ -33,18 +35,15 @@ const ParaseleneCommon = (() => {
     const scriptAuthor = 'Neil Luna';
  
     const versionInfo = () => {
-        log(`-=> ${scriptName} - ${version} by ${scriptAuthor} <=- Meta offset: ${API_Meta.ParaseleneCommon.offset}`);
+        log(`-=> ${scriptName} - ${version} by ${scriptAuthor}`);
     };
 
-    // Check the schema version and update if necessary.
+    // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
-        if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
+        if (!Object.prototype.hasOwnProperty.call(state, scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
-                case '1.0.0':
-                    // No break statement. This must fall through.
-
                 case 'UpdateSchemaVersion':
                     state[scriptName].version = schemaVersion;
                     break;
@@ -56,6 +55,25 @@ const ParaseleneCommon = (() => {
                     break;
             }
         }
+    };
+
+    // Compare two version numbers.
+    const compareVersions = (v1, v2) => {
+        const v1Components = v1.split('.');
+        const v2Components = v2.split('.');
+
+        for (let i = 0; i < 3; ++i) {
+            const v1Component = parseInt(v1Components[i], 10);
+            const v2Component = parseInt(v2Components[i], 10);
+            if (v1Component < v2Component) {
+                return -1;
+            }
+            if (v1Component > v2Component) {
+                return 1;
+            }
+        }
+
+        return 0;
     };
 
     // Extract a command line option from the args array.
@@ -76,7 +94,7 @@ const ParaseleneCommon = (() => {
     const getPlayerPageId = (playerId) => {
         let playerPageId = Campaign().get('playerpageid');
         const playerPages = Campaign().get('playerspecificpages');
-        if (playerPages != false && playerPages.hasOwnProperty(playerId)) {
+        if (playerPages != false && Object.prototype.hasOwnProperty.call(playerPages, playerId)) {
             playerPageId = playerPages[playerId];
         }
         return playerPageId;
@@ -184,6 +202,13 @@ const ParaseleneCommon = (() => {
         }
     };
 
+    // Base class for an HTML span.
+    const HtmlSpan = class extends HtmlElement {
+        constructor(content, style = null) {
+            super('span', content, style);
+        }
+    };
+
     // Create a bordered HTML table.
     const HtmlBorderedTable = class extends HtmlTable {
         constructor(style = null) {
@@ -265,6 +290,7 @@ const ParaseleneCommon = (() => {
 
     // Public interface.
     return {
+        compareVersions: compareVersions,
         extractCommandLineOption: extractCommandLineOption,
         getPlayerPageId: getPlayerPageId,
         HtmlAttribute: HtmlAttribute,
@@ -275,6 +301,7 @@ const ParaseleneCommon = (() => {
         HtmlTableHeader: HtmlTableHeader,
         HtmlTableCell: HtmlTableCell,
         HtmlLink: HtmlLink,
+        HtmlSpan: HtmlSpan,
         HtmlBorderedTable: HtmlBorderedTable,
         HtmlBorderedTableRow: HtmlBorderedTableRow,
         HtmlBorderedTableHeader: HtmlBorderedTableHeader,
