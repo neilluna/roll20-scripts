@@ -1,6 +1,7 @@
 // Summon a Spiritual Weapon
 // Version 3.0.1
 
+// eslint-disable-next-line no-var
 var paraselene = paraselene || {};
 
 on("ready", function() {
@@ -54,4 +55,4 @@ paraselene.summonSpiritualWeapon = function(msg) {
         top: top,
         width: 70,
     });
-}
+};

@@ -7,6 +7,7 @@
 // Contact:  https://app.roll20.net/users/280391/neil-luna
 
 // Register the offset of the start of this script.
+// eslint-disable-next-line no-var
 var API_Meta = API_Meta || {};
 API_Meta.ParaseleneCommon = {
     offset: Number.MAX_SAFE_INTEGER,
@@ -14,7 +15,7 @@ API_Meta.ParaseleneCommon = {
     version: '1.1.0',
 };
 {
-    const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
+    const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
     try {
         throw new Error('');  // Set errorLineNumber (above) to this line number.
     }
@@ -25,6 +26,7 @@ API_Meta.ParaseleneCommon = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const ParaseleneCommon = (() => {
 
     const scriptName = 'Paraselene-Common';
@@ -38,7 +40,7 @@ const ParaseleneCommon = (() => {
 
     // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
-        if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
+        if (!Object.prototype.hasOwnProperty.call(state, scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
@@ -92,7 +94,7 @@ const ParaseleneCommon = (() => {
     const getPlayerPageId = (playerId) => {
         let playerPageId = Campaign().get('playerpageid');
         const playerPages = Campaign().get('playerspecificpages');
-        if (playerPages != false && playerPages.hasOwnProperty(playerId)) {
+        if (playerPages != false && Object.prototype.hasOwnProperty.call(playerPages, playerId)) {
             playerPageId = playerPages[playerId];
         }
         return playerPageId;

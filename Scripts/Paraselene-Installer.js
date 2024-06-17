@@ -7,6 +7,7 @@
 // Contact:  https://app.roll20.net/users/280391/neil-luna
 
 // Register the offset of the start of this script.
+// eslint-disable-next-line no-var
 var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
     offset: Number.MAX_SAFE_INTEGER,
@@ -14,7 +15,7 @@ API_Meta.ParaseleneInstaller = {
     version: '1.4.0',
 };
 {
-    const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
+    const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
     try {
         throw new Error('');  // Set errorLineNumber (above) to this line number.
     }
@@ -25,6 +26,7 @@ API_Meta.ParaseleneInstaller = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const ParaseleneInstaller = (() => {
 
     const scriptName = 'Paraselene-Installer';
@@ -35,7 +37,6 @@ const ParaseleneInstaller = (() => {
     // Convenience aliases for ParaseleneCommon.
     let pc = null;
     let Attribute = null;
-    let Element = null;
     let Table = null;
     let Row = null;
     let Header = null;
@@ -50,7 +51,7 @@ const ParaseleneInstaller = (() => {
 
     // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
-        if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
+        if (!Object.prototype.hasOwnProperty.call(state, scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
@@ -96,12 +97,13 @@ const ParaseleneInstaller = (() => {
             return false;
         }
 
+        // eslint-disable-next-line no-undef
         pc = ParaseleneCommon;
         const requiredVersion = '1.1.0';
         if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
             log(
                 `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
-                `Please update Paraselene-Common to version ${requiredVersion} or higher.`
+                `Please update Paraselene-Common to version ${requiredVersion} or higher.`,
             );
             pc = null;
             return false;
@@ -109,7 +111,6 @@ const ParaseleneInstaller = (() => {
 
         // Set up the convenience aliases for ParaseleneCommon.
         Attribute = pc.HtmlAttribute;
-        Element = pc.HtmlElement;
         Table = pc.HtmlBorderedTable;
         Row = pc.HtmlBorderedTableRow;
         Header = pc.HtmlBorderedTableHeader;
@@ -121,17 +122,17 @@ const ParaseleneInstaller = (() => {
     };
 
     // Paraselene ecosystem state keys.
-    const paraseleneStateKeys = [
-        'Paraselene-Common',
-        'Paraselene-Tools',
-        'Paraselene-DnD5e',
-        'Paraselene-Installer',
-    ];
+    // const paraseleneStateKeys = [
+    //     'Paraselene-Common',
+    //     'Paraselene-Tools',
+    //     'Paraselene-DnD5e',
+    //     'Paraselene-Installer',
+    // ];
 
     // Deprecated Paraselene ecosystem state keys.
-    const paraseleneDeprecatedStateKeys = [
-        'Paraselene-Updater',
-    ];
+    // const paraseleneDeprecatedStateKeys = [
+    //     'Paraselene-Updater',
+    // ];
 
     // ParaseleneDnD5e SmartAOE abilities.
     const dnd5eSmartAOEAbilities = [
@@ -1058,7 +1059,7 @@ const ParaseleneInstaller = (() => {
         const serializedChoices = serializeChoices(state[scriptName].installedFeatures);
 
         sendChat(speakAs, `!${scriptName}-Install-Menu-API --speakAs ${speakAs} ${playerId} ${serializedChoices}`);
-    }
+    };
 
     // Convert a feature choice object into a string of feature choices.
     const serializeChoices = (choices) => {
@@ -1070,7 +1071,7 @@ const ParaseleneInstaller = (() => {
             `${choices.TokenActions} ` +
             `${choices.TokenMod} ` +
             `${choices.TurnOrder}`;
-    }
+    };
 
     // Convert a string of feature choices to a feature choice object.
     const deserializeChoices = (args, startIndex) => {
@@ -1084,7 +1085,7 @@ const ParaseleneInstaller = (() => {
             TokenMod: args[startIndex + 6] === 'true',
             TurnOrder: args[startIndex + 7] === 'true',
         };
-    }
+    };
 
     // Present the installation menu.
     const installMenuAPI = (msg) => {
@@ -1155,14 +1156,14 @@ const ParaseleneInstaller = (() => {
                     new Span('Installation Features', 'font-weight: bold').render() + '<br/>' +
                     'Turn on which features you want installed. ' +
                     'Turn off which features you want removed.',
-                    cellStyle + ' text-align: center;'
-                ).addAttribute(new Attribute('colspan', '2')))
+                    cellStyle + ' text-align: center;',
+                ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Dynamic Lighting Tool', 'font-weight: bold').render() + '<br/>' +
                     dynamicLightingToolSummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1170,14 +1171,14 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.DynamicLightingTool ? 'On' : 'Off'}`,
                     ).render() + alerts.DynamicLightingTool,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Map Change', 'font-weight: bold').render() + '<br/>' +
                     mapChangeSummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1185,14 +1186,14 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.MapChange ? 'On' : 'Off'}`,
                     ).render() + alerts.MapChange,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Script Cards', 'font-weight: bold').render() + '<br/>' +
                     scriptCardsSummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1200,14 +1201,14 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.ScriptCards ? 'On' : 'Off'}`,
                     ).render() + alerts.ScriptCards,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Smart AOE', 'font-weight: bold').render() + '<br/>' +
                     smartAOESummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1215,14 +1216,14 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.SmartAOE ? 'On' : 'Off'}`,
                     ).render() + alerts.SmartAOE,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Teleport', 'font-weight: bold').render() + '<br/>' +
                     teleportSummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1230,14 +1231,14 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.Teleport ? 'On' : 'Off'}`,
                     ).render() + alerts.Teleport,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Token Actions', 'font-weight: bold').render() + '<br/>' +
                     tokenActionsSummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1245,14 +1246,14 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.TokenActions ? 'On' : 'Off'}`,
                     ).render() + alerts.TokenActions,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Token Mod', 'font-weight: bold').render() + '<br/>' +
                     tokenModSummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1260,14 +1261,14 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.TokenMod ? 'On' : 'Off'}`,
                     ).render() + alerts.TokenMod,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
                     new Span('Turn Order', 'font-weight: bold').render() + '<br/>' +
                     turnOrderSummary,
-                    cellStyle
+                    cellStyle,
                 ))
                 .add(new Cell(
                     new Link(
@@ -1275,8 +1276,8 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.TurnOrder ? 'On' : 'Off'}`,
                     ).render() + alerts.TurnOrder,
-                    cellStyle + ' text-align: center;'
-                ))
+                    cellStyle + ' text-align: center;',
+                )),
             )
             .add(new Row()
                 .add(new Cell(
@@ -1284,12 +1285,12 @@ const ParaseleneInstaller = (() => {
                         `!${scriptName}-Install-API --speakAs ${speakAs} ${playerId} ${serializedChoices}`,
                         `Install and remove features`,
                     ).render(),
-                    cellStyle + ' text-align: center;'
-                ).addAttribute(new Attribute('colspan', '2')))
+                    cellStyle + ' text-align: center;',
+                ).addAttribute(new Attribute('colspan', '2'))),
             );
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
-    }
+    };
 
     // Toggle a feature on or off.
     const toggleFeatureAPI = (msg) => {
@@ -1313,7 +1314,7 @@ const ParaseleneInstaller = (() => {
         const serializedChoices = serializeChoices(choices);
 
         sendChat(speakAs, `!${scriptName}-Install-Menu-API --speakAs ${speakAs} ${playerId} ${serializedChoices}`);
-    }
+    };
 
     // Execute the installation and removal of features.
     const installAPI = (msg) => {
@@ -1393,7 +1394,7 @@ const ParaseleneInstaller = (() => {
                 {
                     name: characterName,
                     controlledby: 'all',
-                }
+                },
             );
             summary = `${characterName} character<br/>${new Span('Created', 'color: green').render()}`;
         }
@@ -1424,13 +1425,13 @@ const ParaseleneInstaller = (() => {
                 .add(new Header(
                     `Updating and removing<br/>${characterName}<br/>abilities`,
                     'text-align: center;',
-                ))
+                )),
             );
             existingAbilities.forEach(ability => {
                 const name = ability.get('name');
                 const action = ability.get('action');
                 const canonicalName = getParaseleneActionCanonicalName(action);
-                if (newActionsIndex.hasOwnProperty(canonicalName)) {
+                if (Object.prototype.hasOwnProperty.call(newActionsIndex, canonicalName)) {
                     const newAction = newActionsList[newActionsIndex[canonicalName]];
                     if (action == newAction) {
                         summary = `${name}<br/>Up to date`;
@@ -1467,7 +1468,7 @@ const ParaseleneInstaller = (() => {
                 .add(new Header(
                     `Installing<br/>${characterName}<br/>abilities`,
                     'text-align: center;',
-                ))
+                )),
             );
             actionsToInstall.forEach(action => {
                 const name = getParaseleneAbilityName(action);
@@ -1477,13 +1478,13 @@ const ParaseleneInstaller = (() => {
                         name: name,
                         action: action,
                         characterid: character.id,
-                    }
+                    },
                 );
                 table.add(new Row()
                     .add(new Cell(
                         `${name}<br/>${new Span('Installed', 'color: green').render()}`,
                         'text-align: center;',
-                    ))
+                    )),
                 );
             });
         };
@@ -1495,7 +1496,7 @@ const ParaseleneInstaller = (() => {
     const updateParaseleneMacros = (speakAs, playerId, playerName, paraseleneMacros) => {
 
         // Create a list of the existing Paraselene macros.
-        let existingMacros = findObjs({
+        const existingMacros = findObjs({
             type: 'macro',
         }).filter(macro => {
             return isParaseleneAction(macro.get('action'));
@@ -1505,19 +1506,20 @@ const ParaseleneInstaller = (() => {
         const newActionIndex = indexParaseleneActions(paraseleneMacros);
 
         const table = new Table();
+        let summary = '';
         if (existingMacros.length > 0) {
             table.add(new Row()
                 .add(new Header(
                     `Updating and removing macros`,
                     'text-align: center;',
-                ))
+                )),
             );
             existingMacros.forEach(macro => {
                 const name = macro.get('name');
                 const action = macro.get('action');
                 const canonicalName = getParaseleneActionCanonicalName(action);
                 const displayName = name == canonicalName ? name : `${name}<br/>(${canonicalName})`;
-                if (newActionIndex.hasOwnProperty(canonicalName)) {
+                if (Object.prototype.hasOwnProperty.call(newActionIndex, canonicalName)) {
                     const newAction = paraseleneMacros[newActionIndex[canonicalName]];
                     if (action == newAction) {
                         summary = `${displayName}<br/>Up to date`;
@@ -1552,12 +1554,12 @@ const ParaseleneInstaller = (() => {
                 .add(new Header(
                     `Installing macros`,
                     'text-align: center;',
-                ))
+                )),
             );
             actionsToInstall.forEach(action => {
                 const name = getParaseleneActionCanonicalName(action);
                 const settings = getParaseleneMacroSettings(action);
-                let macroAttributes = {
+                const macroAttributes = {
                     name: name,
                     action: action,
                     istokenaction: settings['Token Action'] == 'Yes',
@@ -1574,7 +1576,7 @@ const ParaseleneInstaller = (() => {
                     .add(new Cell(
                         `${name}<br/>${new Span('Installed', 'color: green').render()}`,
                         'text-align: center;',
-                    ))
+                    )),
                 );
             });
         }
@@ -1586,21 +1588,21 @@ const ParaseleneInstaller = (() => {
     const isParaseleneAction = (action) => {
         const lines = action.split('\n');
         return lines.length >= 2 && /^!# Paraselene-\S*$/.test(lines[0]);
-    }
+    };
 
     // Return the canonical name of a Paraselene ability or macro action.
     const getParaseleneActionCanonicalName = (action) => {
         return action.split('\n')[0].substring('!# '.length);
-    }
+    };
 
     // Return the abilty name of a Paraselene ability action.
     const getParaseleneAbilityName = (action) => {
         return getParaseleneActionCanonicalName(action).substring('Paraselene-'.length);
-    }
+    };
 
     // Return the index of a list of Paraselene actions.
     const indexParaseleneActions = (actionList) => {
-        let actionIndex = {};
+        const actionIndex = {};
         actionList.forEach((action, index) => {
             actionIndex[getParaseleneActionCanonicalName(action)] = index;
         });
@@ -1609,7 +1611,7 @@ const ParaseleneInstaller = (() => {
 
     // Return the Paraselene macro settings.
     const getParaseleneMacroSettings = (action) => {
-        let settings = {};
+        const settings = {};
         const lines = action.split('\n');
         if (!lines[1].startsWith('!# Settings:')) {
             return settings;
@@ -1620,7 +1622,7 @@ const ParaseleneInstaller = (() => {
             settings[key.trim()] = value.trim();
         });
         return settings;
-    }
+    };
 
     // Register event handlers.
     const registerEventHandlers = () => {

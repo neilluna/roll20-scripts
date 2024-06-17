@@ -7,6 +7,7 @@
 // Contact:  https://app.roll20.net/users/280391/neil-luna
 
 // Register the offset of the start of this script.
+// eslint-disable-next-line no-var
 var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
     offset: Number.MAX_SAFE_INTEGER,
@@ -14,7 +15,7 @@ API_Meta.ParaseleneDnD5e = {
     version: '1.4.0',
 };
 {
-    const errorLineNumber = 19;  // Set this to the line number of the "throw new Error('')" below.
+    const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
     try {
         throw new Error('');  // Set errorLineNumber (above) to this line number.
     }
@@ -25,6 +26,7 @@ API_Meta.ParaseleneDnD5e = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 const ParaseleneDnD5e = (() => {
 
     const scriptName = 'Paraselene-DnD5e';
@@ -34,13 +36,6 @@ const ParaseleneDnD5e = (() => {
  
     // Convenience aliases for ParaseleneCommon.
     let pc = null;
-    let Attribute = null;
-    let Element = null;
-    let Table = null;
-    let Row = null;
-    let Header = null;
-    let Cell = null;
-    let Link = null;
 
     // Log the version info.
     const versionInfo = () => {
@@ -49,7 +44,7 @@ const ParaseleneDnD5e = (() => {
 
     // Check the state schema version. Update the schema if necessary.
     const checkSchema = () => {
-        if (!state.hasOwnProperty(scriptName) || state[scriptName].version !== schemaVersion) {
+        if (!Object.prototype.hasOwnProperty.call(state, scriptName) || state[scriptName].version !== schemaVersion) {
             log(`  > Updating schema to version ${schemaVersion} <`);
 
             switch (state[scriptName] && state[scriptName].version) {
@@ -76,25 +71,17 @@ const ParaseleneDnD5e = (() => {
             return false;
         }
 
+        // eslint-disable-next-line no-undef
         pc = ParaseleneCommon;
         const requiredVersion = '1.1.0';
         if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
             log(
                 `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
-                `Please update Paraselene-Common to version ${requiredVersion} or higher.`
+                `Please update Paraselene-Common to version ${requiredVersion} or higher.`,
             );
             pc = null;
             return false;
         }
-
-        // Set up the convenience aliases for ParaseleneCommon.
-        Attribute = pc.HtmlAttribute;
-        Element = pc.HtmlElement;
-        Table = pc.HtmlBorderedTable;
-        Row = pc.HtmlBorderedTableRow;
-        Header = pc.HtmlBorderedTableHeader;
-        Cell = pc.HtmlBorderedTableCell;
-        Link = pc.HtmlLink;
 
         return true;
     };
@@ -118,7 +105,7 @@ const ParaseleneDnD5e = (() => {
         const tokenId = msg.selected[0]._id;
         const token = getObj("graphic", tokenId);
 
-        let spells = {
+        const spells = {
             AcidSplash: false,
             AuraOfProtection: false,
             AuraOfVitality: false,
@@ -166,13 +153,13 @@ const ParaseleneDnD5e = (() => {
             if (arg === '{{' || arg === '}}') {
                 continue;
             }
-            if (!spells.hasOwnProperty(arg)) {
+            if (!Object.prototype.hasOwnProperty.call(spells, arg)) {
                 pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>"${arg}" is not recognized.`);
             }
             spells[arg] = true;
         }
 
-        let menu = [`&{template:traits}{{name=Add AOE Pattern}} {{description=${token.get('name')}`];
+        const menu = [`&{template:traits}{{name=Add AOE Pattern}} {{description=${token.get('name')}`];
         if (spells.AcidSplash) {
             menu.push('[Acid Splash](~ParaseleneDnD5e|AddAOEAcidSplash)');
         }
@@ -315,7 +302,7 @@ const ParaseleneDnD5e = (() => {
         const tokenId = msg.selected[0]._id;
         const token = getObj("graphic", tokenId);
 
-        let spells = {
+        const spells = {
             ChaosBolt: false,
             MagicMissile: false,
         };
@@ -326,13 +313,13 @@ const ParaseleneDnD5e = (() => {
             if (arg === '{{' || arg === '}}') {
                 continue;
             }
-            if (!spells.hasOwnProperty(arg)) {
+            if (!Object.prototype.hasOwnProperty.call(spells, arg)) {
                 pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>"${arg}" is not recognized.`);
             }
             spells[arg] = true;
         }
 
-        let menu = [`&{template:traits}{{name=Cast Spell}} {{description=${token.get('name')}`];
+        const menu = [`&{template:traits}{{name=Cast Spell}} {{description=${token.get('name')}`];
         if (spells.ChaosBolt) {
             menu.push('[Chaos Bolt](~ParaseleneDnD5e|ChaosBolt)');
         }
