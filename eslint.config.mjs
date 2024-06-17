@@ -32,7 +32,7 @@ export default [
                 "exports": "always-multiline",
                 "functions": "always-multiline",
             }],
-            // "@stylistic/js/linebreak-style": ["error", "unix"],
+            "@stylistic/js/linebreak-style": ["error", "unix"],
             "no-var": "error",
             "prefer-const": ["error", {
                 "destructuring": "any",
