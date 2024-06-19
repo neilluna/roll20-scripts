@@ -400,11 +400,22 @@ const ParaseleneTools = (() => {
         const playerName = player.get('displayname');
         const playerPageId = pc.getPlayerPageId(playerId);
 
+        if (playerIsGM(playerId)) {
+            const message = 'GMs cannot use Ping-Character. Use Get-Token-Info instead.';
+            pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${message}`);
+            return;
+        }
+
         const characters = findObjs({
             type: 'character',
         }).filter(character => {
             const controlledBy = character.get('controlledby').split(',');
-            return controlledBy.includes(playerId) || controlledBy.includes('all');
+            const inplayerjournals = character.get('inplayerjournals').split(',');
+
+            const isControlledBy = controlledBy.includes(playerId) || controlledBy.includes('all');
+            const isInPlayerJournals = inplayerjournals.includes(playerId) || inplayerjournals.includes('all');
+
+            return isControlledBy && isInPlayerJournals;
         });
 
         let tokens = [];
@@ -412,6 +423,7 @@ const ParaseleneTools = (() => {
             const characterId = character.get('id');
             findObjs({
                 pageid: playerPageId,
+                layer: 'objects',
                 represents: characterId,
                 subtype: 'token',
                 type: 'graphic',
@@ -500,10 +512,12 @@ const ParaseleneTools = (() => {
         }
 
         const token = tokens[0];
+        const name = pc.stringOrBlank(token.get('name'));
         const left = token.get('left');
         const top = token.get('top');
         const pageId = token.get('pageid');
 
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>Pinging token ${name} ...`);
         sendPing(left, top, pageId, playerId, true, playerId);
     };
 
