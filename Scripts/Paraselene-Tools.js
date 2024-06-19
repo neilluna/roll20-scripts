@@ -620,6 +620,7 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
