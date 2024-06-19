@@ -597,9 +597,8 @@ const ParaseleneTools = (() => {
                 .add(new Row()
                     .add(new Cell(
                         new Link(
-                            `!token-mod --ignore-selected --ids ${id} ` +
-                                `--order tofront --set layer#${tokenLayer} ` +
-                                `left#${tokenLeft} top#${tokenTop}`,
+                            `!${scriptName}-Move-Token-API --speakAs ${speakAs} ${playerId} ${id} ` +
+                            `${tokenLeft} ${tokenTop} ${tokenLayer}`,
                             name,
                         ).render(),
                     ))
@@ -611,6 +610,45 @@ const ParaseleneTools = (() => {
         });
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
+    };
+
+    // Rotate a token to the next 45-degree increment.
+    const moveTokenAPI = (msg) => {
+        const commandName = `${scriptName}-Move-Token-API`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = args[1];
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
+        const tokenId = args[2];
+        const left = args[3];
+        const top = args[4];
+        const layer = args[5];
+
+        const specifiedTokens = findObjs({
+            id: tokenId,
+            subtype: 'token',
+            type: 'graphic',
+        });
+
+        if (specifiedTokens.length == 0) {
+            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            return;
+        }
+
+        const token = specifiedTokens[0];
+        token.set('left', left);
+        token.set('top', top);
+        token.set('layer', layer);
+        toFront(token);
     };
 
     // Rotate a token to the next 45-degree increment.
@@ -647,6 +685,7 @@ const ParaseleneTools = (() => {
         on('chat:message', pingCharacter);
         on('chat:message', pingTokenAPI);
         on('chat:message', listPullTokensAPI);
+        on('chat:message', moveTokenAPI);
         on('chat:message', rotateToken);
     };
 
