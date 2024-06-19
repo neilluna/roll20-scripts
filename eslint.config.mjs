@@ -14,11 +14,13 @@ export default [
                 "getObj": "readonly",
                 "log": "readonly",
                 "on": "readonly",
+                "playerIsGM": "readonly",
                 "sendChat": "readonly",
                 "sendPing": "readonly",
                 "spawnFx": "readonly",
                 "stringOrBlank": "readonly",
                 "state": "readonly",
+                "toFront": "readonly",
             },
         },
         plugins: {

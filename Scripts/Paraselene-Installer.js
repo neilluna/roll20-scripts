@@ -1122,34 +1122,35 @@ const ParaseleneInstaller = (() => {
 
         const dynamicLightingToolSummary = 'Include a macro to invoke the "Dynamic Lighting Tool".<br/>' +
             'Example: "Dynamic-Lighting-Tool".<br/>' +
-            'Requires the "Dynamic Lighting Tool" script.';
+            'Requires the "Dynamic Lighting Tool" mod script.';
         const mapChangeSummary = 'Include macros that allow the players to change maps themselves, ' +
             'and a macro for the GM to easily manage which maps the players are on.<br/>' +
             'Examples: "Change-Map" and "Change-Map-GM-Only".<br/>' +
-            'Requires the "MapChange" script.';
+            'Requires the "MapChange" mod script.';
         const scriptCardsSummary = 'Include customized abilities and spells.<br/>' +
             'Examples: "Chaos Bolt" and "Magic Missile".<br/>' +
-            'Requires the "ScriptCards" script.';
+            'Requires the "ScriptCards" mod script.';
         const smartAOESummary = 'Include abilities and macros for the AOE pattern helpers.<br/>' +
             'Examples: "Add-AOE-Pattern" and "Remove-AOE-Pattern".<br/>' +
-            'Requires the "smartAoE" script.';
+            'Requires the "smartAoE" mod script.';
         const teleportSummary = 'Include a macro to invoke the GM\'s "Teleport" menu tool.<br/>' +
             'Example: "Teleport-Menu".<br/>' +
-            'Requires the "Teleport" script.';
+            'Requires the "Teleport" mod script.';
         const tokenActionsSummary = 'Include macros to add and remove token actions for the "Actions" of NPCs.<br/>' +
             'Examples: "Add-Token-Actions" and "Remove-Token-Actions".<br/>' +
-            'Requires the "Token Action Maker" script.';
+            'Requires the "Token Action Maker" mod script.';
         const tokenModSummary = 'Include abilities and macros for the "TokenMod" module.<br/>' +
             'Examples: "Clear-Token-Status", "Kill-Token", "Set-Token-Defaults", "Set-Token-Light", ' +
             'and "Set-Token-Vision".<br/>' +
-            'Requires the "TokenMod" script.';
+            'Requires the "TokenMod" mod script.';
         const turnOrderSummary = 'Include macros to easily manage the turn order.<br/>' +
             'Examples: "Manage-Turn-Order" and "Manage-Turn-Order-Stack".<br/>' +
-            'Requires the "AddCustomTurn", "GroupInitiative", and "TurnMarker1" scripts.';
+            'Requires the "AddCustomTurn", "GroupInitiative", and "TurnMarker1" mod scripts.';
 
         const serializedChoices = serializeChoices(choices);
 
-        const cellStyle = 'padding-left: 10px; padding-right: 10px;';
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
+        const switchCellStyle = cellStyle + ' text-align: center;';
         const table = new Table()
             .add(new Row()
                 .add(new Cell(
@@ -1171,7 +1172,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.DynamicLightingTool ? 'On' : 'Off'}`,
                     ).render() + alerts.DynamicLightingTool,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1186,7 +1187,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.MapChange ? 'On' : 'Off'}`,
                     ).render() + alerts.MapChange,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1201,7 +1202,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.ScriptCards ? 'On' : 'Off'}`,
                     ).render() + alerts.ScriptCards,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1216,7 +1217,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.SmartAOE ? 'On' : 'Off'}`,
                     ).render() + alerts.SmartAOE,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1231,7 +1232,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.Teleport ? 'On' : 'Off'}`,
                     ).render() + alerts.Teleport,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1246,7 +1247,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.TokenActions ? 'On' : 'Off'}`,
                     ).render() + alerts.TokenActions,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1261,7 +1262,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.TokenMod ? 'On' : 'Off'}`,
                     ).render() + alerts.TokenMod,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1276,7 +1277,7 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.TurnOrder ? 'On' : 'Off'}`,
                     ).render() + alerts.TurnOrder,
-                    cellStyle + ' text-align: center;',
+                    switchCellStyle,
                 )),
             )
             .add(new Row()
@@ -1285,7 +1286,7 @@ const ParaseleneInstaller = (() => {
                         `!${scriptName}-Install-API --speakAs ${speakAs} ${playerId} ${serializedChoices}`,
                         `Install and remove features`,
                     ).render(),
-                    cellStyle + ' text-align: center;',
+                    'text-align: center;',
                 ).addAttribute(new Attribute('colspan', '2'))),
             );
 
@@ -1376,6 +1377,7 @@ const ParaseleneInstaller = (() => {
 
     // Update, remove, and install Paraselene character abilities.
     const updateAbilities = (speakAs, playerName, characterName, newActionsList) => {
+        const cellStyle = 'padding-left: 5px; padding-right: 5px; text-align: center;';
         const table = new Table();
         let summary = '';
 
@@ -1406,7 +1408,7 @@ const ParaseleneInstaller = (() => {
             summary = `${characterName} character<br/>${new Span('Removed', 'color: yellow').render()}`;
         }
 
-        table.add(new Row().add(new Cell(summary, 'text-align: center;')));
+        table.add(new Row().add(new Cell(summary, cellStyle)));
 
         // Create a list of the existing Paraselene abilities.
         let existingAbilities = [];
@@ -1424,7 +1426,7 @@ const ParaseleneInstaller = (() => {
             table.add(new Row()
                 .add(new Header(
                     `Updating and removing<br/>${characterName}<br/>abilities`,
-                    'text-align: center;',
+                    cellStyle,
                 )),
             );
             existingAbilities.forEach(ability => {
@@ -1445,7 +1447,7 @@ const ParaseleneInstaller = (() => {
                     ability.remove();
                     summary = `${name}<br/>${new Span('Removed', 'color: yellow').render()}`;
                 }
-                table.add(new Row().add(new Cell(summary, 'text-align: center;')));
+                table.add(new Row().add(new Cell(summary, cellStyle)));
             });
         }
 
@@ -1467,7 +1469,7 @@ const ParaseleneInstaller = (() => {
             table.add(new Row()
                 .add(new Header(
                     `Installing<br/>${characterName}<br/>abilities`,
-                    'text-align: center;',
+                    cellStyle,
                 )),
             );
             actionsToInstall.forEach(action => {
@@ -1483,7 +1485,7 @@ const ParaseleneInstaller = (() => {
                 table.add(new Row()
                     .add(new Cell(
                         `${name}<br/>${new Span('Installed', 'color: green').render()}`,
-                        'text-align: center;',
+                        cellStyle,
                     )),
                 );
             });
@@ -1505,13 +1507,14 @@ const ParaseleneInstaller = (() => {
         // Create an index of the new actions.
         const newActionIndex = indexParaseleneActions(paraseleneMacros);
 
+        const cellStyle = 'padding-left: 5px; padding-right: 5px; text-align: center;';
         const table = new Table();
         let summary = '';
         if (existingMacros.length > 0) {
             table.add(new Row()
                 .add(new Header(
                     `Updating and removing macros`,
-                    'text-align: center;',
+                    cellStyle,
                 )),
             );
             existingMacros.forEach(macro => {
@@ -1533,7 +1536,7 @@ const ParaseleneInstaller = (() => {
                     macro.remove();
                     summary = `${displayName}<br/>${new Span('Removed', 'color: yellow').render()}`;
                 }
-                table.add(new Row().add(new Cell(summary, 'text-align: center;')));
+                table.add(new Row().add(new Cell(summary, cellStyle)));
             });
         }
 
@@ -1553,7 +1556,7 @@ const ParaseleneInstaller = (() => {
             table.add(new Row()
                 .add(new Header(
                     `Installing macros`,
-                    'text-align: center;',
+                    cellStyle,
                 )),
             );
             actionsToInstall.forEach(action => {
@@ -1575,7 +1578,7 @@ const ParaseleneInstaller = (() => {
                 table.add(new Row()
                     .add(new Cell(
                         `${name}<br/>${new Span('Installed', 'color: green').render()}`,
-                        'text-align: center;',
+                        cellStyle,
                     )),
                 );
             });

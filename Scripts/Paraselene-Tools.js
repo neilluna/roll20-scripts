@@ -156,32 +156,32 @@ const ParaseleneTools = (() => {
         const name = pc.stringOrBlank(token.get('name'));
         const imgsrc = token.get('imgsrc');
         const represents = pc.stringOrBlank(token.get('represents'));
-        const left = token.get('left');
-        const top = token.get('top');
-        const width = token.get('width');
-        const height = token.get('height');
+        const left = Math.round(token.get('left'));
+        const top = Math.round(token.get('top'));
+        const width = Math.round(token.get('width'));
+        const height = Math.round(token.get('height'));
         const rotation = token.get('rotation');
         const layer = token.get('layer');
         const controlledby = pc.stringOrBlank(token.get('controlledby'));
 
-        const cellStyle = 'padding-left: 10px; padding-right: 10px;';
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const table = new Table()
             .add(new Row()
                 .add(new Cell(
                     `Information for token<br/>${name}`,
-                    'text-align: center;',
+                    cellStyle + ' text-align: center;',
                 ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
-                .add(new Header('id'))
+                .add(new Header('id', cellStyle))
                 .add(new Cell(id, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('name'))
+                .add(new Header('name', cellStyle))
                 .add(new Cell(name, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('imgsrc'))
+                .add(new Header('imgsrc', cellStyle))
                 .add(new Cell(
                     new Element('img')
                         .addAttribute(new Attribute('src', imgsrc))
@@ -196,35 +196,35 @@ const ParaseleneTools = (() => {
                 )),
             )
             .add(new Row()
-                .add(new Header('represents'))
+                .add(new Header('represents', cellStyle))
                 .add(new Cell(represents, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('left'))
+                .add(new Header('left', cellStyle))
                 .add(new Cell(left, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('top'))
+                .add(new Header('top', cellStyle))
                 .add(new Cell(top, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('width'))
+                .add(new Header('width', cellStyle))
                 .add(new Cell(width, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('height'))
+                .add(new Header('height', cellStyle))
                 .add(new Cell(height, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('rotation'))
+                .add(new Header('rotation', cellStyle))
                 .add(new Cell(rotation, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('layer'))
+                .add(new Header('layer', cellStyle))
                 .add(new Cell(layer, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('controlledby'))
+                .add(new Header('controlledby', cellStyle))
                 .add(new Cell(controlledby, cellStyle)),
             )
             .add(new Row()
@@ -344,27 +344,28 @@ const ParaseleneTools = (() => {
             pageTokens = pc.sortTokens(pageTokens);
         }
 
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const pageTokensTable = new Table()
             .add(new Row()
                 .add(new Cell(
                     `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})`,
-                    'text-align: center;',
+                    cellStyle + ' text-align: center;',
                 ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
-                .add(new Header('Token'))
+                .add(new Header('Token', cellStyle))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
-                    'padding-left: 10px; padding-right: 10px;',
+                    cellStyle,
                 )),
             );
         pageTokens.forEach(token => {
             const id = token.get('id');
             const name = pc.stringOrBlank(token.get('name'));
-            const left = token.get('left');
-            const top = token.get('top');
-            const width = token.get('width');
-            const height = token.get('height');
+            const left = Math.round(token.get('left'));
+            const top = Math.round(token.get('top'));
+            const width = Math.round(token.get('width'));
+            const height = Math.round(token.get('height'));
 
             pageTokensTable
                 .add(new Row()
@@ -374,7 +375,7 @@ const ParaseleneTools = (() => {
                     ))
                     .add(new Cell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
-                        'padding-left: 10px; padding-right: 10px;',
+                        cellStyle,
                     )),
                 );
         });
@@ -400,11 +401,22 @@ const ParaseleneTools = (() => {
         const playerName = player.get('displayname');
         const playerPageId = pc.getPlayerPageId(playerId);
 
+        if (playerIsGM(playerId)) {
+            const message = 'GMs cannot use Ping-Character. Use Get-Token-Info instead.';
+            pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${message}`);
+            return;
+        }
+
         const characters = findObjs({
             type: 'character',
         }).filter(character => {
             const controlledBy = character.get('controlledby').split(',');
-            return controlledBy.includes(playerId) || controlledBy.includes('all');
+            const inplayerjournals = character.get('inplayerjournals').split(',');
+
+            const isControlledBy = controlledBy.includes(playerId) || controlledBy.includes('all');
+            const isInPlayerJournals = inplayerjournals.includes(playerId) || inplayerjournals.includes('all');
+
+            return isControlledBy && isInPlayerJournals;
         });
 
         let tokens = [];
@@ -412,6 +424,7 @@ const ParaseleneTools = (() => {
             const characterId = character.get('id');
             findObjs({
                 pageid: playerPageId,
+                layer: 'objects',
                 represents: characterId,
                 subtype: 'token',
                 type: 'graphic',
@@ -436,21 +449,22 @@ const ParaseleneTools = (() => {
             tokens = pc.sortTokens(tokens);
         }
 
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const pageTokensTable = new Table()
             .add(new Row()
-                .add(new Header('Token'))
+                .add(new Header('Token', cellStyle))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
-                    'padding-left: 10px; padding-right: 10px;',
+                    cellStyle,
                 )),
             );
         tokens.forEach(token => {
             const id = token.get('id');
             const name = pc.stringOrBlank(token.get('name'));
-            const left = token.get('left');
-            const top = token.get('top');
-            const width = token.get('width');
-            const height = token.get('height');
+            const left = Math.round(token.get('left'));
+            const top = Math.round(token.get('top'));
+            const width = Math.round(token.get('width'));
+            const height = Math.round(token.get('height'));
 
             pageTokensTable
                 .add(new Row()
@@ -461,7 +475,7 @@ const ParaseleneTools = (() => {
                 .add(
                     new pc.HtmlTableCell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
-                        'padding-left: 10px; padding-right: 10px;',
+                        cellStyle,
                     ),
                 ),
             );
@@ -500,10 +514,12 @@ const ParaseleneTools = (() => {
         }
 
         const token = tokens[0];
+        const name = pc.stringOrBlank(token.get('name'));
         const left = token.get('left');
         const top = token.get('top');
         const pageId = token.get('pageid');
 
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>Pinging token ${name} ...`);
         sendPing(left, top, pageId, playerId, true, playerId);
     };
 
@@ -553,47 +569,86 @@ const ParaseleneTools = (() => {
             pageTokens = pc.sortTokens(pageTokens);
         }
 
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const pageTokensTable = new Table()
             .add(new Row()
                 .add(new Cell(
                     `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})<br/>` +
                     'Which token do you wish to pull to this token?',
-                    'text-align: center;',
+                    cellStyle + ' text-align: center;',
                 ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
-                .add(new Header('Token'))
+                .add(new Header('Token', cellStyle))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
-                    'padding-left: 10px; padding-right: 10px;',
+                    cellStyle,
                 )),
             );
         pageTokens.forEach(token => {
             const id = token.get('id');
             const name = pc.stringOrBlank(token.get('name'));
-            const left = token.get('left');
-            const top = token.get('top');
-            const width = token.get('width');
-            const height = token.get('height');
+            const left = Math.round(token.get('left'));
+            const top = Math.round(token.get('top'));
+            const width = Math.round(token.get('width'));
+            const height = Math.round(token.get('height'));
 
             pageTokensTable
                 .add(new Row()
                     .add(new Cell(
                         new Link(
-                            `!token-mod --ignore-selected --ids ${id} ` +
-                                `--order tofront --set layer#${tokenLayer} ` +
-                                `left#${tokenLeft} top#${tokenTop}`,
+                            `!${scriptName}-Move-Token-API --speakAs ${speakAs} ${playerId} ${id} ` +
+                            `${tokenLeft} ${tokenTop} ${tokenLayer}`,
                             name,
                         ).render(),
                     ))
                     .add(new Cell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
-                        'padding-left: 10px; padding-right: 10px;',
+                        cellStyle,
                     )),
                 );
         });
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${pageTokensTable.render()}`);
+    };
+
+    // Rotate a token to the next 45-degree increment.
+    const moveTokenAPI = (msg) => {
+        const commandName = `${scriptName}-Move-Token-API`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = args[1];
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
+        const tokenId = args[2];
+        const left = args[3];
+        const top = args[4];
+        const layer = args[5];
+
+        const specifiedTokens = findObjs({
+            id: tokenId,
+            subtype: 'token',
+            type: 'graphic',
+        });
+
+        if (specifiedTokens.length == 0) {
+            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            return;
+        }
+
+        const token = specifiedTokens[0];
+        token.set('left', left);
+        token.set('top', top);
+        token.set('layer', layer);
+        toFront(token);
     };
 
     // Rotate a token to the next 45-degree increment.
@@ -603,6 +658,7 @@ const ParaseleneTools = (() => {
         if (msg.type != 'api' || args[0] != `!${commandName}`) {
             return;
         }
+
         if (!isParseleneCommonLoaded()) {
             return;
         }
@@ -629,6 +685,7 @@ const ParaseleneTools = (() => {
         on('chat:message', pingCharacter);
         on('chat:message', pingTokenAPI);
         on('chat:message', listPullTokensAPI);
+        on('chat:message', moveTokenAPI);
         on('chat:message', rotateToken);
     };
 
