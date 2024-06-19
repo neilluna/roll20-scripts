@@ -156,10 +156,10 @@ const ParaseleneTools = (() => {
         const name = pc.stringOrBlank(token.get('name'));
         const imgsrc = token.get('imgsrc');
         const represents = pc.stringOrBlank(token.get('represents'));
-        const left = token.get('left');
-        const top = token.get('top');
-        const width = token.get('width');
-        const height = token.get('height');
+        const left = Math.round(token.get('left'));
+        const top = Math.round(token.get('top'));
+        const width = Math.round(token.get('width'));
+        const height = Math.round(token.get('height'));
         const rotation = token.get('rotation');
         const layer = token.get('layer');
         const controlledby = pc.stringOrBlank(token.get('controlledby'));
@@ -361,10 +361,10 @@ const ParaseleneTools = (() => {
         pageTokens.forEach(token => {
             const id = token.get('id');
             const name = pc.stringOrBlank(token.get('name'));
-            const left = token.get('left');
-            const top = token.get('top');
-            const width = token.get('width');
-            const height = token.get('height');
+            const left = Math.round(token.get('left'));
+            const top = Math.round(token.get('top'));
+            const width = Math.round(token.get('width'));
+            const height = Math.round(token.get('height'));
 
             pageTokensTable
                 .add(new Row()
@@ -459,10 +459,10 @@ const ParaseleneTools = (() => {
         tokens.forEach(token => {
             const id = token.get('id');
             const name = pc.stringOrBlank(token.get('name'));
-            const left = token.get('left');
-            const top = token.get('top');
-            const width = token.get('width');
-            const height = token.get('height');
+            const left = Math.round(token.get('left'));
+            const top = Math.round(token.get('top'));
+            const width = Math.round(token.get('width'));
+            const height = Math.round(token.get('height'));
 
             pageTokensTable
                 .add(new Row()
@@ -585,10 +585,10 @@ const ParaseleneTools = (() => {
         pageTokens.forEach(token => {
             const id = token.get('id');
             const name = pc.stringOrBlank(token.get('name'));
-            const left = token.get('left');
-            const top = token.get('top');
-            const width = token.get('width');
-            const height = token.get('height');
+            const left = Math.round(token.get('left'));
+            const top = Math.round(token.get('top'));
+            const width = Math.round(token.get('width'));
+            const height = Math.round(token.get('height'));
 
             pageTokensTable
                 .add(new Row()
