@@ -164,24 +164,24 @@ const ParaseleneTools = (() => {
         const layer = token.get('layer');
         const controlledby = pc.stringOrBlank(token.get('controlledby'));
 
-        const cellStyle = 'padding-left: 10px; padding-right: 10px;';
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const table = new Table()
             .add(new Row()
                 .add(new Cell(
                     `Information for token<br/>${name}`,
-                    'text-align: center;',
+                    cellStyle + ' text-align: center;',
                 ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
-                .add(new Header('id'))
+                .add(new Header('id', cellStyle))
                 .add(new Cell(id, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('name'))
+                .add(new Header('name', cellStyle))
                 .add(new Cell(name, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('imgsrc'))
+                .add(new Header('imgsrc', cellStyle))
                 .add(new Cell(
                     new Element('img')
                         .addAttribute(new Attribute('src', imgsrc))
@@ -196,35 +196,35 @@ const ParaseleneTools = (() => {
                 )),
             )
             .add(new Row()
-                .add(new Header('represents'))
+                .add(new Header('represents', cellStyle))
                 .add(new Cell(represents, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('left'))
+                .add(new Header('left', cellStyle))
                 .add(new Cell(left, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('top'))
+                .add(new Header('top', cellStyle))
                 .add(new Cell(top, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('width'))
+                .add(new Header('width', cellStyle))
                 .add(new Cell(width, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('height'))
+                .add(new Header('height', cellStyle))
                 .add(new Cell(height, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('rotation'))
+                .add(new Header('rotation', cellStyle))
                 .add(new Cell(rotation, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('layer'))
+                .add(new Header('layer', cellStyle))
                 .add(new Cell(layer, cellStyle)),
             )
             .add(new Row()
-                .add(new Header('controlledby'))
+                .add(new Header('controlledby', cellStyle))
                 .add(new Cell(controlledby, cellStyle)),
             )
             .add(new Row()
@@ -344,18 +344,19 @@ const ParaseleneTools = (() => {
             pageTokens = pc.sortTokens(pageTokens);
         }
 
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const pageTokensTable = new Table()
             .add(new Row()
                 .add(new Cell(
                     `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})`,
-                    'text-align: center;',
+                    cellStyle + ' text-align: center;',
                 ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
-                .add(new Header('Token'))
+                .add(new Header('Token', cellStyle))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
-                    'padding-left: 10px; padding-right: 10px;',
+                    cellStyle,
                 )),
             );
         pageTokens.forEach(token => {
@@ -374,7 +375,7 @@ const ParaseleneTools = (() => {
                     ))
                     .add(new Cell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
-                        'padding-left: 10px; padding-right: 10px;',
+                        cellStyle,
                     )),
                 );
         });
@@ -448,12 +449,13 @@ const ParaseleneTools = (() => {
             tokens = pc.sortTokens(tokens);
         }
 
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const pageTokensTable = new Table()
             .add(new Row()
-                .add(new Header('Token'))
+                .add(new Header('Token', cellStyle))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
-                    'padding-left: 10px; padding-right: 10px;',
+                    cellStyle,
                 )),
             );
         tokens.forEach(token => {
@@ -473,7 +475,7 @@ const ParaseleneTools = (() => {
                 .add(
                     new pc.HtmlTableCell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
-                        'padding-left: 10px; padding-right: 10px;',
+                        cellStyle,
                     ),
                 ),
             );
@@ -567,19 +569,20 @@ const ParaseleneTools = (() => {
             pageTokens = pc.sortTokens(pageTokens);
         }
 
+        const cellStyle = 'padding-left: 5px; padding-right: 5px;';
         const pageTokensTable = new Table()
             .add(new Row()
                 .add(new Cell(
                     `Tokens on the same page as<br/>"${tokenName}"<br/>(${tokenId})<br/>` +
                     'Which token do you wish to pull to this token?',
-                    'text-align: center;',
+                    cellStyle + ' text-align: center;',
                 ).addAttribute(new Attribute('colspan', '2'))),
             )
             .add(new Row()
-                .add(new Header('Token'))
+                .add(new Header('Token', cellStyle))
                 .add(new Header(
                     'left,&nbsp;top,&nbsp;width,&nbsp;height',
-                    'padding-left: 10px; padding-right: 10px;',
+                    cellStyle,
                 )),
             );
         pageTokens.forEach(token => {
@@ -602,7 +605,7 @@ const ParaseleneTools = (() => {
                     ))
                     .add(new Cell(
                         `${left},&nbsp;${top},&nbsp;${width},&nbsp;${height}`,
-                        'padding-left: 10px; padding-right: 10px;',
+                        cellStyle,
                     )),
                 );
         });
