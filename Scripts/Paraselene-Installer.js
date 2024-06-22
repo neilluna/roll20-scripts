@@ -925,7 +925,11 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Remove-AOE-Pattern',
             '!# Settings: Token Action: Yes, Visibility: All Players',
-            '!smartremove',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'smartremove' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Remove-AOE-Pattern' +
+                '{& end}',
         ].join('\n') + '\n',
     ];
 
@@ -947,12 +951,20 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Clear-Token-Status',
             '!# Settings: Token Action: Yes',
-            '!token-mod --set statusmarkers#=',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'token-mod --set statusmarkers#=' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Clear-Token-Status' +
+                '{& end}',
         ].join('\n') + '\n',
         [
             '!# Paraselene-Kill-Token',
             '!# Settings: Token Action: Yes',
-            '!token-mod --order top --set layer#map statusmarkers#dead',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'token-mod --order top --set layer#map statusmarkers#dead' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Kill-Token' +
+                '{& end}',
         ].join('\n') + '\n',
         [
             '!# Paraselene-Set-Token-Defaults',
@@ -972,7 +984,11 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Toggle-Token-Hunters-Mark',
             '!# Settings: Token Action: Yes',
-            '!token-mod --set statusmarkers#!archery-target',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'token-mod --set statusmarkers#!archery-target' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Toggle-Token-Hunters-Mark' +
+                '{& end}',
         ].join('\n') + '\n',
     ];
 
@@ -1009,12 +1025,20 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Add-Token-Actions',
             '!# Settings: Token Action: Yes',
-            '!sortta',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'sortta' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Add-Token-Actions' +
+                '{& end}',
         ].join('\n') + '\n',
         [
             '!# Paraselene-Remove-Token-Actions',
             '!# Settings: Token Action: Yes',
-            '!deleteta',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'deleteta' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Remove-Token-Actions' +
+                '{& end}',
         ].join('\n') + '\n',
     ];
 
@@ -1023,8 +1047,11 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Get-Token-Info',
             '!# Settings: Token Action: Yes',
-            '!Paraselene-Tools-{& if @(selected.token_name[noneSelected]) != noneSelected}Get-Token-Info' +
-                '{& else}Whisper-Token-Not-Selected{& end} --speakAs Get-Token-Info',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'Paraselene-Tools-Get-Token-Info' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected' +
+                '{& end} --speakAs Get-Token-Info',
         ].join('\n') + '\n',
         [
             '!# Paraselene-Install',
@@ -1038,8 +1065,11 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Rotate-Token',
             '!# Settings: Token Action: Yes, Visibility: All Players',
-            '!Paraselene-Tools-{& if @(selected.token_name[noneSelected]) != noneSelected}Rotate-Token' +
-                '{& else}Whisper-Token-Not-Selected{& end} --speakAs Rotate-Token',
+            '!{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'Paraselene-Tools-Rotate-Token' +
+                '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected' +
+                '{& end} --speakAs Rotate-Token',
         ].join('\n') + '\n',
     ];
 
