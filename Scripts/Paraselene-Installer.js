@@ -99,7 +99,7 @@ const ParaseleneInstaller = (() => {
 
         // eslint-disable-next-line no-undef
         pc = ParaseleneCommon;
-        const requiredVersion = '1.1.0';
+        const requiredVersion = '2.0.0';
         if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
             log(
                 `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
@@ -1023,7 +1023,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Get-Token-Info',
             '!# Settings: Token Action: Yes',
-            '!Paraselene-Tools-Get-Token-Info --speakAs Get-Token-Info',
+            '!Paraselene-Tools-{& if @(selected.token_name[noneSelected]) != noneSelected}Get-Token-Info' +
+                '{& else}Whisper-Token-Not-Selected{& end} --speakAs Get-Token-Info',
         ].join('\n') + '\n',
         [
             '!# Paraselene-Install',
@@ -1037,7 +1038,8 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Rotate-Token',
             '!# Settings: Token Action: Yes, Visibility: All Players',
-            '!Paraselene-Tools-Rotate-Token',
+            '!Paraselene-Tools-{& if @(selected.token_name[noneSelected]) != noneSelected}Rotate-Token' +
+                '{& else}Whisper-Token-Not-Selected{& end} --speakAs Rotate-Token',
         ].join('\n') + '\n',
     ];
 

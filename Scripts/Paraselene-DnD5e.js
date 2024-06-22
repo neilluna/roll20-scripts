@@ -73,7 +73,7 @@ const ParaseleneDnD5e = (() => {
 
         // eslint-disable-next-line no-undef
         pc = ParaseleneCommon;
-        const requiredVersion = '1.1.0';
+        const requiredVersion = '2.0.0';
         if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
             log(
                 `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
@@ -102,6 +102,12 @@ const ParaseleneDnD5e = (() => {
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+
+        if (!msg.selected || (msg.selected.length == 0)) {
+            pc.whisperTokenNotSelected(speakAs, playerName);
+            return;
+        }
+
         const tokenId = msg.selected[0]._id;
         const token = getObj("graphic", tokenId);
 
@@ -299,6 +305,12 @@ const ParaseleneDnD5e = (() => {
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
+
+        if (!msg.selected || (msg.selected.length == 0)) {
+            pc.whisperTokenNotSelected(speakAs, playerName);
+            return;
+        }
+
         const tokenId = msg.selected[0]._id;
         const token = getObj("graphic", tokenId);
 

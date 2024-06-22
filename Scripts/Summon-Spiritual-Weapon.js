@@ -18,8 +18,12 @@ paraselene.summonSpiritualWeapon = function(msg) {
     const weapon = JSON.parse(args[1]);
     const offset = args[2];
 
-    const selected = msg.selected;
-    const token = getObj("graphic", selected[0]._id);
+    // if (!msg.selected || (msg.selected.length == 0)) {
+    //     pc.whisperTokenNotSelected(speakAs, playerName);
+    //     return;
+    // }
+
+    const token = getObj("graphic", msg.selected[0]._id);
     const character = getObj("character", token.get("represents"));
 
     let left = token.get("left");
