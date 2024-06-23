@@ -1,6 +1,6 @@
 // Paraselene-Common
 // Common utilites used by other Paraselene scripts.
-// Version 1.1.0
+// Version 2.0.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneCommon = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.1.0',
+    version: '2.0.0',
 };
 {
     const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
@@ -258,16 +258,6 @@ const ParaseleneCommon = (() => {
         sendChat(speakAs, message, null, { noarchive: true });
     };
 
-    // Send a chat message to a player that a token does not exist.
-    const sendChatTokenDoesNotExist = (speakAs, playerName) => {
-        sendChatNoArchive(speakAs, `/w "${playerName}" <br/>That token is no longer in the game.`);
-    };
-
-    // Send a chat message to a player that a token does not exist.
-    const sendChatTokenNotOnPage = (speakAs, playerName) => {
-        sendChatNoArchive(speakAs, `/w "${playerName}" <br/>That token is no longer on this map.`);
-    };
-
     // Sort an array of tokens by name.
     const sortTokens = (tokens) => {
         return tokens.sort((token1, token2) => {
@@ -280,6 +270,21 @@ const ParaseleneCommon = (() => {
     // Return "<Blank>" is the given string is blank. Otherwise return the string,
     const stringOrBlank = (str) => {
         return str.length > 0 ? str : '&lt;Blank&gt;';
+    };
+
+    // Send a chat message to a player that a token does not exist.
+    const whisperTokenDoesNotExist = (speakAs, playerName) => {
+        sendChatNoArchive(speakAs, `/w "${playerName}" <br/>That token is no longer in the game.`);
+    };
+
+    // Send a chat message to a player that a token does not exist.
+    const whisperTokenNotOnPage = (speakAs, playerName) => {
+        sendChatNoArchive(speakAs, `/w "${playerName}" <br/>That token is no longer on this map.`);
+    };
+
+    // Send a chat message to a player that a token is not selected.
+    const whisperTokenNotSelected = (speakAs, playerName) => {
+        sendChatNoArchive(speakAs, `/w "${playerName}" <br/>No token is selected.`);
     };
 
     // When all scripts have loaded ...
@@ -307,10 +312,11 @@ const ParaseleneCommon = (() => {
         HtmlBorderedTableHeader: HtmlBorderedTableHeader,
         HtmlBorderedTableCell: HtmlBorderedTableCell,
         sendChatNoArchive: sendChatNoArchive,
-        sendChatTokenDoesNotExist: sendChatTokenDoesNotExist,
-        sendChatTokenNotOnPage: sendChatTokenNotOnPage,
         sortTokens: sortTokens,
         stringOrBlank: stringOrBlank,
+        whisperTokenDoesNotExist: whisperTokenDoesNotExist,
+        whisperTokenNotOnPage: whisperTokenNotOnPage,
+        whisperTokenNotSelected: whisperTokenNotSelected,
         version: version,
     };
 

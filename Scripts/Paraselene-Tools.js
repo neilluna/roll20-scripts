@@ -80,7 +80,7 @@ const ParaseleneTools = (() => {
 
         // eslint-disable-next-line no-undef
         pc = ParaseleneCommon;
-        const requiredVersion = '1.1.0';
+        const requiredVersion = '2.0.0';
         if (!pc.compareVersions || pc.compareVersions(pc.version, requiredVersion) < 0) {
             log(
                 `${scriptName}: Error: Paraselene-Common version ${pc.version} is not supported. ` +
@@ -116,6 +116,14 @@ const ParaseleneTools = (() => {
 
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
         const playerId = msg.playerid;
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
+
+        if (!msg.selected || (msg.selected.length == 0)) {
+            pc.whisperTokenNotSelected(speakAs, playerName);
+            return;
+        }
+
         const tokenId = msg.selected[0]._id;
 
         sendChat(speakAs, `!${scriptName}-Get-Token-Info-API --speakAs ${speakAs} ${playerId} ${tokenId}`);
@@ -146,7 +154,7 @@ const ParaseleneTools = (() => {
         });
 
         if (tokens.length == 0) {
-            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            pc.whisperTokenDoesNotExist(speakAs, playerName);
             return;
         }
 
@@ -288,7 +296,7 @@ const ParaseleneTools = (() => {
         });
 
         if (tokens.length == 0) {
-            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            pc.whisperTokenDoesNotExist(speakAs, playerName);
             return;
         }
 
@@ -326,7 +334,7 @@ const ParaseleneTools = (() => {
         });
 
         if (specifiedTokens.length == 0) {
-            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            pc.whisperTokenDoesNotExist(speakAs, playerName);
             return;
         }
 
@@ -421,11 +429,10 @@ const ParaseleneTools = (() => {
 
         let tokens = [];
         characters.forEach(character => {
-            const characterId = character.get('id');
             findObjs({
                 pageid: playerPageId,
                 layer: 'objects',
-                represents: characterId,
+                represents: character.get('id'),
                 subtype: 'token',
                 type: 'graphic',
             }).forEach(token => {
@@ -509,7 +516,7 @@ const ParaseleneTools = (() => {
         });
 
         if (tokens.length == 0) {
-            pc.sendChatTokenNotOnPage(speakAs, playerName);
+            pc.whisperTokenNotOnPage(speakAs, playerName);
             return;
         }
 
@@ -548,7 +555,7 @@ const ParaseleneTools = (() => {
         });
 
         if (specifiedTokens.length == 0) {
-            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            pc.whisperTokenDoesNotExist(speakAs, playerName);
             return;
         }
 
@@ -564,6 +571,11 @@ const ParaseleneTools = (() => {
             subtype: 'token',
             type: 'graphic',
         });
+
+        if (pageTokens.length == 0) {
+            pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>There are no tokens on this map.`);
+            return;
+        }
 
         if (pageTokens.length > 1) {
             pageTokens = pc.sortTokens(pageTokens);
@@ -640,7 +652,7 @@ const ParaseleneTools = (() => {
         });
 
         if (specifiedTokens.length == 0) {
-            pc.sendChatTokenDoesNotExist(speakAs, playerName);
+            pc.whisperTokenDoesNotExist(speakAs, playerName);
             return;
         }
 
@@ -663,17 +675,44 @@ const ParaseleneTools = (() => {
             return;
         }
 
-        const token = findObjs({
-            id: msg.selected[0]._id,
-            subtype: 'token',
-            type: 'graphic',
-        })[0];
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = msg.playerid;
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
+
+        if (!msg.selected || (msg.selected.length == 0)) {
+            pc.whisperTokenNotSelected(speakAs, playerName);
+            return;
+        }
+
+        const tokenId = msg.selected[0]._id;
+        const token = getObj("graphic", tokenId);
 
         let newRotation = Math.ceil((token.get('rotation') + 45) / 45) * 45;
         if (newRotation >= 360) {
             newRotation -= 360;
         }
         token.set("rotation", newRotation);
+    };
+
+    // Rotate a token to the next 45-degree increment.
+    const whisperTokenNotSelected = (msg) => {
+        const commandName = `${scriptName}-Whisper-Token-Not-Selected`;
+        const args = msg.content.split(/\s+/);
+        if (msg.type != 'api' || args[0] != `!${commandName}`) {
+            return;
+        }
+
+        if (!isParseleneCommonLoaded()) {
+            return;
+        }
+
+        const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const playerId = msg.playerid;
+        const player = getObj('player', playerId);
+        const playerName = player.get('displayname');
+
+        pc.whisperTokenNotSelected(speakAs, playerName);
     };
 
     // Register event handlers.
@@ -687,6 +726,7 @@ const ParaseleneTools = (() => {
         on('chat:message', listPullTokensAPI);
         on('chat:message', moveTokenAPI);
         on('chat:message', rotateToken);
+        on('chat:message', whisperTokenNotSelected);
     };
 
     // When all scripts have loaded ...
