@@ -947,105 +947,322 @@ const ParaseleneInstaller = (() => {
     const dnd5eTokenModAbilities = [
         [
             '!# Paraselene-SetTokenDefaults',
-            '!token-mod ' +
-                '--on ' +
-                    'showname ' +
-                    'showplayers_name ' +
-                    'showplayers_bar1 ' +
-                '--off ' +
-                    'playersedit_name ' +
-                    'showplayers_aura1 showplayers_aura2 playersedit_aura1 playersedit_aura2 ' +
-                    'showplayers_bar2 showplayers_bar3 playersedit_bar1 playersedit_bar2 playersedit_bar3',
-        ].join('\n') + '\n',
+            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'token-mod ' +
+                    '--on ' +
+                        'showname ' +
+                        'showplayers_name ' +
+                        'showplayers_bar1 ' +
+                    '--off ' +
+                        'playersedit_name ' +
+                        'showplayers_aura1 showplayers_aura2 playersedit_aura1 playersedit_aura2 ' +
+                        'showplayers_bar2 showplayers_bar3 playersedit_bar1 playersedit_bar2 playersedit_bar3' +
+            '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Set-Token-Defaults' +
+            '{& end}',
+            ].join('\n') + '\n',
         [
             '!# Paraselene-SetTokenLight',
-            '!token-mod --set ' +
-                '?{Light|' +
-                    'None,' +
-                        'has_bright_light_vision#on emits_bright_light#off emits_low_light#off ' +
-                        'bright_light_distance#0 low_light_distance#0 light_angle#360|' +
-                    'Bullseye Lantern,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#60 low_light_distance#60 light_angle#90|' +
-                    'Candle,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#2 low_light_distance#5 light_angle#360|' +
-                    'Crown of 1-3 Stars,' +
-                        'has_bright_light_vision#on emits_bright_light#off emits_low_light#on ' +
-                        'bright_light_distance#0 low_light_distance#30 light_angle#360|' +
-                    'Crown of 4+ Stars,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#30 low_light_distance#30 light_angle#360|' +
-                    'Dancing Lights,' +
-                        'has_bright_light_vision#on emits_bright_light#off emits_low_light#on ' +
-                        'bright_light_distance#0 low_light_distance#10 light_angle#360|' +
-                    'Daylight Spell,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#60 low_light_distance#60 light_angle#360|' +
-                    'Faerie Fire,' +
-                        'has_bright_light_vision#on emits_bright_light#off emits_low_light#on ' +
-                        'bright_light_distance#0 low_light_distance#10 light_angle#360|' +
-                    'Gem of Brightness,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#30 low_light_distance#30 light_angle#360|' +
-                    'Hooded Lantern,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#30 low_light_distance#30 light_angle#360|' +
-                    'Lamp,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#15 low_light_distance#15 light_angle#360|' +
-                    'Light Cantrip,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#20 low_light_distance#20 light_angle#360|' +
-                    'Spot 5ft,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#5 low_light_distance#0 light_angle#360|' +
-                    'Sunblade 10/10,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#10 low_light_distance#10 light_angle#360|' +
-                    'Sunblade (1st)15/15,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#15 low_light_distance#15 light_angle#360|' +
-                    'Sunblade 20/20,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#20 low_light_distance#20 light_angle#360|' +
-                    'Sunblade 25/25,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#25 low_light_distance#25 light_angle#360|' +
-                    'Sunblade 30/30,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#30 low_light_distance#30 light_angle#360|' +
-                    'Torch,' +
-                        'has_bright_light_vision#on emits_bright_light#on emits_low_light#on ' +
-                        'bright_light_distance#20 low_light_distance#20 light_angle#360' +
-                '}',
+            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'script{{',
+                '--#reentrant|Set token light for @(selected|token_id)',
+                '',
+                '--#sourceToken|@(selected|token_id)',
+                '--#emoteState|hidden',
+                '--#title|Set Token Light',
+                '--#whisper|self',
+                '',
+                '--+[rbutton]Select::setNone;None[/rbutton]|None',
+                '--+[rbutton]Select::setBullseyeLantern;Bullseye Lantern[/rbutton]|Bullseye Lantern',
+                '--+[rbutton]Select::setCandle;Candle[/rbutton]|Candle',
+                '--+[rbutton]Select::setCrownOfStars1Mote;Crown of Stars (1-3 Motes)[/rbutton]|' +
+                    'Crown of Stars (1-3 Motes)',
+                '--+[rbutton]Select::setCrownOfStars4Motes;Crown of Stars (4+ Motes)[/rbutton]|' +
+                    'Crown of Stars (4+ Motes)',
+                '--+[rbutton]Select::setDancingLights;Dancing Lights[/rbutton]|Dancing Lights',
+                '--+[rbutton]Select::setDaylightSpell;Daylight Spell[/rbutton]|Daylight Spell',
+                '--+[rbutton]Select::setFaerieFire;Faerie Fire[/rbutton]|Faerie Fire',
+                '--+[rbutton]Select::setGemOfBrightness;Gem of Brightness[/rbutton]|Gem of Brightness',
+                '--+[rbutton]Select::setHoodedLantern;Hooded Lantern[/rbutton]|Hooded Lantern',
+                '--+[rbutton]Select::setLamp;Lamp[/rbutton]|Lamp',
+                '--+[rbutton]Select::setLightCantrip;Light Cantrip[/rbutton]|Light Cantrip',
+                '--+[rbutton]Select::setSpot5ft;Spot 5ft[/rbutton]|Spot 5ft',
+                '--+[rbutton]Select::setSunblade10;Sun Blade 10ft[/rbutton]|Sun Blade 10ft',
+                '--+[rbutton]Select::setSunblade15;Sun Blade 15ft[/rbutton]|Sun Blade 15ft',
+                '--+[rbutton]Select::setSunblade20;Sun Blade 20ft[/rbutton]|Sun Blade 20ft',
+                '--+[rbutton]Select::setSunblade25;Sun Blade 25ft[/rbutton]|Sun Blade 25ft',
+                '--+[rbutton]Select::setSunblade30;Sun Blade 30ft[/rbutton]|Sun Blade 30ft',
+                '--+[rbutton]Select::setTorch;Torch[/rbutton]|Torch',
+                '--X|',
+                '',
+                '--:setNone|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|off',
+                '--&emitsLowLight|off',
+                '--&brightLightDistance|0',
+                '--&lowLightDistance|0',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setBullseyeLantern|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|60',
+                '--&lowLightDistance|60',
+                '--&lightAngle|90',
+                '--^setTokenLight|',
+                '',
+                '--:setCandle|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|2',
+                '--&lowLightDistance|5',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setCrownOfStars1Mote|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|off',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|0',
+                '--&lowLightDistance|30',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setCrownOfStars4Motes|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|30',
+                '--&lowLightDistance|30',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setDancingLights|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|off',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|0',
+                '--&lowLightDistance|10',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setDaylightSpell|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|60',
+                '--&lowLightDistance|60',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setFaerieFire|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|off',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|0',
+                '--&lowLightDistance|10',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setGemOfBrightness|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|30',
+                '--&lowLightDistance|30',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setHoodedLantern|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|30',
+                '--&lowLightDistance|30',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setLamp|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|15',
+                '--&lowLightDistance|15',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setLightCantrip|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|20',
+                '--&lowLightDistance|20',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setSpot5ft|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|5',
+                '--&lowLightDistance|0',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setSunblade10|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|10',
+                '--&lowLightDistance|10',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setSunblade1st15|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|15',
+                '--&lowLightDistance|15',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setSunblade20|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|20',
+                '--&lowLightDistance|20',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setSunblade25|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|25',
+                '--&lowLightDistance|25',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setSunblade30|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|30',
+                '--&lowLightDistance|30',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setTorch|',
+                '--&hasBrightLightVision|on',
+                '--&emitsBrightLight|on',
+                '--&emitsLowLight|on',
+                '--&brightLightDistance|20',
+                '--&lowLightDistance|20',
+                '--&lightAngle|360',
+                '--^setTokenLight|',
+                '',
+                '--:setTokenLight|',
+                '--+|[c][b]Set to [&reentryval][/b][/c]',
+                '--@token-mod|_ignore-selected _ids @(selected|token_id) _set ' +
+                    'has_bright_light_vision|[&hasBrightLightVision] emits_bright_light|[&emitsBrightLight] ' +
+                    'emits_low_light|[&emitsLowLight] bright_light_distance|[&brightLightDistance] ' +
+                    'low_light_distance|[&lowLightDistance] light_angle|[&lightAngle]',
+                '}}' +
+            '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Set-Token-Light' +
+            '{& end}',
         ].join('\n') + '\n',
         [
             '!# Paraselene-SetTokenVision',
-            '!token-mod --set ' +
-                '?{Vision|' +
-                    'Normal (Human),' +
-                        'has_bright_light_vision#on has_night_vision#off ' +
-                        'night_vision_distance#0 light_angle#360 night_vision_effect#none|' +
-                    'Blind,' +
-                        'has_bright_light_vision#off has_night_vision#off ' +
-                        'night_vision_distance#0 light_angle#360 night_vision_effect#none|' +
-                    'Blind Fighting,' +
-                        'has_bright_light_vision#on has_night_vision#on ' +
-                        'night_vision_distance#10 light_angle#360 night_vision_effect#none|' +
-                    'Darkvision 60,' +
-                        'has_bright_light_vision#on has_night_vision#on ' +
-                        'night_vision_distance#60 light_angle#360 night_vision_effect#nocturnal|' +
-                    'Darkvision 90,' +
-                        'has_bright_light_vision#on has_night_vision#on ' +
-                        'night_vision_distance#90 light_angle#360 night_vision_effect#nocturnal|' +
-                    'Darkvision 120,' +
-                        'has_bright_light_vision#on has_night_vision#on ' +
-                        'night_vision_distance#120 light_angle#360 night_vision_effect#nocturnal|' +
-                    'Darkvision 300,' +
-                        'has_bright_light_vision#on has_night_vision#on ' +
-                        'night_vision_distance#300 light_angle#360 night_vision_effect#nocturnal' +
-                '}',
+            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+                'script{{',
+                '--#reentrant|Set token vision for @(selected|token_id)',
+                '',
+                '--#sourceToken|@(selected|token_id)',
+                '--#emoteState|hidden',
+                '--#title|Set Token Vision',
+                '--#whisper|self',
+                '',
+                '--+[rbutton]Select::setNormal;Normal (Human)[/rbutton]|Normal (Human)',
+                '--+[rbutton]Select::setBlind;Blind[/rbutton]|Blind',
+                '--+[rbutton]Select::setBlindFighting;Blind Fighting[/rbutton]|Blind Fighting',
+                '--+[rbutton]Select::setDarkvision60;Darkvision 60ft[/rbutton]|Darkvision 60ft',
+                '--+[rbutton]Select::setDarkvision90;Darkvision 90ft[/rbutton]|Darkvision 90ft',
+                '--+[rbutton]Select::setDarkvision120;Darkvision 120ft[/rbutton]|Darkvision 120ft',
+                '--+[rbutton]Select::setDarkvision300;Darkvision 300ft[/rbutton]|Darkvision 300ft',
+                '--X|',
+                '',
+                '--:setNormal|',
+                '--&hasBrightLightVision|on',
+                '--&hasNightVision|off',
+                '--&nightVisionDistance|0',
+                '--&lightAngle|360',
+                '--&night_vision_effect|none',
+                '--^setTokenVision|',
+                '',
+                '--:setBlind|',
+                '--&hasBrightLightVision|off',
+                '--&hasNightVision|off',
+                '--&nightVisionDistance|0',
+                '--&lightAngle|360',
+                '--&night_vision_effect|none',
+                '--^setTokenVision|',
+                '',
+                '--:setBlindFighting|',
+                '--&hasBrightLightVision|on',
+                '--&hasNightVision|on',
+                '--&nightVisionDistance|10',
+                '--&lightAngle|360',
+                '--&night_vision_effect|none',
+                '--^setTokenVision|',
+                '',
+                '--:setDarkvision60|',
+                '--&hasBrightLightVision|on',
+                '--&hasNightVision|on',
+                '--&nightVisionDistance|60',
+                '--&lightAngle|360',
+                '--&night_vision_effect|nocturnal',
+                '--^setTokenVision|',
+                '',
+                '--:setDarkvision90|',
+                '--&hasBrightLightVision|on',
+                '--&hasNightVision|on',
+                '--&nightVisionDistance|90',
+                '--&lightAngle|360',
+                '--&night_vision_effect|nocturnal',
+                '--^setTokenVision|',
+                '',
+                '--:setDarkvision120|',
+                '--&hasBrightLightVision|on',
+                '--&hasNightVision|on',
+                '--&nightVisionDistance|120',
+                '--&lightAngle|360',
+                '--&night_vision_effect|nocturnal',
+                '--^setTokenVision|',
+                '',
+                '--:setDarkvision300|',
+                '--&hasBrightLightVision|on',
+                '--&hasNightVision|on',
+                '--&nightVisionDistance|300',
+                '--&lightAngle|360',
+                '--&night_vision_effect|nocturnal',
+                '--^setTokenVision|',
+                '',
+                '--:setTokenVision|',
+                '--+|[c][b]Set to [&reentryval][/b][/c]',
+                '--@token-mod|_ignore-selected _ids @(selected|token_id) _set ' +
+                    'has_bright_light_vision|[&hasBrightLightVision] has_night_vision|[&hasNightVision] ' +
+                    'night_vision_distance|[&nightVisionDistance] light_angle|[&lightAngle] ' +
+                    'night_vision_effect|[&night_vision_effect]',
+                '}}' +
+            '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Set-Token-Vision' +
+            '{& end}',
         ].join('\n') + '\n',
     ];
 
