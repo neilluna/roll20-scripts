@@ -1562,31 +1562,23 @@ const ParaseleneInstaller = (() => {
         };
 
         const dynamicLightingToolSummary = 'Include a macro to invoke the "Dynamic Lighting Tool".<br/>' +
-            'Example: "Dynamic-Lighting-Tool".<br/>' +
-            'Requires the "Dynamic Lighting Tool" mod script.';
+            'Example: "Dynamic-Lighting-Tool".';
         const mapChangeSummary = 'Include macros that allow the players to change maps themselves, ' +
             'and a macro for the GM to easily manage which maps the players are on.<br/>' +
-            'Examples: "Change-Map" and "Change-Map-GM-Only".<br/>' +
-            'Requires the "MapChange" mod script.';
+            'Examples: "Change-Map" and "Change-Map-GM-Only".';
         const scriptCardsSummary = 'Include customized abilities and spells.<br/>' +
-            'Examples: "Chaos Bolt" and "Magic Missile".<br/>' +
-            'Requires the "ScriptCards" mod script.';
+            'Examples: "Chaos Bolt" and "Magic Missile".';
         const smartAOESummary = 'Include abilities and macros for the AOE pattern helpers.<br/>' +
-            'Examples: "Add-AOE-Pattern" and "Remove-AOE-Pattern".<br/>' +
-            'Requires the "smartAoE" mod script.';
+            'Examples: "Add-AOE-Pattern" and "Remove-AOE-Pattern".';
         const teleportSummary = 'Include a macro to invoke the GM\'s "Teleport" menu tool.<br/>' +
-            'Example: "Teleport-Menu".<br/>' +
-            'Requires the "Teleport" mod script.';
+            'Example: "Teleport-Menu".';
         const tokenActionsSummary = 'Include macros to add and remove token actions for the "Actions" of NPCs.<br/>' +
-            'Examples: "Add-Token-Actions" and "Remove-Token-Actions".<br/>' +
-            'Requires the "Token Action Maker" mod script.';
+            'Examples: "Add-Token-Actions" and "Remove-Token-Actions".';
         const tokenModSummary = 'Include abilities and macros for the "TokenMod" module.<br/>' +
             'Examples: "Clear-Token-Status", "Kill-Token", "Set-Token-Defaults", "Set-Token-Light", ' +
-            'and "Set-Token-Vision".<br/>' +
-            'Requires the "TokenMod" mod script.';
+            'and "Set-Token-Vision".';
         const turnOrderSummary = 'Include macros to easily manage the turn order.<br/>' +
-            'Examples: "Manage-Turn-Order" and "Manage-Turn-Order-Stack".<br/>' +
-            'Requires the "AddCustomTurn", "GroupInitiative", and "TurnMarker1" mod scripts.';
+            'Examples: "Manage-Turn-Order" and "Manage-Turn-Order-Stack".';
 
         const serializedChoices = serializeChoices(choices);
 
