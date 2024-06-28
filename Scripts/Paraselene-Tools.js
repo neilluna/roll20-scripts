@@ -1,6 +1,6 @@
 // Paraselene-Tools
 // Game-independent tools.
-// Version 1.1.0
+// Version 1.2.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneTools = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.1.0',
+    version: '1.2.0',
 };
 {
     const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
@@ -708,11 +708,12 @@ const ParaseleneTools = (() => {
         }
 
         const speakAs = pc.extractCommandLineOption(args, '--speakAs', commandName);
+        const isCharacter = pc.extractCommandLineOption(args, '--isCharacter', 'false') == 'true';
         const playerId = msg.playerid;
         const player = getObj('player', playerId);
         const playerName = player.get('displayname');
 
-        pc.whisperTokenNotSelected(speakAs, playerName);
+        pc.whisperTokenNotSelected(speakAs, playerName, isCharacter);
     };
 
     // Register event handlers.

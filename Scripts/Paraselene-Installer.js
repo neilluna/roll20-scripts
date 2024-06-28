@@ -139,7 +139,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEAcidSplash',
             '!# https://www.dndbeyond.com/spells/acid-splash',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#00ff0050 ' +  // Green
                     '--aoeOutlineColor|#00000050 ' +
@@ -154,23 +154,41 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEAuraOfProtection',
             '!# https://www.dndbeyond.com/sources/basic-rules/classes#AuraofProtection',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
-                'smartaoe ' +
-                    '--aoeColor|#ffff0050 ' +  // Yellow
-                    '--aoeOutlineColor|#00000050 ' +
-                    '--aoeType|circle, float ' +
-                    '--forceIntersection|0 ' +
-                    '--radius|[[?{Aura of Protection - Cast at what Level?|6,7.5|18,27.5}]]ft ' +
-                    '--controlTokName|self ' +
-                    '--tooltip|@(selected|token_name) - Aura of Protection' +
+            '!{& 0 fetch apilogic}{& if "@(selected.character_id[None])" != "None"}' +
+                'script{{',
+                '--#emoteState|hidden',
+                '--#leftsub|Range: Self',
+                '--#rightsub|Level @(selected.level)',
+                '--#title|AOE for Aura of Protection',
+                '--#whisper|self',
+                '',
+                '--=casterLevel|@(selected.level)',
+                '--?[$casterLevel] -ge 18|radius30',
+                '--?[$casterLevel] -ge 6|radius10',
+                '--+|[c][#800][b]Level too low[/b][/#][/c]',
+                '--X|',
+                '',
+                '--:radius10|',
+                '--&radius|7.5ft',
+                '--^castaoe|',
+                '',
+                '--:radius30|',
+                '--&radius|27.5ft',
+                '',
+                '--:castaoe|',
+                '--@forselected|' +
+                    'smartaoe _aoeColor|#ffff0050 _aoeOutlineColor|#00000050 _aoeType|circle, float ' +
+                    '_forceIntersection|0 _radius|[&radius] _controlTokName|self ' +
+                    '_tooltip|@(selected.token_name) - Aura of Protection',
+                '}}' +
             '{& else}' +
-                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Aura-of-Protection' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs AOE-Aura-of-Protection --isCharacter true' +
             '{& end}',
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOEAuraOfVitality',
             '!# https://www.dndbeyond.com/spells/aura-of-vitality',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffff0050 ' +  // Yellow
                     '--aoeOutlineColor|#00000050 ' +
@@ -186,7 +204,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEBurningHands',
             '!# https://www.dndbeyond.com/spells/burning-hands',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff000050 ' +  // Red
                     '--aoeOutlineColor|#00000050 ' +
@@ -202,7 +220,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOECallLightningCloud',
             '!# https://www.dndbeyond.com/spells/call-lightning',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#88888850 ' +  // Grey
                     '--aoeOutlineColor|#00000050 ' +
@@ -217,7 +235,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOECallLightningStrike',
             '!# https://www.dndbeyond.com/spells/call-lightning',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffffff50 ' +  // White
                     '--aoeOutlineColor|#00000050 ' +
@@ -232,7 +250,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOECloudOfDaggers',
             '!# https://www.dndbeyond.com/spells/cloud-of-daggers',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -247,7 +265,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEColorSpray',
             '!# https://www.dndbeyond.com/spells/color-spray',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff008850 ' +   // Rose
                     '--aoeOutlineColor|#00000050 ' +
@@ -263,7 +281,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEConfusion',
             '!# https://www.dndbeyond.com/spells/confusion',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff008850 ' +  // Rose
                     '--aoeOutlineColor|#00000050 ' +
@@ -278,7 +296,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEControlWater',
             '!# https://www.dndbeyond.com/spells/control-water',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#00ffff50 ' +  // Cyan
                     '--aoeOutlineColor|#00000050 ' +
@@ -293,7 +311,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDestructiveWave',
             '!# https://www.dndbeyond.com/spells/destructive-wave',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -309,7 +327,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDetectEvilAndGood',
             '!# https://www.dndbeyond.com/spells/detect-evil-and-good',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff00ff50 ' +  // Magenta
                     '--aoeOutlineColor|#00000050 ' +
@@ -325,7 +343,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDetectMagic',
             '!# https://www.dndbeyond.com/spells/detect-magic',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff00ff50 ' +  // Magenta
                     '--aoeOutlineColor|#00000050 ' +
@@ -341,7 +359,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEDragonsBreath',
             '!# https://www.dndbeyond.com/spells/dragons-breath',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff000050 ' +   // Red
                     '--aoeOutlineColor|#00000050 ' +
@@ -357,7 +375,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEEarthTremor',
             '!# https://www.dndbeyond.com/spells/earth-tremor',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -373,7 +391,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEEntangle',
             '!# https://www.dndbeyond.com/spells/entangle',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#00ff0050 ' +  // Grey
                     '--aoeOutlineColor|#00000050 ' +
@@ -388,7 +406,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEFireShield',
             '!# https://www.dndbeyond.com/spells/fire-shield',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff000050 ' +  // Red
                     '--aoeOutlineColor|#00000050 ' +
@@ -404,7 +422,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEFlamingSphere',
             '!# https://www.dndbeyond.com/spells/flaming-sphere',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff000050 ' +  // Red
                     '--aoeOutlineColor|#00000050 ' +
@@ -419,7 +437,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEFogCloud',
             '!# https://www.dndbeyond.com/spells/fog-cloud',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#88888850 ' +  // Grey
                     '--aoeOutlineColor|#00000050 ' +
@@ -434,7 +452,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEGraspingVine',
             '!# https://www.dndbeyond.com/spells/grasping-vine',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#00ff0050 ' +  // Green
                     '--aoeOutlineColor|#00000050 ' +
@@ -449,7 +467,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEGrease',
             '!# https://www.dndbeyond.com/spells/grease',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#88888850 ' +  // Grey
                     '--aoeOutlineColor|#00000050 ' +
@@ -464,7 +482,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEGuardianOfFaith',
             '!# https://www.dndbeyond.com/spells/guardian-of-faith',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffff0050 ' +  // Yellow
                     '--aoeOutlineColor|#00000050 ' +
@@ -479,7 +497,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEGustOfWind',
             '!# https://www.dndbeyond.com/spells/gust-of-wind',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#00ffff50 ' +  // Cyan
                     '--aoeOutlineColor|#00000050 ' +
@@ -496,7 +514,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEHallow',
             '!# https://www.dndbeyond.com/spells/hallow',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffff0050 ' +  // Yellow
                     '--aoeOutlineColor|#00000050 ' +
@@ -511,7 +529,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEIceStorm',
             '!# https://www.dndbeyond.com/spells/ice-storm',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffffff50 ' +  // White
                     '--aoeOutlineColor|#00000050 ' +
@@ -526,7 +544,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEInsectPlague',
             '!# https://www.dndbeyond.com/spells/insect-plague',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#88ff0050 ' +  // Chartreuse
                     '--aoeOutlineColor|#00000050 ' +
@@ -541,7 +559,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOELeomundsTinyHut',
             '!# https://www.dndbeyond.com/spells/leomunds-tiny-hut',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#0000ff50 ' +  // Blue
                     '--aoeOutlineColor|#00000050 ' +
@@ -556,7 +574,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOELightningBolt',
             '!# https://www.dndbeyond.com/spells/lightning-bolt',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffffff50 ' +  // White
                     '--aoeOutlineColor|#00000050 ' +
@@ -573,7 +591,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEMassCureWounds',
             '!# https://www.dndbeyond.com/spells/mass-cure-wounds',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffff0050 ' +  // Yellow
                     '--aoeOutlineColor|#00000050 ' +
@@ -588,7 +606,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEPasswall',
             '!# https://www.dndbeyond.com/spells/passwall',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -604,7 +622,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEPassWithoutTrace',
             '!# https://www.dndbeyond.com/spells/pass-without-trace',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#0088ff50 ' +  // Azure
                     '--aoeOutlineColor|#00000050 ' +
@@ -620,7 +638,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEShatter',
             '!# https://www.dndbeyond.com/spells/shatter',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -635,7 +653,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOESilence',
             '!# https://www.dndbeyond.com/spells/silence',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#0088ff50 ' +  // Azure
                     '--aoeOutlineColor|#00000050 ' +
@@ -650,7 +668,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOESleep',
             '!# https://www.dndbeyond.com/spells/sleep',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#0088ff50 ' +  // Azure
                     '--aoeOutlineColor|#00000050 ' +
@@ -665,7 +683,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOESleetStorm',
             '!# https://www.dndbeyond.com/spells/sleet-storm',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ffffff50 ' +  // White
                     '--aoeOutlineColor|#00000050 ' +
@@ -680,7 +698,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOESwordBurst',
             '!# https://www.dndbeyond.com/spells/sword-burst',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -696,7 +714,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEThunderclap',
             '!# https://www.dndbeyond.com/spells/thunderclap',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -712,7 +730,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEThunderwave',
             '!# https://www.dndbeyond.com/spells/thunderwave',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#ff880050 ' +  // Orange
                     '--aoeOutlineColor|#00000050 ' +
@@ -728,7 +746,7 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
         [
             '!# Paraselene-AddAOETrajectory',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#88888850 ' +  // Grey
                     '--aoeOutlineColor|#00000050 ' +
@@ -743,7 +761,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEZoneOfTruth',
             '!# https://www.dndbeyond.com/spells/zone-of-truth',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartaoe ' +
                     '--aoeColor|#0088ff50 ' +  // Azure
                     '--aoeOutlineColor|#00000050 ' +
@@ -761,7 +779,7 @@ const ParaseleneInstaller = (() => {
     const dnd5eScriptCardsAbilities = [
         [
             '!# Paraselene-ChaosBolt',
-            '!{& 0 fetch mulerget}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch mulerget}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '--#reentrant|Chaos Bolt from @(selected|character_id)',
                 '',
@@ -891,7 +909,7 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
         [
             '!# Paraselene-MagicMissile',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '--#reentrant|Magic Missile from @(selected|character_id)',
                 '',
@@ -947,7 +965,7 @@ const ParaseleneInstaller = (() => {
     const dnd5eTokenModAbilities = [
         [
             '!# Paraselene-SetTokenDefaults',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'token-mod ' +
                     '--on ' +
                         'showname ' +
@@ -963,7 +981,7 @@ const ParaseleneInstaller = (() => {
             ].join('\n') + '\n',
         [
             '!# Paraselene-SetTokenLight',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '--#reentrant|Set token light for @(selected|token_id)',
                 '',
@@ -1179,7 +1197,7 @@ const ParaseleneInstaller = (() => {
         ].join('\n') + '\n',
         [
             '!# Paraselene-SetTokenVision',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '--#reentrant|Set token vision for @(selected|token_id)',
                 '',
@@ -1324,7 +1342,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Remove-AOE-Pattern',
             '!# Settings: Token Action: Yes, Visibility: All Players',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'smartremove' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Remove-AOE-Pattern' +
@@ -1350,7 +1368,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Clear-Token-Status',
             '!# Settings: Token Action: Yes',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'token-mod --set statusmarkers#=' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Clear-Token-Status' +
@@ -1359,7 +1377,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Kill-Token',
             '!# Settings: Token Action: Yes',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'token-mod --order top --set layer#map statusmarkers#dead' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Kill-Token' +
@@ -1383,7 +1401,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Toggle-Token-Hunters-Mark',
             '!# Settings: Token Action: Yes',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'token-mod --set statusmarkers#!archery-target' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Toggle-Token-Hunters-Mark' +
@@ -1424,7 +1442,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Add-Token-Actions',
             '!# Settings: Token Action: Yes',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'sortta' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Add-Token-Actions' +
@@ -1433,7 +1451,7 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-Remove-Token-Actions',
             '!# Settings: Token Action: Yes',
-            '!{& 0 fetch}{& if "@(selected.token_name[noneSelected])" != "noneSelected"}' +
+            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
                 'deleteta' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Remove-Token-Actions' +
