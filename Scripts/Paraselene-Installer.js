@@ -152,35 +152,23 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEAuraOfProtection',
             '!# https://www.dndbeyond.com/sources/basic-rules/classes#AuraofProtection',
-            '!{& 0 fetch apilogic}{& if "@(selected.character_id[None])" != "None"}' +
+            '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
-                '--#emoteState|hidden',
-                '--#leftsub|Range: Self',
-                '--#rightsub|Level @(selected.level)',
-                '--#title|AOE for Aura of Protection',
-                '--#whisper|self',
+                '+++ParaseleneDnD5e+++',
+                '--#reentrant|AOE Aura of Protection for @(selected|token_id)',
+                '-->setupCardStandard|Aura of Protection',
                 '',
-                '--=casterLevel|@(selected.level)',
-                '--?[$casterLevel] -ge 18|radius30',
-                '--?[$casterLevel] -ge 6|radius10',
-                '--+|[c][#800][b]Level too low[/b][/#][/c]',
+                '--+Caster level?|' +
+                    '[rbutton]6-17::casterLevelSet;7.5[/rbutton][rbutton]18+::casterLevelSet;27.5[/rbutton]',
                 '--X|',
                 '',
-                '--:radius10|',
-                '--&radius|7.5ft',
-                '--^castaoe|',
-                '',
-                '--:radius30|',
-                '--&radius|27.5ft',
-                '',
-                '--:castaoe|',
-                '--@forselected|' +
-                    'smartaoe _aoeColor|#ffff0050 _aoeOutlineColor|#00000050 _aoeType|circle, float ' +
-                    '_forceIntersection|0 _radius|[&radius] _controlTokName|self ' +
-                    '_tooltip|@(selected.token_name) - Aura of Protection',
+                '--:casterLevelSet|',
+                '-->showSmartAOE|' +
+                    'Hidden;Aura of Protection;Yellow;circle, float;[&reentryval]ft;self;center;1u;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
-                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Aura-of-Protection --isCharacter true' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Aura-of-Protection' +
             '{& end}',
         ].join('\n') + '\n',
         [
@@ -264,14 +252,23 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEConfusion',
             '!# https://www.dndbeyond.com/spells/confusion',
-            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
-                'smartaoe ' +
-                    '--aoeColor|#ff008850 ' +  // Rose
-                    '--aoeOutlineColor|#00000050 ' +
-                    '--aoeType|circle, float ' +
-                    '--forceIntersection|0 ' +
-                    '--radius|[[?{Confusion - Cast at what Level?|4,10|5,15|6,20|7,25|8,30|9,35}]]ft ' +
-                    '--tooltip|@(selected|token_name) - Confusion' +
+            '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+                'script{{',
+                '+++ParaseleneDnD5e+++',
+                '--#reentrant|AOE Confusion for @(selected|token_id)',
+                '-->setupCardStandard|Confusion',
+                '',
+                '--+Cast level?|' +
+                    '[rbutton]4::castLevelSet;10[/rbutton][rbutton]5::castLevelSet;15[/rbutton]' +
+                    '[rbutton]6::castLevelSet;20[/rbutton][rbutton]7::castLevelSet;25[/rbutton]' +
+                    '[rbutton]8::castLevelSet;30[/rbutton][rbutton]9::castLevelSet;35[/rbutton]',
+                '--X|',
+                '',
+                '--:castLevelSet|',
+                '-->showSmartAOE|' +
+                    'Hidden;Confusion;Rose;circle, float;[&reentryval]ft;AoEControlToken;center;1u;' +
+                    '@(selected.token_name)',
+                '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Confusion' +
             '{& end}',
@@ -396,14 +393,25 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEFogCloud',
             '!# https://www.dndbeyond.com/spells/fog-cloud',
-            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
-                'smartaoe ' +
-                    '--aoeColor|#88888850 ' +  // Grey
-                    '--aoeOutlineColor|#00000050 ' +
-                    '--aoeType|circle, float ' +
-                    '--forceIntersection|0 ' +
-                    '--radius|[[(?{Fog Cloud - Cast at what Level?|1|2|3|4|5|6|7|8|9}*20)]]ft ' +
-                    '--tooltip|@(selected|token_name) - Fog Cloud' +
+            '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+                'script{{',
+                '+++ParaseleneDnD5e+++',
+                '--#reentrant|AOE Fog Cloud for @(selected|token_id)',
+                '-->setupCardStandard|Fog Cloud',
+                '',
+                '--+Cast level?|' +
+                    '[rbutton]1::castLevelSet;20[/rbutton][rbutton]2::castLevelSet;40[/rbutton]' +
+                    '[rbutton]3::castLevelSet;60[/rbutton][rbutton]4::castLevelSet;80[/rbutton]' +
+                    '[rbutton]5::castLevelSet;100[/rbutton][rbutton]6::castLevelSet;120[/rbutton]' +
+                    '[rbutton]7::castLevelSet;140[/rbutton][rbutton]8::castLevelSet;160[/rbutton]' +
+                    '[rbutton]9::castLevelSet;180[/rbutton]',
+                '--X|',
+                '',
+                '--:castLevelSet|',
+                '-->showSmartAOE|' +
+                    'Hidden;Fog Cloud;Grey;circle, float;[&reentryval]ft;AoEControlToken;center;1u;' +
+                    '@(selected.token_name)',
+                '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Fog-Cloud' +
             '{& end}',
@@ -541,15 +549,39 @@ const ParaseleneInstaller = (() => {
         [
             '!# Paraselene-AddAOEPasswall',
             '!# https://www.dndbeyond.com/spells/passwall',
-            '!{& 0 fetch}{& if "@(selected.token_id[None])" != "None"}' +
-                'smartaoe ' +
-                    '--aoeColor|#ff880050 ' +  // Orange
-                    '--aoeOutlineColor|#00000050 ' +
-                    '--aoeType|wall ' +
-                    '--forceIntersection|0 ' +
-                    '--radius|[[?{Passwall - Length?|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20}]]ft ' +
-                    '--width|[[?{Passwall - Width?|1|2|3|4|5}]]ft ' +
-                    '--tooltip|@(selected|token_name) - Passwall' +
+            '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+                'script{{',
+                '+++ParaseleneDnD5e+++',
+                '--#reentrant|AOE Passwall for @(selected|token_id)',
+                '-->setupCardStandard|Passwall',
+                '',
+                '--+Length?|' +
+                    '[rbutton]1::lengthSet;1[/rbutton][rbutton]2::lengthSet;2[/rbutton]' +
+                    '[rbutton]3::lengthSet;3[/rbutton][rbutton]4::lengthSet;4[/rbutton]' +
+                    '[rbutton]5::lengthSet;5[/rbutton][rbutton]6::lengthSet;6[/rbutton]' +
+                    '[rbutton]7::lengthSet;7[/rbutton][rbutton]8::lengthSet;8[/rbutton]' +
+                    '[rbutton]9::lengthSet;9[/rbutton][rbutton]10::lengthSet;10[/rbutton]' +
+                    '[rbutton]11::lengthSet;11[/rbutton][rbutton]12::lengthSet;12[/rbutton]' +
+                    '[rbutton]13::lengthSet;13[/rbutton][rbutton]14::lengthSet;14[/rbutton]' +
+                    '[rbutton]15::lengthSet;15[/rbutton][rbutton]16::lengthSet;16[/rbutton]' +
+                    '[rbutton]17::lengthSet;17[/rbutton][rbutton]18::lengthSet;18[/rbutton]' +
+                    '[rbutton]19::lengthSet;19[/rbutton][rbutton]20::lengthSet;20[/rbutton]',
+                '--X|',
+                '',
+                '--:lengthSet|',
+                '--&length|[&reentryval]',
+                '',
+                '--+Width?|' +
+                    '[rbutton]1::widthSet;1[/rbutton][rbutton]2::widthSet;2[/rbutton]' +
+                    '[rbutton]3::widthSet;3[/rbutton][rbutton]4::widthSet;4[/rbutton]' +
+                    '[rbutton]5::widthSet;5[/rbutton]',
+                '--X|',
+                '',
+                '--:widthSet|',
+                '-->showSmartAOE|' +
+                    'Hidden;Passwall;Orange;wall;[&length]ft;AoEControlToken;center;[&reentryval]ft;' +
+                    '@(selected.token_name)',
+                '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Passwall' +
             '{& end}',
