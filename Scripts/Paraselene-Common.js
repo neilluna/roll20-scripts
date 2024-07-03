@@ -1,6 +1,6 @@
 // Paraselene-Common
 // Common utilites used by other Paraselene scripts.
-// Version 2.0.0
+// Version 2.1.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneCommon = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '2.0.0',
+    version: '2.1.0',
 };
 {
     const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
@@ -283,8 +283,13 @@ const ParaseleneCommon = (() => {
     };
 
     // Send a chat message to a player that a token is not selected.
-    const whisperTokenNotSelected = (speakAs, playerName) => {
-        sendChatNoArchive(speakAs, `/w "${playerName}" <br/>No token is selected.`);
+    const whisperTokenNotSelected = (speakAs, playerName, isCharacter = false) => {
+        if (isCharacter) {
+            sendChatNoArchive(speakAs, `/w "${playerName}" <br/>No character token is selected.`);
+        }
+        else {
+            sendChatNoArchive(speakAs, `/w "${playerName}" <br/>No token is selected.`);
+        }
     };
 
     // When all scripts have loaded ...
