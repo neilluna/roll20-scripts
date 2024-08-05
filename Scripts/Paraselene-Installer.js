@@ -1562,6 +1562,7 @@ const ParaseleneInstaller = (() => {
                     '_aoeOutlineColor|#00000050 ' +
                     '_aoeType|[%4%] ' +
                     '_forceIntersection|0 ' +
+                    '_mingridarea|0.1 ' +
                     '_radius|[%5%] ' +
                     '_controlTokName|[%6%] ' +
                     '_origin|[%7%] ' +
@@ -1579,6 +1580,7 @@ const ParaseleneInstaller = (() => {
                     '_aoeOutlineColor|#00000050 ' +
                     '_aoeType|[%4%] ' +
                     '_forceIntersection|0 ' +
+                    '_mingridarea|0.1 ' +
                     '_radius|[%5%] ' +
                     '_controlTokName|[%6%] ' +
                     '_origin|[%7%] ' +
@@ -1595,6 +1597,7 @@ const ParaseleneInstaller = (() => {
                     '_aoeOutlineColor|#00000050 ' +
                     '_aoeType|[%4%] ' +
                     '_forceIntersection|0 ' +
+                    '_mingridarea|0.1 ' +
                     '_controlTokName|[%5%] ' +
                     '_origin|[%6%] ' +
                     '_tooltip|[%7%] - [%2%]',
