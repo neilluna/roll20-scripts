@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.5.0
+// Version 1.5.1
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.5.0',
+    version: '1.5.1',
 };
 {
     const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
@@ -142,8 +142,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Acid Splash;Green;circle, float;5ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Acid Splash;Green;circle, float;5ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Acid-Splash' +
@@ -159,12 +160,13 @@ const ParaseleneInstaller = (() => {
                 '-->setupCardStandard|Aura of Protection',
                 '',
                 '--+Caster level?|' +
-                    '[rbutton]6-17::casterLevelSet;7.5[/rbutton][rbutton]18+::casterLevelSet;27.5[/rbutton]',
+                    '[rbutton]6-17::casterLevelSet;7.5[/rbutton]' +
+                    '[rbutton]18+::casterLevelSet;27.5[/rbutton]',
                 '--X|',
                 '',
                 '--:casterLevelSet|',
-                '-->showSmartAOE|' +
-                    'Hidden;Aura of Protection;Yellow;circle, float;[&reentryval]ft;self;center;1u;' +
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Aura of Protection;Yellow;circle, float;[&reentryval]ft;self;center;' +
                     '@(selected.token_name)',
                 '}}' +
             '{& else}' +
@@ -177,8 +179,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Aura of Vitality;Yellow;circle, float;27.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Aura of Vitality;Yellow;circle, float;27.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Aura-of-Vitality' +
@@ -190,8 +193,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Burning Hands;Red;5econe;15ft;AoEControlToken;nearest, face;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Burning Hands;Red;5econe;15ft;AoEControlToken;nearest, face;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Burning-Hands' +
@@ -203,8 +207,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Call Lightning Cloud;Grey;circle, float;60ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Call Lightning Cloud;Grey;circle, float;60ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Call-Lightning-Cloud' +
@@ -216,8 +221,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Call Lightning Strike;White;circle, float;5ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Call Lightning Strike;White;circle, float;5ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Call-Lightning-Strike' +
@@ -229,8 +235,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Cloud of Daggers;Orange;square, float;2.5ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Cloud of Daggers;Orange;square, float;2.5ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Cloud-of-Daggers' +
@@ -242,8 +249,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Color Spray;Rose;5econe;15ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Color Spray;Rose;5econe;15ft;AoEControlToken;nearest, face;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Color-Spray' +
@@ -259,14 +267,17 @@ const ParaseleneInstaller = (() => {
                 '-->setupCardStandard|Confusion',
                 '',
                 '--+Cast level?|' +
-                    '[rbutton]4::castLevelSet;10[/rbutton][rbutton]5::castLevelSet;15[/rbutton]' +
-                    '[rbutton]6::castLevelSet;20[/rbutton][rbutton]7::castLevelSet;25[/rbutton]' +
-                    '[rbutton]8::castLevelSet;30[/rbutton][rbutton]9::castLevelSet;35[/rbutton]',
+                    '[rbutton]4::castLevelSet;10[/rbutton]' +
+                    '[rbutton]5::castLevelSet;15[/rbutton]' +
+                    '[rbutton]6::castLevelSet;20[/rbutton]' +
+                    '[rbutton]7::castLevelSet;25[/rbutton]' +
+                    '[rbutton]8::castLevelSet;30[/rbutton]' +
+                    '[rbutton]9::castLevelSet;35[/rbutton]',
                 '--X|',
                 '',
                 '--:castLevelSet|',
-                '-->showSmartAOE|' +
-                    'Hidden;Confusion;Rose;circle, float;[&reentryval]ft;AoEControlToken;center;1u;' +
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Confusion;Rose;circle, float;[&reentryval]ft;AoEControlToken;center;' +
                     '@(selected.token_name)',
                 '}}' +
             '{& else}' +
@@ -279,8 +290,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Control Water;Cyan;square, float;100ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Control Water;Cyan;square, float;100ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Control-Water' +
@@ -292,8 +304,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Destructive Wave;Orange;circle, float;27.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Destructive Wave;Orange;circle, float;27.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Destructive-Wave' +
@@ -305,8 +318,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Detect Evil and Good;Magenta;circle, float;27.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Detect Evil and Good;Magenta;circle, float;27.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Detect-Evil-and-Good' +
@@ -318,8 +332,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Detect Magic;Magenta;circle, float;27.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Detect Magic;Magenta;circle, float;27.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Detect-Magic' +
@@ -331,8 +346,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    "Hidden;Dragon's Breath;Red;5econe;15ft;AoEControlToken;nearest, face;1u;@(selected.token_name)",
+                '-->showSmartAOENoWidth|' +
+                    "Hidden;Dragon's Breath;Red;5econe;15ft;AoEControlToken;nearest, face;" +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Dragon's-Breath" +
@@ -344,8 +360,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Earth Tremor;Orange;circle, float;7.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Earth Tremor;Orange;circle, float;7.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Earth-Tremor' +
@@ -357,8 +374,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Entangle;Green;square, float;10ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Entangle;Green;square, float;10ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Entangle' +
@@ -370,8 +388,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Fire Shield;Red;circle, float;2.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Fire Shield;Red;circle, float;2.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Fire-Shield' +
@@ -383,8 +402,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Flaming Sphere;Red;circle, float;5ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Flaming Sphere;Red;circle, float;5ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Flaming-Sphere' +
@@ -400,16 +420,20 @@ const ParaseleneInstaller = (() => {
                 '-->setupCardStandard|Fog Cloud',
                 '',
                 '--+Cast level?|' +
-                    '[rbutton]1::castLevelSet;20[/rbutton][rbutton]2::castLevelSet;40[/rbutton]' +
-                    '[rbutton]3::castLevelSet;60[/rbutton][rbutton]4::castLevelSet;80[/rbutton]' +
-                    '[rbutton]5::castLevelSet;100[/rbutton][rbutton]6::castLevelSet;120[/rbutton]' +
-                    '[rbutton]7::castLevelSet;140[/rbutton][rbutton]8::castLevelSet;160[/rbutton]' +
+                    '[rbutton]1::castLevelSet;20[/rbutton]' +
+                    '[rbutton]2::castLevelSet;40[/rbutton]' +
+                    '[rbutton]3::castLevelSet;60[/rbutton]' +
+                    '[rbutton]4::castLevelSet;80[/rbutton]' +
+                    '[rbutton]5::castLevelSet;100[/rbutton]' +
+                    '[rbutton]6::castLevelSet;120[/rbutton]' +
+                    '[rbutton]7::castLevelSet;140[/rbutton]' +
+                    '[rbutton]8::castLevelSet;160[/rbutton]' +
                     '[rbutton]9::castLevelSet;180[/rbutton]',
                 '--X|',
                 '',
                 '--:castLevelSet|',
-                '-->showSmartAOE|' +
-                    'Hidden;Fog Cloud;Grey;circle, float;[&reentryval]ft;AoEControlToken;center;1u;' +
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Fog Cloud;Grey;circle, float;[&reentryval]ft;AoEControlToken;center;' +
                     '@(selected.token_name)',
                 '}}' +
             '{& else}' +
@@ -422,8 +446,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Grasping Vine;Green;circle, float;30ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Grasping Vine;Green;circle, float;30ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Grasping-Vine' +
@@ -435,8 +460,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Grease;Grey;square, float;5ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Grease;Grey;square, float;5ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Grease' +
@@ -448,8 +474,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Guardian of Faith;Yellow;circle, float;10ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Guardian of Faith;Yellow;circle, float;10ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Guardian-of-Faith' +
@@ -462,7 +489,8 @@ const ParaseleneInstaller = (() => {
                 'script{{',
                 '+++ParaseleneDnD5e+++',
                 '-->showSmartAOE|' +
-                    'Hidden;Gust of Wind;Cyan;wall;60ft;AoEControlToken;nearest, face;10ft;@(selected.token_name)',
+                    'Hidden;Gust of Wind;Cyan;wall;60ft;AoEControlToken;nearest, face;10ft;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Gust-of-Wind' +
@@ -474,8 +502,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Hallow;Yellow;circle, float;60ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Hallow;Yellow;circle, float;60ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Hallow' +
@@ -487,8 +516,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Ice Storm;White;circle, float;20ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Ice Storm;White;circle, float;20ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Ice-Storm' +
@@ -500,8 +530,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Insect Plague;Chartreuse;circle, float;20ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Insect Plague;Chartreuse;circle, float;20ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Insect-Plague' +
@@ -513,8 +544,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    "Hidden;Leomund's Tiny Hut;Blue;circle, float;10ft;AoEControlToken;center;1u;@(selected.token_name)",
+                '-->showSmartAOENoWidth|' +
+                    "Hidden;Leomund's Tiny Hut;Blue;circle, float;10ft;AoEControlToken;center;" +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Leomund's-Tiny-Hut" +
@@ -527,7 +559,8 @@ const ParaseleneInstaller = (() => {
                 'script{{',
                 '+++ParaseleneDnD5e+++',
                 '-->showSmartAOE|' +
-                    'Hidden;Lightning Bolt;White;wall;100ft;AoEControlToken;nearest, face;5ft;@(selected.token_name)',
+                    'Hidden;Lightning Bolt;White;wall;100ft;AoEControlToken;nearest, face;5ft;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Lightning-Bolt' +
@@ -539,8 +572,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Mass Cure Wounds;Yellow;circle, float;30ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Mass Cure Wounds;Yellow;circle, float;30ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Mass-Cure-Wounds' +
@@ -556,24 +590,36 @@ const ParaseleneInstaller = (() => {
                 '-->setupCardStandard|Passwall',
                 '',
                 '--+Length?|' +
-                    '[rbutton]1::lengthSet;1[/rbutton][rbutton]2::lengthSet;2[/rbutton]' +
-                    '[rbutton]3::lengthSet;3[/rbutton][rbutton]4::lengthSet;4[/rbutton]' +
-                    '[rbutton]5::lengthSet;5[/rbutton][rbutton]6::lengthSet;6[/rbutton]' +
-                    '[rbutton]7::lengthSet;7[/rbutton][rbutton]8::lengthSet;8[/rbutton]' +
-                    '[rbutton]9::lengthSet;9[/rbutton][rbutton]10::lengthSet;10[/rbutton]' +
-                    '[rbutton]11::lengthSet;11[/rbutton][rbutton]12::lengthSet;12[/rbutton]' +
-                    '[rbutton]13::lengthSet;13[/rbutton][rbutton]14::lengthSet;14[/rbutton]' +
-                    '[rbutton]15::lengthSet;15[/rbutton][rbutton]16::lengthSet;16[/rbutton]' +
-                    '[rbutton]17::lengthSet;17[/rbutton][rbutton]18::lengthSet;18[/rbutton]' +
-                    '[rbutton]19::lengthSet;19[/rbutton][rbutton]20::lengthSet;20[/rbutton]',
+                    '[rbutton]1::lengthSet;1[/rbutton]' +
+                    '[rbutton]2::lengthSet;2[/rbutton]' +
+                    '[rbutton]3::lengthSet;3[/rbutton]' +
+                    '[rbutton]4::lengthSet;4[/rbutton]' +
+                    '[rbutton]5::lengthSet;5[/rbutton]' +
+                    '[rbutton]6::lengthSet;6[/rbutton]' +
+                    '[rbutton]7::lengthSet;7[/rbutton]' +
+                    '[rbutton]8::lengthSet;8[/rbutton]' +
+                    '[rbutton]9::lengthSet;9[/rbutton]' +
+                    '[rbutton]10::lengthSet;10[/rbutton]' +
+                    '[rbutton]11::lengthSet;11[/rbutton]' +
+                    '[rbutton]12::lengthSet;12[/rbutton]' +
+                    '[rbutton]13::lengthSet;13[/rbutton]' +
+                    '[rbutton]14::lengthSet;14[/rbutton]' +
+                    '[rbutton]15::lengthSet;15[/rbutton]' +
+                    '[rbutton]16::lengthSet;16[/rbutton]' +
+                    '[rbutton]17::lengthSet;17[/rbutton]' +
+                    '[rbutton]18::lengthSet;18[/rbutton]' +
+                    '[rbutton]19::lengthSet;19[/rbutton]' +
+                    '[rbutton]20::lengthSet;20[/rbutton]',
                 '--X|',
                 '',
                 '--:lengthSet|',
                 '--&length|[&reentryval]',
                 '',
                 '--+Width?|' +
-                    '[rbutton]1::widthSet;1[/rbutton][rbutton]2::widthSet;2[/rbutton]' +
-                    '[rbutton]3::widthSet;3[/rbutton][rbutton]4::widthSet;4[/rbutton]' +
+                    '[rbutton]1::widthSet;1[/rbutton]' +
+                    '[rbutton]2::widthSet;2[/rbutton]' +
+                    '[rbutton]3::widthSet;3[/rbutton]' +
+                    '[rbutton]4::widthSet;4[/rbutton]' +
                     '[rbutton]5::widthSet;5[/rbutton]',
                 '--X|',
                 '',
@@ -592,8 +638,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Pass without Trace;Azure;circle, float;27.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Pass without Trace;Azure;circle, float;27.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Pass-without-Trace' +
@@ -605,8 +652,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Shatter;Orange;circle, float;10ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Shatter;Orange;circle, float;10ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Shatter' +
@@ -618,8 +666,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Silence;Azure;circle, float;20ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Silence;Azure;circle, float;20ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Silence' +
@@ -631,8 +680,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Sleep;Azure;circle, float;20ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Sleep;Azure;circle, float;20ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sleep' +
@@ -644,8 +694,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Sleet Storm;White;circle, float;40ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Sleet Storm;White;circle, float;40ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sleet-Storm' +
@@ -657,8 +708,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Sword Burst;Orange;circle, float;2.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Sword Burst;Orange;circle, float;2.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sword-Burst' +
@@ -670,8 +722,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Thunderclap;Orange;circle, float;2.5ft;self;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Thunderclap;Orange;circle, float;2.5ft;self;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Thunderclap' +
@@ -684,7 +737,8 @@ const ParaseleneInstaller = (() => {
                 'script{{',
                 '+++ParaseleneDnD5e+++',
                 '-->showSmartAOE|' +
-                    'Hidden;Thunderwave;Orange;wall;15ft;AoEControlToken;nearest, face;15ft;@(selected.token_name)',
+                    'Hidden;Thunderwave;Orange;wall;15ft;AoEControlToken;nearest, face;15ft;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Thunderwave' +
@@ -695,8 +749,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Trajectory;Grey;line;variable;AoEControlToken;nearest, face;1u;@(selected.token_name)',
+                '-->showSmartAOENoRadiusNoWidth|' +
+                    'Hidden;Trajectory;Grey;line;AoEControlToken;nearest, face;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Trajectory' +
@@ -708,8 +763,9 @@ const ParaseleneInstaller = (() => {
             '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
                 'script{{',
                 '+++ParaseleneDnD5e+++',
-                '-->showSmartAOE|' +
-                    'Hidden;Zone of Truth;Azure;circle, float;15ft;AoEControlToken;center;1u;@(selected.token_name)',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Zone of Truth;Azure;circle, float;15ft;AoEControlToken;center;' +
+                    '@(selected.token_name)',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Zone-of-Truth' +
@@ -738,10 +794,14 @@ const ParaseleneInstaller = (() => {
                 '--#title|Chaos Bolt',
                 '',
                 '--+Cast at what Level?|' +
-                    '[rbutton]1::spellLevelSet;1[/rbutton][rbutton]2::spellLevelSet;2[/rbutton]' +
-                    '[rbutton]3::spellLevelSet;3[/rbutton][rbutton]4::spellLevelSet;4[/rbutton]' +
-                    '[rbutton]5::spellLevelSet;5[/rbutton][rbutton]6::spellLevelSet;6[/rbutton]' +
-                    '[rbutton]7::spellLevelSet;7[/rbutton][rbutton]8::spellLevelSet;8[/rbutton]' +
+                    '[rbutton]1::spellLevelSet;1[/rbutton]' +
+                    '[rbutton]2::spellLevelSet;2[/rbutton]' +
+                    '[rbutton]3::spellLevelSet;3[/rbutton]' +
+                    '[rbutton]4::spellLevelSet;4[/rbutton]' +
+                    '[rbutton]5::spellLevelSet;5[/rbutton]' +
+                    '[rbutton]6::spellLevelSet;6[/rbutton]' +
+                    '[rbutton]7::spellLevelSet;7[/rbutton]' +
+                    '[rbutton]8::spellLevelSet;8[/rbutton]' +
                     '[rbutton]9::spellLevelSet;9[/rbutton]',
                 '--X|',
                 '--:spellLevelSet|',
@@ -828,10 +888,24 @@ const ParaseleneInstaller = (() => {
                 '--+Critical Hit Damage|[r][$critDmg][/r]',
                 '--:skipCrit|',
                 '',
-                '--c[$dmgRoll1]|1:&dmgType1;Acid|2:&dmgType1;Cold|3:&dmgType1;Fire|4:&dmgType1;Force|' +
-                    '5:&dmgType1;Lightning|6:&dmgType1;Poison|7:&dmgType1;Psychic|8:&dmgType1;Thunder',
-                '--c[$dmgRoll2]|1:&dmgType2;Acid|2:&dmgType2;Cold|3:&dmgType2;Fire|4:&dmgType2;Force|' +
-                    '5:&dmgType2;Lightning|6:&dmgType2;Poison|7:&dmgType2;Psychic|8:&dmgType2;Thunder',
+                '--c[$dmgRoll1]' +
+                    '|1:&dmgType1;Acid' +
+                    '|2:&dmgType1;Cold' +
+                    '|3:&dmgType1;Fire' +
+                    '|4:&dmgType1;Force' +
+                    '|5:&dmgType1;Lightning' +
+                    '|6:&dmgType1;Poison' +
+                    '|7:&dmgType1;Psychic' +
+                    '|8:&dmgType1;Thunder',
+                '--c[$dmgRoll2]' +
+                    '|1:&dmgType2;Acid' +
+                    '|2:&dmgType2;Cold' +
+                    '|3:&dmgType2;Fire' +
+                    '|4:&dmgType2;Force' +
+                    '|5:&dmgType2;Lightning' +
+                    '|6:&dmgType2;Poison' +
+                    '|7:&dmgType2;Psychic' +
+                    '|8:&dmgType2;Thunder',
                 '',
                 '--?[$dmgRoll1] -ne [$dmgRoll2]|skipHop',
                 '--+Damage Type|[r][b][i][&dmgType1][/i][/b][/r]',
@@ -863,10 +937,14 @@ const ParaseleneInstaller = (() => {
                 '--#title|Magic Missile',
                 '',
                 '--+Cast at what Level?|' +
-                    '[rbutton]1::spellLevelSet;1[/rbutton][rbutton]2::spellLevelSet;2[/rbutton]' +
-                    '[rbutton]3::spellLevelSet;3[/rbutton][rbutton]4::spellLevelSet;4[/rbutton]' +
-                    '[rbutton]5::spellLevelSet;5[/rbutton][rbutton]6::spellLevelSet;6[/rbutton]' +
-                    '[rbutton]7::spellLevelSet;7[/rbutton][rbutton]8::spellLevelSet;8[/rbutton]' +
+                    '[rbutton]1::spellLevelSet;1[/rbutton]' +
+                    '[rbutton]2::spellLevelSet;2[/rbutton]' +
+                    '[rbutton]3::spellLevelSet;3[/rbutton]' +
+                    '[rbutton]4::spellLevelSet;4[/rbutton]' +
+                    '[rbutton]5::spellLevelSet;5[/rbutton]' +
+                    '[rbutton]6::spellLevelSet;6[/rbutton]' +
+                    '[rbutton]7::spellLevelSet;7[/rbutton]' +
+                    '[rbutton]8::spellLevelSet;8[/rbutton]' +
                     '[rbutton]9::spellLevelSet;9[/rbutton]',
                 '--X|',
                 '--:spellLevelSet|',
@@ -915,8 +993,15 @@ const ParaseleneInstaller = (() => {
                         'showplayers_bar1 ' +
                     '--off ' +
                         'playersedit_name ' +
-                        'showplayers_aura1 showplayers_aura2 playersedit_aura1 playersedit_aura2 ' +
-                        'showplayers_bar2 showplayers_bar3 playersedit_bar1 playersedit_bar2 playersedit_bar3' +
+                        'showplayers_aura1 ' +
+                        'showplayers_aura2 ' +
+                        'playersedit_aura1 ' +
+                        'playersedit_aura2 ' +
+                        'showplayers_bar2 ' +
+                        'showplayers_bar3 ' +
+                        'playersedit_bar1 ' +
+                        'playersedit_bar2 ' +
+                        'playersedit_bar3' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Set-Token-Defaults' +
             '{& end}',
@@ -1128,10 +1213,14 @@ const ParaseleneInstaller = (() => {
                 '',
                 '--:setTokenLight|',
                 '--+|[c][b]Set to [&reentryval][/b][/c]',
-                '--@token-mod|_ignore-selected _ids @(selected|token_id) _set ' +
-                    'has_bright_light_vision|[&hasBrightLightVision] emits_bright_light|[&emitsBrightLight] ' +
-                    'emits_low_light|[&emitsLowLight] bright_light_distance|[&brightLightDistance] ' +
-                    'low_light_distance|[&lowLightDistance] light_angle|[&lightAngle]',
+                '--@token-mod|_ignore-selected _ids @(selected|token_id) ' +
+                    '_set ' +
+                        'has_bright_light_vision|[&hasBrightLightVision] ' +
+                        'emits_bright_light|[&emitsBrightLight] ' +
+                        'emits_low_light|[&emitsLowLight] ' +
+                        'bright_light_distance|[&brightLightDistance] ' +
+                        'low_light_distance|[&lowLightDistance] ' +
+                        'light_angle|[&lightAngle]',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Set-Token-Light' +
@@ -1215,10 +1304,13 @@ const ParaseleneInstaller = (() => {
                 '',
                 '--:setTokenVision|',
                 '--+|[c][b]Set to [&reentryval][/b][/c]',
-                '--@token-mod|_ignore-selected _ids @(selected|token_id) _set ' +
-                    'has_bright_light_vision|[&hasBrightLightVision] has_night_vision|[&hasNightVision] ' +
-                    'night_vision_distance|[&nightVisionDistance] light_angle|[&lightAngle] ' +
-                    'night_vision_effect|[&night_vision_effect]',
+                '--@token-mod|_ignore-selected _ids @(selected|token_id) ' +
+                    '_set ' +
+                        'has_bright_light_vision|[&hasBrightLightVision] ' +
+                        'has_night_vision|[&hasNightVision] ' +
+                        'night_vision_distance|[&nightVisionDistance] ' +
+                        'light_angle|[&lightAngle] ' +
+                        'night_vision_effect|[&night_vision_effect]',
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Set-Token-Vision' +
@@ -1421,6 +1513,92 @@ const ParaseleneInstaller = (() => {
             '!# Paraselene-Rotate-Token',
             '!# Settings: Token Action: Yes, Visibility: All Players',
             '!Paraselene-Tools-Rotate-Token --speakAs Rotate-Token',
+        ].join('\n') + '\n',
+    ];
+
+    // ParaseleneDnD5e ScriptCards Library SmartAOE functions.
+    const smartAOELibraryFunctions = [
+        [
+            '--:setupCardStandard|title',
+            '--#emoteState|hidden',
+            '--#title|AOE for [%1%]',
+            '--#whisper|self',
+            '--<|',
+        ].join('\n') + '\n',
+        [
+            '--:setupCardHidden|',
+            '--#emoteState|hidden',
+            '--#hideCard|1',
+            '--#whisper|self',
+            '--<|',
+        ].join('\n') + '\n',
+        [
+            '--:getColorCode|targertVariable;colorName',
+            '--c[%2%]' +
+                '|Aquamarine:&[%1%];#00FF88' +
+                '|Azure:&[%1%];#0088FF' +
+                '|Black:&[%1%];#000000' +
+                '|Blue:&[%1%];#0000FF' +
+                '|Chartreuse:&[%1%];#88FF00' +
+                '|Cyan:&[%1%];#00FFFF' +
+                '|Green:&[%1%];#00FF00' +
+                '|Grey:&[%1%];#888888' +
+                '|Magenta:&[%1%];#FF00FF' +
+                '|Orange:&[%1%];#FF8800' +
+                '|Red:&[%1%];#FF0000' +
+                '|Rose:&[%1%];#FF0088' +
+                '|Violet:&[%1%];#8800FF' +
+                '|White:&[%1%];#FFFFFF' +
+                '|Yellow:&[%1%];#FFFF00',
+            '--<|',
+        ].join('\n') + '\n',
+        [
+            '--:showSmartAOE|cardType;title;colorName;type;radius;controlTokenName;origin;width;characterName',
+            '-->setupCard[%1%]|[%2%]',
+            '-->getColorCode|colorCode;[%3%]',
+            '--@forselected|' +
+                'smartaoe ' +
+                    '_aoeColor|[&colorCode]50 ' +
+                    '_aoeOutlineColor|#00000050 ' +
+                    '_aoeType|[%4%] ' +
+                    '_forceIntersection|0 ' +
+                    '_radius|[%5%] ' +
+                    '_controlTokName|[%6%] ' +
+                    '_origin|[%7%] ' +
+                    '_width|[%8%] ' +
+                    '_tooltip|[%9%] - [%2%]',
+            '--<|',
+        ].join('\n') + '\n',
+        [
+            '--:showSmartAOENoWidth|cardType;title;colorName;type;radius;controlTokenName;origin;characterName',
+            '-->setupCard[%1%]|[%2%]',
+            '-->getColorCode|colorCode;[%3%]',
+            '--@forselected|' +
+                'smartaoe ' +
+                    '_aoeColor|[&colorCode]50 ' +
+                    '_aoeOutlineColor|#00000050 ' +
+                    '_aoeType|[%4%] ' +
+                    '_forceIntersection|0 ' +
+                    '_radius|[%5%] ' +
+                    '_controlTokName|[%6%] ' +
+                    '_origin|[%7%] ' +
+                    '_tooltip|[%8%] - [%2%]',
+            '--<|',
+        ].join('\n') + '\n',
+        [
+            '--:showSmartAOENoRadiusNoWidth|cardType;title;colorName;type;controlTokenName;origin;characterName',
+            '-->setupCard[%1%]|[%2%]',
+            '-->getColorCode|colorCode;[%3%]',
+            '--@forselected|' +
+                'smartaoe ' +
+                    '_aoeColor|[&colorCode]50 ' +
+                    '_aoeOutlineColor|#00000050 ' +
+                    '_aoeType|[%4%] ' +
+                    '_forceIntersection|0 ' +
+                    '_controlTokName|[%5%] ' +
+                    '_origin|[%6%] ' +
+                    '_tooltip|[%7%] - [%2%]',
+            '--<|',
         ].join('\n') + '\n',
     ];
 
@@ -1712,6 +1890,7 @@ const ParaseleneInstaller = (() => {
         const choices = deserializeChoices(args, 2);
         state[scriptName].installedFeatures = choices;
 
+        let paraseleneDnD5eLibraryFunctions = [];
         let paraseleneDnD5eAbilities = [];
         let paraseleneToolsAbilities = [];
         let paraseleneMacros = [];
@@ -1727,6 +1906,7 @@ const ParaseleneInstaller = (() => {
             paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eScriptCardsAbilities);
         }
         if (state[scriptName].installedFeatures.SmartAOE) {
+            paraseleneDnD5eLibraryFunctions = paraseleneDnD5eLibraryFunctions.concat(smartAOELibraryFunctions);
             paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eSmartAOEAbilities);
             paraseleneMacros = paraseleneMacros.concat(smartAOEMacros);
         }
@@ -1745,15 +1925,77 @@ const ParaseleneInstaller = (() => {
             paraseleneMacros = paraseleneMacros.concat(turnOrderMacros);
         }
 
+        updateScriptCardsLibrary(speakAs, playerName, 'ParaseleneDnD5e', paraseleneDnD5eLibraryFunctions);
         updateAbilities(speakAs, playerName, 'ParaseleneDnD5e', paraseleneDnD5eAbilities);
         updateAbilities(speakAs, playerName, 'ParaseleneTools', paraseleneToolsAbilities);
         updateParaseleneMacros(speakAs, playerId, playerName, paraseleneMacros);
     };
 
+    // Get the notes of a handout.
+    const getHandoutNotes = function (handout) {
+        return new Promise((resolve) => {
+            handout.get('notes', (p) => {
+                resolve(p);
+            });
+        });
+    };
+
+    // Update, remove, and install Paraselene ScriptCards libraries.
+    const updateScriptCardsLibrary = async (speakAs, playerName, libraryName, newLibraryFunctionsList) => {
+        const fullHandoutName = `ScriptCards Library ${libraryName}`;
+        let summary = '';
+
+        // Create the handout if it does not exist and is needed.
+        let handout = null;
+        const handouts = findObjs({
+            type: 'handout',
+            name: fullHandoutName,
+        });
+        if (handouts.length > 0) {
+            handout = handouts[0];
+            summary = `${fullHandoutName}<br/>handout<br/>Already exists`;
+        } else if (newLibraryFunctionsList.length > 0) {
+            handout = createObj(
+                'handout',
+                {
+                    name: fullHandoutName,
+                },
+            );
+            summary = `${fullHandoutName}<br/>handout<br/>${new Span('Created', 'color: green').render()}`;
+        } else {
+            return;
+        }
+
+        const table = new Table();
+        const cellStyle = 'padding-left: 5px; padding-right: 5px; text-align: center;';
+        table.add(new Row().add(new Cell(summary, cellStyle)));
+
+        // Remove the handout if it is no longer needed.
+        if (newLibraryFunctionsList.length == 0) {
+            handout.remove();
+            handout = null;
+            summary = `${fullHandoutName}<br/>handout<br/>${new Span('Removed', 'color: yellow').render()}`;
+            table.add(new Row().add(new Cell(summary, cellStyle)));
+        }
+
+        const existingNotes = await getHandoutNotes(handout);
+        const newNotes = (newLibraryFunctionsList.join('\n') + '\n').replaceAll('\n', '<br>');
+
+        if (existingNotes == newNotes) {
+            summary = `${fullHandoutName}<br/>handout<br/>Up to date`;
+        } else {
+            handout.set({
+                notes: newNotes,
+            });
+            summary = `${fullHandoutName}<br/>handout<br/>${new Span('Updated', 'color: green').render()}`;
+        }
+        table.add(new Row().add(new Cell(summary, cellStyle)));
+
+        pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
+    };
+
     // Update, remove, and install Paraselene character abilities.
     const updateAbilities = (speakAs, playerName, characterName, newActionsList) => {
-        const cellStyle = 'padding-left: 5px; padding-right: 5px; text-align: center;';
-        const table = new Table();
         let summary = '';
 
         // Create the character if it does not exist and is needed.
@@ -1774,25 +2016,19 @@ const ParaseleneInstaller = (() => {
                 },
             );
             summary = `${characterName} character<br/>${new Span('Created', 'color: green').render()}`;
+        } else {
+            return;
         }
 
-        // Remove the character if it exists but is no longer needed.
-        if (character && (newActionsList.length == 0)) {
-            character.remove();
-            character = null;
-            summary = `${characterName} character<br/>${new Span('Removed', 'color: yellow').render()}`;
-        }
-
+        const table = new Table();
+        const cellStyle = 'padding-left: 5px; padding-right: 5px; text-align: center;';
         table.add(new Row().add(new Cell(summary, cellStyle)));
 
-        // Create a list of the existing Paraselene abilities.
-        let existingAbilities = [];
-        if (character) {
-            existingAbilities = findObjs({
-                type: 'ability',
-                characterid: character.id,
-            });
-        }
+        // Create a list of the existing abilities.
+        const existingAbilities = findObjs({
+            type: 'ability',
+            characterid: character.id,
+        });
 
         // Create an index of the new actions.
         const newActionsIndex = indexParaseleneActions(newActionsList);
@@ -1807,7 +2043,7 @@ const ParaseleneInstaller = (() => {
             existingAbilities.forEach(ability => {
                 const name = ability.get('name');
                 const action = ability.get('action');
-                const canonicalName = getParaseleneActionCanonicalName(action);
+                const canonicalName = isParaseleneAction(action) ? getParaseleneActionCanonicalName(action) : 'None';
                 if (Object.prototype.hasOwnProperty.call(newActionsIndex, canonicalName)) {
                     const newAction = newActionsList[newActionsIndex[canonicalName]];
                     if (action == newAction) {
@@ -1826,16 +2062,13 @@ const ParaseleneInstaller = (() => {
             });
         }
 
-        // Get a fresh list of the existing Paraselene abilities names, since some may have been removed.
-        let existingAbilityNames = [];
-        if (character) {
-            existingAbilityNames = findObjs({
-                type: 'ability',
-                characterid: character.id,
-            }).map(ability => {
-                return ability.get('name');
-            });
-        }
+        // Get a fresh list of the existing ability names, since some may have been removed.
+        const existingAbilityNames = findObjs({
+            type: 'ability',
+            characterid: character.id,
+        }).map(ability => {
+            return ability.get('name');
+        });
         const actionsToInstall = newActionsList.filter(action => {
             return !(existingAbilityNames.includes(getParaseleneAbilityName(action)));
         });
@@ -1865,6 +2098,13 @@ const ParaseleneInstaller = (() => {
                 );
             });
         };
+
+        // Remove the character if it is no longer needed.
+        if (newActionsList.length == 0) {
+            character.remove();
+            summary = `${characterName} character<br/>${new Span('Removed', 'color: yellow').render()}`;
+            table.add(new Row().add(new Cell(summary, cellStyle)));
+        }
 
         pc.sendChatNoArchive(speakAs, `/w "${playerName}" <br/>${table.render()}`);
     };
