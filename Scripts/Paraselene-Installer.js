@@ -31,7 +31,7 @@ const ParaseleneInstaller = (() => {
 
     const scriptName = 'Paraselene-Installer';
     const version = API_Meta.ParaseleneInstaller.version;
-    const schemaVersion = '2.0.0';
+    const schemaVersion = '2.0.1';
     const scriptAuthor = 'Neil Luna';
  
     // Convenience aliases for ParaseleneCommon.
@@ -59,6 +59,10 @@ const ParaseleneInstaller = (() => {
                     setStateToDefaults();
                     // No break statement. This must fall through.
 
+                case '2.0.0':  // Migrate from 2.0.0 to 2.0.1.
+                    convertSchema200To201();
+                    // No break statement. This must fall through.
+
                 case 'UpdateSchemaVersion':
                     state[scriptName].version = schemaVersion;
                     break;
@@ -71,20 +75,24 @@ const ParaseleneInstaller = (() => {
         }
     };
 
-    // Set the state to the schema version 2.0.0 defaults.
+    // Set the state to the schema version 2.0.1 defaults.
     const setStateToDefaults = () => {
         state[scriptName] = {
             installedFeatures: {
                 DynamicLightingTool: true,
                 MapChange: true,
-                ScriptCards: true,
                 SmartAOE: true,
                 Teleport: true,
                 TokenActions: true,
-                TokenMod: true,
                 TurnOrder: true,
             },
         };
+    };
+
+    // Convert the schema version from 2.0.0 to 2.0.1.
+    const convertSchema200To201 = () => {
+        delete state[scriptName].installedFeatures.ScriptCards;
+        delete state[scriptName].installedFeatures.TokenMod;
     };
 
     // Check if Paraselene-Common is loaded.
@@ -1629,11 +1637,9 @@ const ParaseleneInstaller = (() => {
     const serializeChoices = (choices) => {
         return `${choices.DynamicLightingTool} ` +
             `${choices.MapChange} ` +
-            `${choices.ScriptCards} ` +
             `${choices.SmartAOE} ` +
             `${choices.Teleport} ` +
             `${choices.TokenActions} ` +
-            `${choices.TokenMod} ` +
             `${choices.TurnOrder}`;
     };
 
@@ -1642,12 +1648,10 @@ const ParaseleneInstaller = (() => {
         return {
             DynamicLightingTool: args[startIndex] === 'true',
             MapChange: args[startIndex + 1] === 'true',
-            ScriptCards: args[startIndex + 2] === 'true',
-            SmartAOE: args[startIndex + 3] === 'true',
-            Teleport: args[startIndex + 4] === 'true',
-            TokenActions: args[startIndex + 5] === 'true',
-            TokenMod: args[startIndex + 6] === 'true',
-            TurnOrder: args[startIndex + 7] === 'true',
+            SmartAOE: args[startIndex + 2] === 'true',
+            Teleport: args[startIndex + 3] === 'true',
+            TokenActions: args[startIndex + 4] === 'true',
+            TurnOrder: args[startIndex + 5] === 'true',
         };
     };
 
@@ -1676,11 +1680,9 @@ const ParaseleneInstaller = (() => {
         const alerts = {
             DynamicLightingTool: choices.DynamicLightingTool !== installedFeatures.DynamicLightingTool ? alert : '',
             MapChange: choices.MapChange !== installedFeatures.MapChange ? alert : '',
-            ScriptCards: choices.ScriptCards !== installedFeatures.ScriptCards ? alert : '',
             SmartAOE: choices.SmartAOE !== installedFeatures.SmartAOE ? alert : '',
             Teleport: choices.Teleport !== installedFeatures.Teleport ? alert : '',
             TokenActions: choices.TokenActions !== installedFeatures.TokenActions ? alert : '',
-            TokenMod: choices.TokenMod !== installedFeatures.TokenMod ? alert : '',
             TurnOrder: choices.TurnOrder !== installedFeatures.TurnOrder ? alert : '',
         };
 
@@ -1689,17 +1691,12 @@ const ParaseleneInstaller = (() => {
         const mapChangeSummary = 'Include macros that allow the players to change maps themselves, ' +
             'and a macro for the GM to easily manage which maps the players are on.<br/>' +
             'Examples: "Change-Map" and "Change-Map-GM-Only".';
-        const scriptCardsSummary = 'Include customized abilities and spells.<br/>' +
-            'Examples: "Chaos Bolt" and "Magic Missile".';
         const smartAOESummary = 'Include abilities and macros for the AOE pattern helpers.<br/>' +
             'Examples: "Add-AOE-Pattern" and "Remove-AOE-Pattern".';
         const teleportSummary = 'Include a macro to invoke the GM\'s "Teleport" menu tool.<br/>' +
             'Example: "Teleport-Menu".';
         const tokenActionsSummary = 'Include macros to add and remove token actions for the "Actions" of NPCs.<br/>' +
             'Examples: "Add-Token-Actions" and "Remove-Token-Actions".';
-        const tokenModSummary = 'Include abilities and macros for the "TokenMod" module.<br/>' +
-            'Examples: "Clear-Token-Status", "Kill-Token", "Set-Token-Defaults", "Set-Token-Light", ' +
-            'and "Set-Token-Vision".';
         const turnOrderSummary = 'Include macros to easily manage the turn order.<br/>' +
             'Examples: "Manage-Turn-Order" and "Manage-Turn-Order-Stack".';
 
@@ -1748,21 +1745,6 @@ const ParaseleneInstaller = (() => {
             )
             .add(new Row()
                 .add(new Cell(
-                    new Span('Script Cards', 'font-weight: bold').render() + '<br/>' +
-                    scriptCardsSummary,
-                    cellStyle,
-                ))
-                .add(new Cell(
-                    new Link(
-                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} ScriptCards ` +
-                            serializedChoices,
-                        `${choices.ScriptCards ? 'On' : 'Off'}`,
-                    ).render() + alerts.ScriptCards,
-                    switchCellStyle,
-                )),
-            )
-            .add(new Row()
-                .add(new Cell(
                     new Span('Smart AOE', 'font-weight: bold').render() + '<br/>' +
                     smartAOESummary,
                     cellStyle,
@@ -1803,21 +1785,6 @@ const ParaseleneInstaller = (() => {
                             serializedChoices,
                         `${choices.TokenActions ? 'On' : 'Off'}`,
                     ).render() + alerts.TokenActions,
-                    switchCellStyle,
-                )),
-            )
-            .add(new Row()
-                .add(new Cell(
-                    new Span('Token Mod', 'font-weight: bold').render() + '<br/>' +
-                    tokenModSummary,
-                    cellStyle,
-                ))
-                .add(new Cell(
-                    new Link(
-                        `!${scriptName}-Toggle-Feature-API --speakAs ${speakAs} ${playerId} TokenMod ` +
-                            serializedChoices,
-                        `${choices.TokenMod ? 'On' : 'Off'}`,
-                    ).render() + alerts.TokenMod,
                     switchCellStyle,
                 )),
             )
@@ -1898,15 +1865,17 @@ const ParaseleneInstaller = (() => {
         let paraseleneToolsAbilities = [];
         let paraseleneMacros = [];
 
+        paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eScriptCardsAbilities);
+        paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eTokenModAbilities);
+
         paraseleneMacros = paraseleneMacros.concat(paraseleneCoreMacros);
+        paraseleneMacros = paraseleneMacros.concat(tokenModMacros);
+
         if (state[scriptName].installedFeatures.DynamicLightingTool) {
             paraseleneMacros = paraseleneMacros.concat(dynamicLightingToolMacros);
         }
         if (state[scriptName].installedFeatures.MapChange) {
             paraseleneMacros = paraseleneMacros.concat(mapChangeMacros);
-        }
-        if (state[scriptName].installedFeatures.ScriptCards) {
-            paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eScriptCardsAbilities);
         }
         if (state[scriptName].installedFeatures.SmartAOE) {
             paraseleneDnD5eLibraryFunctions = paraseleneDnD5eLibraryFunctions.concat(smartAOELibraryFunctions);
@@ -1918,10 +1887,6 @@ const ParaseleneInstaller = (() => {
         }
         if (state[scriptName].installedFeatures.TokenActions) {
             paraseleneMacros = paraseleneMacros.concat(tokenActionMacros);
-        }
-        if (state[scriptName].installedFeatures.TokenMod) {
-            paraseleneDnD5eAbilities = paraseleneDnD5eAbilities.concat(dnd5eTokenModAbilities);
-            paraseleneMacros = paraseleneMacros.concat(tokenModMacros);
         }
         if (state[scriptName].installedFeatures.TurnOrder) {
             paraseleneToolsAbilities = paraseleneToolsAbilities.concat(toolsTurnOrderAbilities);
