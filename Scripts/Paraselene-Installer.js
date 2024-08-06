@@ -355,7 +355,7 @@ const ParaseleneInstaller = (() => {
                 'script{{',
                 '+++ParaseleneDnD5e+++',
                 '-->showSmartAOENoWidth|' +
-                    "Hidden;Dragon's Breath;Red;5econe;15ft;AoEControlToken;nearest, face;" +
+                    "Hidden;Dragon.apostrophe.s Breath;Red;5econe;15ft;AoEControlToken;nearest, face;" +
                     '@(selected.token_name)',
                 '}}' +
             '{& else}' +
@@ -553,7 +553,7 @@ const ParaseleneInstaller = (() => {
                 'script{{',
                 '+++ParaseleneDnD5e+++',
                 '-->showSmartAOENoWidth|' +
-                    "Hidden;Leomund's Tiny Hut;Blue;circle, float;10ft;AoEControlToken;center;" +
+                    "Hidden;Leomund.apostrophe.s Tiny Hut;Blue;circle, float;10ft;AoEControlToken;center;" +
                     '@(selected.token_name)',
                 '}}' +
             '{& else}' +
@@ -1529,7 +1529,8 @@ const ParaseleneInstaller = (() => {
         [
             '--:setupCardStandard|title',
             '--#emoteState|hidden',
-            '--#title|AOE for [%1%]',
+            '--&title|[%1%]',
+            "--#title|AOE for [&title(replaceall,.apostrophe.,')]",
             '--#whisper|self',
             '--<|',
         ].join('\n') + '\n',
@@ -1564,6 +1565,7 @@ const ParaseleneInstaller = (() => {
             '--:showSmartAOE|cardType;title;colorName;type;radius;controlTokenName;origin;width;characterName',
             '-->setupCard[%1%]|[%2%]',
             '-->getColorCode|colorCode;[%3%]',
+            '--&title|[%2%]',
             '--@forselected|' +
                 'smartaoe ' +
                     '_aoeColor|[&colorCode]50 ' +
@@ -1575,13 +1577,14 @@ const ParaseleneInstaller = (() => {
                     '_controlTokName|[%6%] ' +
                     '_origin|[%7%] ' +
                     '_width|[%8%] ' +
-                    '_tooltip|[%9%] - [%2%]',
+                    "_tooltip|[%9%] - [&title(replaceall,.apostrophe.,')]",
             '--<|',
         ].join('\n') + '\n',
         [
             '--:showSmartAOENoWidth|cardType;title;colorName;type;radius;controlTokenName;origin;characterName',
             '-->setupCard[%1%]|[%2%]',
             '-->getColorCode|colorCode;[%3%]',
+            '--&title|[%2%]',
             '--@forselected|' +
                 'smartaoe ' +
                     '_aoeColor|[&colorCode]50 ' +
@@ -1592,13 +1595,14 @@ const ParaseleneInstaller = (() => {
                     '_radius|[%5%] ' +
                     '_controlTokName|[%6%] ' +
                     '_origin|[%7%] ' +
-                    '_tooltip|[%8%] - [%2%]',
+                    "_tooltip|[%8%] - [&title(replaceall,.apostrophe.,')]",
             '--<|',
         ].join('\n') + '\n',
         [
             '--:showSmartAOENoRadiusNoWidth|cardType;title;colorName;type;controlTokenName;origin;characterName',
             '-->setupCard[%1%]|[%2%]',
             '-->getColorCode|colorCode;[%3%]',
+            '--&title|[%2%]',
             '--@forselected|' +
                 'smartaoe ' +
                     '_aoeColor|[&colorCode]50 ' +
@@ -1608,7 +1612,7 @@ const ParaseleneInstaller = (() => {
                     '_mingridarea|0.1 ' +
                     '_controlTokName|[%5%] ' +
                     '_origin|[%6%] ' +
-                    '_tooltip|[%7%] - [%2%]',
+                    "_tooltip|[%7%] - [&title(replaceall,.apostrophe.,')]",
             '--<|',
         ].join('\n') + '\n',
     ];
