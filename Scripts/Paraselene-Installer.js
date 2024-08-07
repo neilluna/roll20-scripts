@@ -795,13 +795,14 @@ const ParaseleneInstaller = (() => {
                     'get.@(selected|character_id).CriticalHitSettings.ChaosBoltUseVariantCriticalHitDamage/get',
                 '',
                 '--#emoteFontColor|#000',
-                '--#noRollHighlight|noRollHighlight',
-                '',
-                '--#sourceToken|@(selected|token_id)',
                 '--#emoteText|@(selected|character_name) casts a Chaos Bolt',
+                '--#whisper|self',
+                '',
+                '--#noRollHighlight|noRollHighlight',
+                '--#sourceToken|@(selected|token_id)',
                 '--#title|Chaos Bolt',
                 '',
-                '--+Cast at what Level?|' +
+                '--+Cast level?|' +
                     '[rbutton]1::spellLevelSet;1[/rbutton]' +
                     '[rbutton]2::spellLevelSet;2[/rbutton]' +
                     '[rbutton]3::spellLevelSet;3[/rbutton]' +
@@ -812,8 +813,10 @@ const ParaseleneInstaller = (() => {
                     '[rbutton]8::spellLevelSet;8[/rbutton]' +
                     '[rbutton]9::spellLevelSet;9[/rbutton]',
                 '--X|',
+                '',
                 '--:spellLevelSet|',
                 '--=castLevel|[&reentryval]',
+                '--#whisper|',
                 '',
                 '--#leftsub|Range: 120 ft',
                 '--#rightsub|Cast at level [$castLevel]',
@@ -938,13 +941,14 @@ const ParaseleneInstaller = (() => {
                 '--#reentrant|Magic Missile from @(selected|character_id)',
                 '',
                 '--#emoteFontColor|#000',
-                '--#noRollHighlight|noRollHighlight',
-                '',
-                '--#sourceToken|@(selected|token_id)',
                 '--#emoteText|@(selected|character_name) casts a Magic Missile',
+                '--#whisper|self',
+                '',
+                '--#noRollHighlight|noRollHighlight',
+                '--#sourceToken|@(selected|token_id)',
                 '--#title|Magic Missile',
                 '',
-                '--+Cast at what Level?|' +
+                '--+Cast level?|' +
                     '[rbutton]1::spellLevelSet;1[/rbutton]' +
                     '[rbutton]2::spellLevelSet;2[/rbutton]' +
                     '[rbutton]3::spellLevelSet;3[/rbutton]' +
@@ -955,8 +959,10 @@ const ParaseleneInstaller = (() => {
                     '[rbutton]8::spellLevelSet;8[/rbutton]' +
                     '[rbutton]9::spellLevelSet;9[/rbutton]',
                 '--X|',
+                '',
                 '--:spellLevelSet|',
                 '--=castLevel|[&reentryval]',
+                '--#whisper|',
                 '',
                 '--#leftsub|Range: 120 ft',
                 '--#rightsub|Cast at level [$castLevel]',
