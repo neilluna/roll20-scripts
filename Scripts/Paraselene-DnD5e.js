@@ -1,6 +1,6 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.4.0
+// Version 1.4.1
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.4.0',
+    version: '1.4.1',
 };
 {
     const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
@@ -146,6 +146,7 @@ const ParaseleneDnD5e = (() => {
             Silence: false,
             Sleep: false,
             SleetStorm: false,
+            SpiritGuardians: false,
             SwordBurst: false,
             Thunderclap: false,
             Thunderwave: false,
@@ -268,6 +269,9 @@ const ParaseleneDnD5e = (() => {
         }
         if (spells.SleetStorm) {
             menu.push('[Sleet Storm](~ParaseleneDnD5e|AddAOESleetStorm)');
+        }
+        if (spells.SpiritGuardians) {
+            menu.push('[Spirit Guardians](~ParaseleneDnD5e|AddAOESpiritGuardians)');
         }
         if (spells.SwordBurst) {
             menu.push('[Sword Burst](~ParaseleneDnD5e|AddAOESwordBurst)');

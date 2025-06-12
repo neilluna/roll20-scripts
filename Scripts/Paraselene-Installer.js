@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.5.1
+// Version 1.5.2
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
     offset: Number.MAX_SAFE_INTEGER,
     lineCount: -1,
-    version: '1.5.1',
+    version: '1.5.2',
 };
 {
     const errorLineNumber = 20;  // Set this to the line number of the "throw new Error('')" below.
@@ -708,6 +708,20 @@ const ParaseleneInstaller = (() => {
                 '}}' +
             '{& else}' +
                 'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sleet-Storm' +
+            '{& end}',
+        ].join('\n') + '\n',
+        [
+            '!# Paraselene-AddAOESpiritGuardians',
+            '!# https://www.dndbeyond.com/spells/spirit-guardians',
+            '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+                'script{{',
+                '+++ParaseleneDnD5e+++',
+                '-->showSmartAOENoWidth|' +
+                    'Hidden;Spirit Guardians;Yellow;circle, float;12.5ft;self;center;' +
+                    '@(selected.token_name)',
+                '}}' +
+            '{& else}' +
+                'Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Spirit-Guardians' +
             '{& end}',
         ].join('\n') + '\n',
         [
