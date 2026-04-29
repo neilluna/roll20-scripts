@@ -18,4 +18,4 @@ Install the following mods in any order:
 
 Once the scripts are installed, run the following command
 
-  `!Paraselene-Installer-Install --speakAs Install`
+`!Paraselene-Installer-Install --speakAs Install`

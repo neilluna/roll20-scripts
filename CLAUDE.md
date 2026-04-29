@@ -23,6 +23,7 @@ There is no test suite.
 All scripts are uploaded directly into Roll20's API mod system. They run in Roll20's sandboxed Node.js environment with access to Roll20 globals (`state`, `on`, `findObjs`, `getObj`, `sendChat`, `createObj`, `sendPing`, `toFront`, `playerIsGM`, etc.).
 
 **Dependency order for installation:**
+
 1. `Paraselene-Common.js` — Core library used by all other scripts
 2. `Paraselene-Installer.js` — Installs/updates character abilities and macros
 3. `Paraselene-Tools.js` — Game-independent token utilities
@@ -44,6 +45,7 @@ Every modern script follows this structure:
 ### `ParaseleneCommon` public API
 
 The shared library (`Scripts/Paraselene-Common.js`) exposes:
+
 - `compareVersions(v1, v2)` — semver comparison returning -1/0/1
 - `extractCommandLineOption(args, option, defaultValue)` — mutates args array, returns value
 - `getPlayerPageId(playerId)` — respects per-player page overrides
