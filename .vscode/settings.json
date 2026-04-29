@@ -1,0 +1,12 @@
+{
+  "bookmarks.saveBookmarksInProject": true,
+  "code-eol.highlightNonDefault": true,
+  "code-eol.highlightExtraWhitespace": true,
+  "code-eol.forceShowOnWordWrap": true,
+  "code-eol.forceShowOnBoundary": true,
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.rulers": [80, 100, 120]
+}

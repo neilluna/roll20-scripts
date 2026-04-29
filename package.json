@@ -1,18 +1,15 @@
 {
   "name": "roll20-scripts",
-  "version": "1.0.0",
-  "description": "Version 0.0.0",
+  "version": "0.0.0",
+  "description": "Roll20 Macros, Mods, and Scripts",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Neil Luna",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/js": "^9.4.0",
-    "@stylistic/eslint-plugin-js": "^2.1.0",
-    "eslint": "^9.4.0",
-    "globals": "^15.4.0"
+    "eslint": "^10.2.1",
+    "prettier": "^3.8.3"
   }
 }
