@@ -1581,8 +1581,9 @@ const ParaseleneInstaller = (() => {
       "-->setupCard[%1%]|[%2%]",
       "-->getColorCode|colorCode;[%3%]",
       "--&title|[%2%]",
-      "--@forselected|" +
-        "smartaoe " +
+      "--@smartaoe|" +
+        "_playerID|[&SendingPlayerID] " +
+        "_selectedID|@(selected.token_id) " +
         "_aoeColor|[&colorCode]50 " +
         "_aoeOutlineColor|#00000050 " +
         "_aoeType|[%4%] " +
@@ -1600,8 +1601,9 @@ const ParaseleneInstaller = (() => {
       "-->setupCard[%1%]|[%2%]",
       "-->getColorCode|colorCode;[%3%]",
       "--&title|[%2%]",
-      "--@forselected|" +
-        "smartaoe " +
+      "--@smartaoe|" +
+        "_playerID|[&SendingPlayerID] " +
+        "_selectedID|@(selected.token_id) " +
         "_aoeColor|[&colorCode]50 " +
         "_aoeOutlineColor|#00000050 " +
         "_aoeType|[%4%] " +
@@ -1618,8 +1620,9 @@ const ParaseleneInstaller = (() => {
       "-->setupCard[%1%]|[%2%]",
       "-->getColorCode|colorCode;[%3%]",
       "--&title|[%2%]",
-      "--@forselected|" +
-        "smartaoe " +
+      "--@smartaoe|" +
+        "_playerID|[&SendingPlayerID] " +
+        "_selectedID|@(selected.token_id) " +
         "_aoeColor|[&colorCode]50 " +
         "_aoeOutlineColor|#00000050 " +
         "_aoeType|[%4%] " +
