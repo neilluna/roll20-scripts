@@ -292,7 +292,7 @@ const ParaseleneInstaller = (() => {
       "",
       "--:castLevelSet|",
       "-->showSmartAOENoWidth|" +
-        "Hidden;Confusion;Rose;circle, float;[&reentryval]ft;AoEControlToken;center;" +
+        "Hidden;Confusion;Violet;circle, float;[&reentryval]ft;AoEControlToken;center;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
