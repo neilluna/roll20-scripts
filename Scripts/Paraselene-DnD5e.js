@@ -121,11 +121,14 @@ const ParaseleneDnD5e = (() => {
     const spells = {
       AcidSplash: false,
       AuraOfProtection: false,
+      AuraOfPurity: false,
       AuraOfVitality: false,
       BurningHands: false,
       CallLightning: false,
+      Cloudkill: false,
       CloudOfDaggers: false,
       ColorSpray: false,
+      ConeOfCold: false,
       Confusion: false,
       ControlWater: false,
       DestructiveWave: false,
@@ -136,6 +139,7 @@ const ParaseleneDnD5e = (() => {
       Entangle: false,
       FireShield: false,
       FlamingSphere: false,
+      FlameStrike: false,
       FogCloud: false,
       GraspingVine: false,
       Grease: false,
@@ -155,6 +159,7 @@ const ParaseleneDnD5e = (() => {
       SleetStorm: false,
       SpiritGuardians: false,
       SwordBurst: false,
+      SynapticStatic: false,
       Thunderclap: false,
       Thunderwave: false,
       Trajectory: false,
@@ -187,6 +192,9 @@ const ParaseleneDnD5e = (() => {
         "[Aura of Protection](~ParaseleneDnD5e|AddAOEAuraOfProtection)",
       );
     }
+    if (spells.AuraOfPurity) {
+      menu.push("[Aura of Purity](~ParaseleneDnD5e|AddAOEAuraOfPurity)");
+    }
     if (spells.AuraOfVitality) {
       menu.push("[Aura of Vitality](~ParaseleneDnD5e|AddAOEAuraOfVitality)");
     }
@@ -201,11 +209,17 @@ const ParaseleneDnD5e = (() => {
         "[Call Lightning - Strike](~ParaseleneDnD5e|AddAOECallLightningStrike)",
       );
     }
+    if (spells.Cloudkill) {
+      menu.push("[Cloudkill](~ParaseleneDnD5e|AddAOECloudkill)");
+    }
     if (spells.CloudOfDaggers) {
       menu.push("[Cloud of Daggers](~ParaseleneDnD5e|AddAOECloudOfDaggers)");
     }
     if (spells.ColorSpray) {
       menu.push("[Color Spray](~ParaseleneDnD5e|AddAOEColorSpray)");
+    }
+    if (spells.ConeOfCold) {
+      menu.push("[Cone of Cold](~ParaseleneDnD5e|AddAOEConeOfCold)");
     }
     if (spells.Confusion) {
       menu.push("[Confusion](~ParaseleneDnD5e|AddAOEConfusion)");
@@ -238,6 +252,9 @@ const ParaseleneDnD5e = (() => {
     }
     if (spells.FlamingSphere) {
       menu.push("[Flaming Sphere](~ParaseleneDnD5e|AddAOEFlamingSphere)");
+    }
+    if (spells.FlameStrike) {
+      menu.push("[Flame Strike](~ParaseleneDnD5e|AddAOEFlameStrike)");
     }
     if (spells.FogCloud) {
       menu.push("[Fog Cloud](~ParaseleneDnD5e|AddAOEFogCloud)");
@@ -297,6 +314,9 @@ const ParaseleneDnD5e = (() => {
     }
     if (spells.SwordBurst) {
       menu.push("[Sword Burst](~ParaseleneDnD5e|AddAOESwordBurst)");
+    }
+    if (spells.SynapticStatic) {
+      menu.push("[Synaptic Static](~ParaseleneDnD5e|AddAOESynapticStatic)");
     }
     if (spells.Thunderclap) {
       menu.push("[Thunderclap](~ParaseleneDnD5e|AddAOEThunderclap)");

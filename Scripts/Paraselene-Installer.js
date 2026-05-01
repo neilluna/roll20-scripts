@@ -189,6 +189,20 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOEAuraOfPurity",
+      "!# https://www.dndbeyond.com/spells/aura-of-purity",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Aura of Purity;Yellow;circle, float;27.5ft;self;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Aura-of-Purity" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOEAuraOfVitality",
       "!# https://www.dndbeyond.com/spells/aura-of-vitality",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
@@ -245,6 +259,20 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOECloudkill",
+      "!# https://www.dndbeyond.com/spells/cloudkill",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Cloudkill;Green;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Cloudkill" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOECloudOfDaggers",
       "!# https://www.dndbeyond.com/spells/cloud-of-daggers",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
@@ -270,6 +298,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Color-Spray" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEConeOfCold",
+      "!# https://www.dndbeyond.com/spells/cone-of-cold",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Cone of Cold;White;5econe;60ft;AoEControlToken;nearest, face;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Cone-of-Cold" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -409,6 +451,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Fire-Shield" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEFlameStrike",
+      "!# https://www.dndbeyond.com/spells/flame-strike",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Flame Strike;Red;circle, float;10ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Flame-Strike" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -743,6 +799,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sword-Burst" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOESynapticStatic",
+      "!# https://www.dndbeyond.com/spells/synaptic-static",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Synaptic Static;Violet;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Synaptic-Static" +
         "{& end}",
     ].join("\n") + "\n",
     [
