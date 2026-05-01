@@ -250,8 +250,8 @@ const ParaseleneInstaller = (() => {
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Cloud of Daggers;Orange;square, float;2.5ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Cloud of Daggers;Orange;wall;5ft;AoEControlToken;nearest, face;5ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -305,8 +305,8 @@ const ParaseleneInstaller = (() => {
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Control Water;Cyan;square, float;100ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Control Water;Cyan;wall;100ft;AoEControlToken;nearest, face;100ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -389,8 +389,8 @@ const ParaseleneInstaller = (() => {
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Entangle;Green;square, float;10ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Entangle;Green;wall;20ft;AoEControlToken;nearest, face;20ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -475,8 +475,8 @@ const ParaseleneInstaller = (() => {
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Grease;Grey;square, float;5ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Grease;Grey;wall;10ft;AoEControlToken;nearest, face;10ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -640,7 +640,7 @@ const ParaseleneInstaller = (() => {
       "",
       "--:widthSet|",
       "-->showSmartAOE|" +
-        "Hidden;Passwall;Orange;wall;[&length]ft;AoEControlToken;center;[&reentryval]ft;" +
+        "Hidden;Passwall;Orange;wall;[&length]ft;AoEControlToken;nearest, face;[&reentryval]ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
