@@ -257,11 +257,11 @@ const ParaseleneDnD5e = (() => {
     if (spells.EruptingEarth) {
       menu.push("[Erupting Earth](~ParaseleneDnD5e|AddAOEEruptingEarth)");
     }
-    if (spells.Fireball) {
-      menu.push("[Fireball](~ParaseleneDnD5e|AddAOEFireball)");
-    }
     if (spells.FireShield) {
       menu.push("[Fire Shield](~ParaseleneDnD5e|AddAOEFireShield)");
+    }
+    if (spells.Fireball) {
+      menu.push("[Fireball](~ParaseleneDnD5e|AddAOEFireball)");
     }
     if (spells.FlamingSphere) {
       menu.push("[Flaming Sphere](~ParaseleneDnD5e|AddAOEFlamingSphere)");
