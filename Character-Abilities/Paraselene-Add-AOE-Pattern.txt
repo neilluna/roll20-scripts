@@ -20,6 +20,7 @@
     EarthTremor
     Entangle
     EruptingEarth
+    Fireball
     FireShield
     FlamingSphere
     FlameStrike
@@ -46,6 +47,7 @@
     SpiritShroud
     SwordBurst
     SynapticStatic
+    ThunderStep
     Thunderclap
     Thunderwave
     Trajectory

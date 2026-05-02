@@ -138,6 +138,7 @@ const ParaseleneDnD5e = (() => {
       EarthTremor: false,
       Entangle: false,
       EruptingEarth: false,
+      Fireball: false,
       FireShield: false,
       FlamingSphere: false,
       FlameStrike: false,
@@ -164,6 +165,7 @@ const ParaseleneDnD5e = (() => {
       SpiritShroud: false,
       SwordBurst: false,
       SynapticStatic: false,
+      ThunderStep: false,
       Thunderclap: false,
       Thunderwave: false,
       Trajectory: false,
@@ -255,6 +257,9 @@ const ParaseleneDnD5e = (() => {
     if (spells.EruptingEarth) {
       menu.push("[Erupting Earth](~ParaseleneDnD5e|AddAOEEruptingEarth)");
     }
+    if (spells.Fireball) {
+      menu.push("[Fireball](~ParaseleneDnD5e|AddAOEFireball)");
+    }
     if (spells.FireShield) {
       menu.push("[Fire Shield](~ParaseleneDnD5e|AddAOEFireShield)");
     }
@@ -336,6 +341,9 @@ const ParaseleneDnD5e = (() => {
     }
     if (spells.SynapticStatic) {
       menu.push("[Synaptic Static](~ParaseleneDnD5e|AddAOESynapticStatic)");
+    }
+    if (spells.ThunderStep) {
+      menu.push("[Thunder Step](~ParaseleneDnD5e|AddAOEThunderStep)");
     }
     if (spells.Thunderclap) {
       menu.push("[Thunderclap](~ParaseleneDnD5e|AddAOEThunderclap)");

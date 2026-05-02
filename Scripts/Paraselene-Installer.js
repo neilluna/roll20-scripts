@@ -454,6 +454,20 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOEFireball",
+      "!# https://www.dndbeyond.com/spells/fireball",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Fireball;Red;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Fireball" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOEFireShield",
       "!# https://www.dndbeyond.com/spells/fire-shield",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
@@ -869,6 +883,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Synaptic-Static" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEThunderStep",
+      "!# https://www.dndbeyond.com/spells/thunder-step",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Thunder Step;Orange;circle, float;7.5ft;self;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Thunder-Step" +
         "{& end}",
     ].join("\n") + "\n",
     [
