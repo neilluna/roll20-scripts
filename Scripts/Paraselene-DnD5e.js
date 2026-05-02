@@ -137,6 +137,7 @@ const ParaseleneDnD5e = (() => {
       DragonsBreath: false,
       EarthTremor: false,
       Entangle: false,
+      EruptingEarth: false,
       FireShield: false,
       FlamingSphere: false,
       FlameStrike: false,
@@ -146,6 +147,7 @@ const ParaseleneDnD5e = (() => {
       GuardianOfFaith: false,
       GustOfWind: false,
       Hallow: false,
+      HypnoticPattern: false,
       IceStorm: false,
       InsectPlague: false,
       LeomundsTinyHut: false,
@@ -154,15 +156,18 @@ const ParaseleneDnD5e = (() => {
       Passwall: false,
       PassWithoutTrace: false,
       Shatter: false,
+      SickeningRadiance: false,
       Silence: false,
       Sleep: false,
       SleetStorm: false,
       SpiritGuardians: false,
+      SpiritShroud: false,
       SwordBurst: false,
       SynapticStatic: false,
       Thunderclap: false,
       Thunderwave: false,
       Trajectory: false,
+      VitriolicSphere: false,
       ZoneOfTruth: false,
     };
 
@@ -247,6 +252,9 @@ const ParaseleneDnD5e = (() => {
     if (spells.Entangle) {
       menu.push("[Entangle](~ParaseleneDnD5e|AddAOEEntangle)");
     }
+    if (spells.EruptingEarth) {
+      menu.push("[Erupting Earth](~ParaseleneDnD5e|AddAOEEruptingEarth)");
+    }
     if (spells.FireShield) {
       menu.push("[Fire Shield](~ParaseleneDnD5e|AddAOEFireShield)");
     }
@@ -274,6 +282,9 @@ const ParaseleneDnD5e = (() => {
     if (spells.Hallow) {
       menu.push("[Hallow](~ParaseleneDnD5e|AddAOEHallow)");
     }
+    if (spells.HypnoticPattern) {
+      menu.push("[Hypnotic Pattern](~ParaseleneDnD5e|AddAOEHypnoticPattern)");
+    }
     if (spells.IceStorm) {
       menu.push("[Ice Storm](~ParaseleneDnD5e|AddAOEIceStorm)");
     }
@@ -300,6 +311,11 @@ const ParaseleneDnD5e = (() => {
     if (spells.Shatter) {
       menu.push("[Shatter](~ParaseleneDnD5e|AddAOEShatter)");
     }
+    if (spells.SickeningRadiance) {
+      menu.push(
+        "[Sickening Radiance](~ParaseleneDnD5e|AddAOESickeningRadiance)",
+      );
+    }
     if (spells.Silence) {
       menu.push("[Silence](~ParaseleneDnD5e|AddAOESilence)");
     }
@@ -311,6 +327,9 @@ const ParaseleneDnD5e = (() => {
     }
     if (spells.SpiritGuardians) {
       menu.push("[Spirit Guardians](~ParaseleneDnD5e|AddAOESpiritGuardians)");
+    }
+    if (spells.SpiritShroud) {
+      menu.push("[Spirit Shroud](~ParaseleneDnD5e|AddAOESpiritShroud)");
     }
     if (spells.SwordBurst) {
       menu.push("[Sword Burst](~ParaseleneDnD5e|AddAOESwordBurst)");
@@ -326,6 +345,9 @@ const ParaseleneDnD5e = (() => {
     }
     if (spells.Trajectory) {
       menu.push("[Trajectory](~ParaseleneDnD5e|AddAOETrajectory)");
+    }
+    if (spells.VitriolicSphere) {
+      menu.push("[Vitriolic Sphere](~ParaseleneDnD5e|AddAOEVitriolicSphere)");
     }
     if (spells.ZoneOfTruth) {
       menu.push("[Zone of Truth](~ParaseleneDnD5e|AddAOEZoneOfTruth)");

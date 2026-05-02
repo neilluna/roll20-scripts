@@ -440,6 +440,20 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOEEruptingEarth",
+      "!# https://www.dndbeyond.com/spells/erupting-earth",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOE|" +
+        "Hidden;Erupting Earth;Orange;wall;20ft;AoEControlToken;nearest, face;20ft;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Erupting-Earth" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOEFireShield",
       "!# https://www.dndbeyond.com/spells/fire-shield",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
@@ -579,6 +593,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Hallow" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEHypnoticPattern",
+      "!# https://www.dndbeyond.com/spells/hypnotic-pattern",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOE|" +
+        "Hidden;Hypnotic Pattern;Violet;wall;30ft;AoEControlToken;nearest, face;30ft;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Hypnotic-Pattern" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -732,6 +760,20 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOESickeningRadiance",
+      "!# https://www.dndbeyond.com/spells/sickening-radiance",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Sickening Radiance;Green;circle, float;30ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sickening-Radiance" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOESilence",
       "!# https://www.dndbeyond.com/spells/silence",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
@@ -785,6 +827,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Spirit-Guardians" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOESpiritShroud",
+      "!# https://www.dndbeyond.com/spells/spirit-shroud",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Spirit Shroud;Yellow;circle, float;7.5ft;self;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Spirit-Shroud" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -854,6 +910,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Trajectory" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEVitriolicSphere",
+      "!# https://www.dndbeyond.com/spells/vitriolic-sphere",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Vitriolic Sphere;Green;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Vitriolic-Sphere" +
         "{& end}",
     ].join("\n") + "\n",
     [

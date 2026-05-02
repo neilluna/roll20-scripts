@@ -19,6 +19,7 @@
     DragonsBreath
     EarthTremor
     Entangle
+    EruptingEarth
     FireShield
     FlamingSphere
     FlameStrike
@@ -28,6 +29,7 @@
     GuardianOfFaith
     GustOfWind
     Hallow
+    HypnoticPattern
     IceStorm
     InsectPlague
     LeomundsTinyHut
@@ -36,14 +38,17 @@
     Passwall
     PassWithoutTrace
     Shatter
+    SickeningRadiance
     Silence
     Sleep
     SleetStorm
     SpiritGuardians
+    SpiritShroud
     SwordBurst
     SynapticStatic
     Thunderclap
     Thunderwave
     Trajectory
+    VitriolicSphere
     ZoneOfTruth
 }}
