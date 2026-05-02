@@ -1,29 +1,29 @@
 {
-  "files": [
-    {
-      "path": "Scripts/Paraselene-Installer.js",
-      "bookmarks": [
-        {
-          "line": 131,
-          "column": 0,
-          "label": ""
-        },
-        {
-          "line": 139,
-          "column": 0,
-          "label": ""
-        },
-        {
-          "line": 806,
-          "column": 0,
-          "label": ""
-        },
-        {
-          "line": 808,
-          "column": 0,
-          "label": ""
-        }
-      ]
-    }
-  ]
+	"files": [
+		{
+			"path": "Scripts/Paraselene-Installer.js",
+			"bookmarks": [
+				{
+					"line": 138,
+					"column": 0,
+					"label": ""
+				},
+				{
+					"line": 146,
+					"column": 0,
+					"label": ""
+				},
+				{
+					"line": 981,
+					"column": 0,
+					"label": ""
+				},
+				{
+					"line": 983,
+					"column": 0,
+					"label": ""
+				}
+			]
+		}
+	]
 }
