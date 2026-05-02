@@ -348,7 +348,7 @@ const ParaseleneInstaller = (() => {
         "script{{",
       "+++ParaseleneDnD5e+++",
       "-->showSmartAOE|" +
-        "Hidden;Control Water;Cyan;wall;100ft;AoEControlToken;nearest, face;100ft;" +
+        "Hidden;Control Water;Aquamarine;wall;100ft;AoEControlToken;nearest, face;100ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
