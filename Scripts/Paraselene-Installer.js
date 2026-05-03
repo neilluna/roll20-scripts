@@ -1367,7 +1367,7 @@ const ParaseleneInstaller = (() => {
       "--&lightAngle|360",
       "--^setTokenLight|",
       "",
-      "--:setSunblade1st15|",
+      "--:setSunblade15|",
       "--&hasBrightLightVision|on",
       "--&emitsBrightLight|on",
       "--&emitsLowLight|on",
