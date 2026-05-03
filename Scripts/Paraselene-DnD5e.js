@@ -1,6 +1,6 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.4.1
+// Version 1.5.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
   offset: Number.MAX_SAFE_INTEGER,
   lineCount: -1,
-  version: "1.4.1",
+  version: "1.5.0",
 };
 {
   const errorLineNumber = 20; // Set this to the line number of the "throw new Error('')" below.
@@ -121,11 +121,14 @@ const ParaseleneDnD5e = (() => {
     const spells = {
       AcidSplash: false,
       AuraOfProtection: false,
+      AuraOfPurity: false,
       AuraOfVitality: false,
       BurningHands: false,
       CallLightning: false,
+      Cloudkill: false,
       CloudOfDaggers: false,
       ColorSpray: false,
+      ConeOfCold: false,
       Confusion: false,
       ControlWater: false,
       DestructiveWave: false,
@@ -134,14 +137,18 @@ const ParaseleneDnD5e = (() => {
       DragonsBreath: false,
       EarthTremor: false,
       Entangle: false,
+      EruptingEarth: false,
+      Fireball: false,
       FireShield: false,
       FlamingSphere: false,
+      FlameStrike: false,
       FogCloud: false,
       GraspingVine: false,
       Grease: false,
       GuardianOfFaith: false,
       GustOfWind: false,
       Hallow: false,
+      HypnoticPattern: false,
       IceStorm: false,
       InsectPlague: false,
       LeomundsTinyHut: false,
@@ -150,14 +157,19 @@ const ParaseleneDnD5e = (() => {
       Passwall: false,
       PassWithoutTrace: false,
       Shatter: false,
+      SickeningRadiance: false,
       Silence: false,
       Sleep: false,
       SleetStorm: false,
       SpiritGuardians: false,
+      SpiritShroud: false,
       SwordBurst: false,
+      SynapticStatic: false,
+      ThunderStep: false,
       Thunderclap: false,
       Thunderwave: false,
       Trajectory: false,
+      VitriolicSphere: false,
       ZoneOfTruth: false,
     };
 
@@ -187,6 +199,9 @@ const ParaseleneDnD5e = (() => {
         "[Aura of Protection](~ParaseleneDnD5e|AddAOEAuraOfProtection)",
       );
     }
+    if (spells.AuraOfPurity) {
+      menu.push("[Aura of Purity](~ParaseleneDnD5e|AddAOEAuraOfPurity)");
+    }
     if (spells.AuraOfVitality) {
       menu.push("[Aura of Vitality](~ParaseleneDnD5e|AddAOEAuraOfVitality)");
     }
@@ -201,11 +216,17 @@ const ParaseleneDnD5e = (() => {
         "[Call Lightning - Strike](~ParaseleneDnD5e|AddAOECallLightningStrike)",
       );
     }
+    if (spells.Cloudkill) {
+      menu.push("[Cloudkill](~ParaseleneDnD5e|AddAOECloudkill)");
+    }
     if (spells.CloudOfDaggers) {
       menu.push("[Cloud of Daggers](~ParaseleneDnD5e|AddAOECloudOfDaggers)");
     }
     if (spells.ColorSpray) {
       menu.push("[Color Spray](~ParaseleneDnD5e|AddAOEColorSpray)");
+    }
+    if (spells.ConeOfCold) {
+      menu.push("[Cone of Cold](~ParaseleneDnD5e|AddAOEConeOfCold)");
     }
     if (spells.Confusion) {
       menu.push("[Confusion](~ParaseleneDnD5e|AddAOEConfusion)");
@@ -233,11 +254,20 @@ const ParaseleneDnD5e = (() => {
     if (spells.Entangle) {
       menu.push("[Entangle](~ParaseleneDnD5e|AddAOEEntangle)");
     }
+    if (spells.EruptingEarth) {
+      menu.push("[Erupting Earth](~ParaseleneDnD5e|AddAOEEruptingEarth)");
+    }
     if (spells.FireShield) {
       menu.push("[Fire Shield](~ParaseleneDnD5e|AddAOEFireShield)");
     }
+    if (spells.Fireball) {
+      menu.push("[Fireball](~ParaseleneDnD5e|AddAOEFireball)");
+    }
     if (spells.FlamingSphere) {
       menu.push("[Flaming Sphere](~ParaseleneDnD5e|AddAOEFlamingSphere)");
+    }
+    if (spells.FlameStrike) {
+      menu.push("[Flame Strike](~ParaseleneDnD5e|AddAOEFlameStrike)");
     }
     if (spells.FogCloud) {
       menu.push("[Fog Cloud](~ParaseleneDnD5e|AddAOEFogCloud)");
@@ -256,6 +286,9 @@ const ParaseleneDnD5e = (() => {
     }
     if (spells.Hallow) {
       menu.push("[Hallow](~ParaseleneDnD5e|AddAOEHallow)");
+    }
+    if (spells.HypnoticPattern) {
+      menu.push("[Hypnotic Pattern](~ParaseleneDnD5e|AddAOEHypnoticPattern)");
     }
     if (spells.IceStorm) {
       menu.push("[Ice Storm](~ParaseleneDnD5e|AddAOEIceStorm)");
@@ -283,6 +316,11 @@ const ParaseleneDnD5e = (() => {
     if (spells.Shatter) {
       menu.push("[Shatter](~ParaseleneDnD5e|AddAOEShatter)");
     }
+    if (spells.SickeningRadiance) {
+      menu.push(
+        "[Sickening Radiance](~ParaseleneDnD5e|AddAOESickeningRadiance)",
+      );
+    }
     if (spells.Silence) {
       menu.push("[Silence](~ParaseleneDnD5e|AddAOESilence)");
     }
@@ -295,8 +333,17 @@ const ParaseleneDnD5e = (() => {
     if (spells.SpiritGuardians) {
       menu.push("[Spirit Guardians](~ParaseleneDnD5e|AddAOESpiritGuardians)");
     }
+    if (spells.SpiritShroud) {
+      menu.push("[Spirit Shroud](~ParaseleneDnD5e|AddAOESpiritShroud)");
+    }
     if (spells.SwordBurst) {
       menu.push("[Sword Burst](~ParaseleneDnD5e|AddAOESwordBurst)");
+    }
+    if (spells.SynapticStatic) {
+      menu.push("[Synaptic Static](~ParaseleneDnD5e|AddAOESynapticStatic)");
+    }
+    if (spells.ThunderStep) {
+      menu.push("[Thunder Step](~ParaseleneDnD5e|AddAOEThunderStep)");
     }
     if (spells.Thunderclap) {
       menu.push("[Thunderclap](~ParaseleneDnD5e|AddAOEThunderclap)");
@@ -306,6 +353,9 @@ const ParaseleneDnD5e = (() => {
     }
     if (spells.Trajectory) {
       menu.push("[Trajectory](~ParaseleneDnD5e|AddAOETrajectory)");
+    }
+    if (spells.VitriolicSphere) {
+      menu.push("[Vitriolic Sphere](~ParaseleneDnD5e|AddAOEVitriolicSphere)");
     }
     if (spells.ZoneOfTruth) {
       menu.push("[Zone of Truth](~ParaseleneDnD5e|AddAOEZoneOfTruth)");

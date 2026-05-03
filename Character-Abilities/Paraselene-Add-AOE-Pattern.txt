@@ -3,11 +3,14 @@
 !Paraselene-DnD5e-Add-AOE-Pattern --speakAs Add-AOE-Pattern {{
     AcidSplash
     AuraOfProtection
+    AuraOfPurity
     AuraOfVitality
     BurningHands
     CallLightning
+    Cloudkill
     CloudOfDaggers
     ColorSpray
+    ConeOfCold
     Confusion
     ControlWater
     DestructiveWave
@@ -16,14 +19,18 @@
     DragonsBreath
     EarthTremor
     Entangle
+    EruptingEarth
     FireShield
+    Fireball
     FlamingSphere
+    FlameStrike
     FogCloud
     GraspingVine
     Grease
     GuardianOfFaith
     GustOfWind
     Hallow
+    HypnoticPattern
     IceStorm
     InsectPlague
     LeomundsTinyHut
@@ -32,12 +39,18 @@
     Passwall
     PassWithoutTrace
     Shatter
+    SickeningRadiance
     Silence
     Sleep
     SleetStorm
+    SpiritGuardians
+    SpiritShroud
     SwordBurst
+    SynapticStatic
+    ThunderStep
     Thunderclap
     Thunderwave
     Trajectory
+    VitriolicSphere
     ZoneOfTruth
 }}

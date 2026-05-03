@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.5.2
+// Version 1.6.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
   offset: Number.MAX_SAFE_INTEGER,
   lineCount: -1,
-  version: "1.5.2",
+  version: "1.6.0",
 };
 {
   const errorLineNumber = 20; // Set this to the line number of the "throw new Error('')" below.
@@ -189,6 +189,20 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOEAuraOfPurity",
+      "!# https://www.dndbeyond.com/spells/aura-of-purity",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Aura of Purity;Yellow;circle, float;27.5ft;self;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Aura-of-Purity" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOEAuraOfVitality",
       "!# https://www.dndbeyond.com/spells/aura-of-vitality",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
@@ -245,13 +259,27 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOECloudkill",
+      "!# https://www.dndbeyond.com/spells/cloudkill",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Cloudkill;Green;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Cloudkill" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOECloudOfDaggers",
       "!# https://www.dndbeyond.com/spells/cloud-of-daggers",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Cloud of Daggers;Orange;square, float;2.5ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Cloud of Daggers;Orange;wall;5ft;AoEControlToken;nearest, face;5ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -270,6 +298,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Color-Spray" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEConeOfCold",
+      "!# https://www.dndbeyond.com/spells/cone-of-cold",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Cone of Cold;White;5econe;60ft;AoEControlToken;nearest, face;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Cone-of-Cold" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -292,7 +334,7 @@ const ParaseleneInstaller = (() => {
       "",
       "--:castLevelSet|",
       "-->showSmartAOENoWidth|" +
-        "Hidden;Confusion;Rose;circle, float;[&reentryval]ft;AoEControlToken;center;" +
+        "Hidden;Confusion;Violet;circle, float;[&reentryval]ft;AoEControlToken;center;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -305,8 +347,8 @@ const ParaseleneInstaller = (() => {
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Control Water;Cyan;square, float;100ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Control Water;Aquamarine;wall;100ft;AoEControlToken;nearest, face;100ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -389,12 +431,26 @@ const ParaseleneInstaller = (() => {
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Entangle;Green;square, float;10ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Entangle;Green;wall;20ft;AoEControlToken;nearest, face;20ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Entangle" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEEruptingEarth",
+      "!# https://www.dndbeyond.com/spells/erupting-earth",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOE|" +
+        "Hidden;Erupting Earth;Orange;wall;20ft;AoEControlToken;nearest, face;20ft;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Erupting-Earth" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -409,6 +465,34 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Fire-Shield" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEFireball",
+      "!# https://www.dndbeyond.com/spells/fireball",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Fireball;Red;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Fireball" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEFlameStrike",
+      "!# https://www.dndbeyond.com/spells/flame-strike",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Flame Strike;Red;circle, float;10ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Flame-Strike" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -475,8 +559,8 @@ const ParaseleneInstaller = (() => {
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
         "script{{",
       "+++ParaseleneDnD5e+++",
-      "-->showSmartAOENoWidth|" +
-        "Hidden;Grease;Grey;square, float;5ft;AoEControlToken;center;" +
+      "-->showSmartAOE|" +
+        "Hidden;Grease;Grey;wall;10ft;AoEControlToken;nearest, face;10ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -523,6 +607,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Hallow" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEHypnoticPattern",
+      "!# https://www.dndbeyond.com/spells/hypnotic-pattern",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOE|" +
+        "Hidden;Hypnotic Pattern;Violet;wall;30ft;AoEControlToken;nearest, face;30ft;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Hypnotic-Pattern" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -640,7 +738,7 @@ const ParaseleneInstaller = (() => {
       "",
       "--:widthSet|",
       "-->showSmartAOE|" +
-        "Hidden;Passwall;Orange;wall;[&length]ft;AoEControlToken;center;[&reentryval]ft;" +
+        "Hidden;Passwall;Orange;wall;[&length]ft;AoEControlToken;nearest, face;[&reentryval]ft;" +
         "@(selected.token_name)",
       "}}" +
         "{& else}" +
@@ -673,6 +771,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Shatter" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOESickeningRadiance",
+      "!# https://www.dndbeyond.com/spells/sickening-radiance",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Sickening Radiance;Green;circle, float;30ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sickening-Radiance" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -732,6 +844,20 @@ const ParaseleneInstaller = (() => {
         "{& end}",
     ].join("\n") + "\n",
     [
+      "!# Paraselene-AddAOESpiritShroud",
+      "!# https://www.dndbeyond.com/spells/spirit-shroud",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Spirit Shroud;Yellow;circle, float;7.5ft;self;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Spirit-Shroud" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
       "!# Paraselene-AddAOESwordBurst",
       "!# https://www.dndbeyond.com/spells/sword-burst",
       '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
@@ -743,6 +869,34 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Sword-Burst" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOESynapticStatic",
+      "!# https://www.dndbeyond.com/spells/synaptic-static",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Synaptic Static;Violet;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Synaptic-Static" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEThunderStep",
+      "!# https://www.dndbeyond.com/spells/thunder-step",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Thunder Step;Orange;circle, float;7.5ft;self;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Thunder-Step" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -784,6 +938,20 @@ const ParaseleneInstaller = (() => {
       "}}" +
         "{& else}" +
         "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Trajectory" +
+        "{& end}",
+    ].join("\n") + "\n",
+    [
+      "!# Paraselene-AddAOEVitriolicSphere",
+      "!# https://www.dndbeyond.com/spells/vitriolic-sphere",
+      '!{& 0 fetch apilogic}{& if "@(selected.token_id[None])" != "None"}' +
+        "script{{",
+      "+++ParaseleneDnD5e+++",
+      "-->showSmartAOENoWidth|" +
+        "Hidden;Vitriolic Sphere;Green;circle, float;20ft;AoEControlToken;center;" +
+        "@(selected.token_name)",
+      "}}" +
+        "{& else}" +
+        "Paraselene-Tools-Whisper-Token-Not-Selected --speakAs Vitriolic-Sphere" +
         "{& end}",
     ].join("\n") + "\n",
     [
@@ -1581,8 +1749,9 @@ const ParaseleneInstaller = (() => {
       "-->setupCard[%1%]|[%2%]",
       "-->getColorCode|colorCode;[%3%]",
       "--&title|[%2%]",
-      "--@forselected|" +
-        "smartaoe " +
+      "--@smartaoe|" +
+        "_playerID|[&SendingPlayerID] " +
+        "_selectedID|@(selected.token_id) " +
         "_aoeColor|[&colorCode]50 " +
         "_aoeOutlineColor|#00000050 " +
         "_aoeType|[%4%] " +
@@ -1600,8 +1769,9 @@ const ParaseleneInstaller = (() => {
       "-->setupCard[%1%]|[%2%]",
       "-->getColorCode|colorCode;[%3%]",
       "--&title|[%2%]",
-      "--@forselected|" +
-        "smartaoe " +
+      "--@smartaoe|" +
+        "_playerID|[&SendingPlayerID] " +
+        "_selectedID|@(selected.token_id) " +
         "_aoeColor|[&colorCode]50 " +
         "_aoeOutlineColor|#00000050 " +
         "_aoeType|[%4%] " +
@@ -1618,8 +1788,9 @@ const ParaseleneInstaller = (() => {
       "-->setupCard[%1%]|[%2%]",
       "-->getColorCode|colorCode;[%3%]",
       "--&title|[%2%]",
-      "--@forselected|" +
-        "smartaoe " +
+      "--@smartaoe|" +
+        "_playerID|[&SendingPlayerID] " +
+        "_selectedID|@(selected.token_id) " +
         "_aoeColor|[&colorCode]50 " +
         "_aoeOutlineColor|#00000050 " +
         "_aoeType|[%4%] " +
