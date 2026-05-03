@@ -1,6 +1,6 @@
 // Paraselene-Installer
 // Update, remove, and install abilities and macros in the Paraselene ecosystem.
-// Version 1.5.2
+// Version 1.6.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneInstaller = {
   offset: Number.MAX_SAFE_INTEGER,
   lineCount: -1,
-  version: "1.5.2",
+  version: "1.6.0",
 };
 {
   const errorLineNumber = 20; // Set this to the line number of the "throw new Error('')" below.

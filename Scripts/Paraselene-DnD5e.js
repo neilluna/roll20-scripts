@@ -1,6 +1,6 @@
 // Paraselene-DnD5e
 // Dungeons & Dragons 5th Edition tools.
-// Version 1.4.1
+// Version 1.5.0
 
 // Github:   https://github.com/neilluna
 // By:       Neil Luna
@@ -12,7 +12,7 @@ var API_Meta = API_Meta || {};
 API_Meta.ParaseleneDnD5e = {
   offset: Number.MAX_SAFE_INTEGER,
   lineCount: -1,
-  version: "1.4.1",
+  version: "1.5.0",
 };
 {
   const errorLineNumber = 20; // Set this to the line number of the "throw new Error('')" below.
